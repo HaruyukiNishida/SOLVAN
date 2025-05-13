@@ -6,22 +6,30 @@ using UnityEngine.Events;
 
 public class TamaTriggerDetector : MonoBehaviour
 {
-    [SerializeField] private TriggerEvent onTriggerEnter = new TriggerEvent();
-    [SerializeField] private TriggerEvent onTriggerExit = new TriggerEvent();
+    [SerializeField] private TriggerEvent<Collider> onTriggerEnter = new TriggerEvent<Collider>();
+    [SerializeField] private TriggerEvent<Collider> onTriggerExit = new TriggerEvent<Collider>();
 
-    private void OnTriggerEnter(Collider collision)
+    public UnityEvent<Collider> tamaMoveUp_EventInvoke;
+    public UnityEvent<Collider> tamaMoveDown_EventInvoke;
+
+    private void OnTriggerEnter(Collider collider)
     {
-        onTriggerEnter.Invoke(collision);
+        Debug.LogWarning(collider.name);
+
+        onTriggerEnter.Invoke(collider);
     }
 
-    private void OnTriggerExit(Collider collision)
+
+    private void OnTriggerExit(Collider collider)
     {
-        onTriggerExit.Invoke(collision);
+        //    Debug.LogWarning(collider.name);
+
+        onTriggerExit.Invoke(collider);
     }
 }
 
 [Serializable]
-public class TriggerEvent : UnityEvent<Collider>
+public class TriggerEvent<Collider> : UnityEvent<Collider>
 {
 }
 

@@ -1,5 +1,5 @@
+using System.Collections;
 using UnityEngine;
-using System.Reflection;
 
 [RequireComponent(typeof(Rigidbody))]
 
@@ -12,11 +12,21 @@ public class Tama : MonoBehaviour
 
     private Vector3 startPos;
     private Vector3 endPos;
+    private Vector3 force = Vector3.up;
+ //   private float moveSpeed = 1f;
+
+    private int status;
+
+    public int index;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
+        _transform = transform;
         _rb = GetComponent<Rigidbody>();
+        GetComponent<Collider>().material.bounciness = 0f;
     }
 
     // Update is called once per frame
@@ -25,57 +35,111 @@ public class Tama : MonoBehaviour
 
     }
 
-    public void CheckEventTriggerDrag()
+    private void FixedUpdate()
     {
-        Debug.LogWarning("Tama");
+
+     //   _rb.MovePosition(_rb.position + force * moveSpeed * Time.fixedDeltaTime);
 
 
-        Vector3 vec3 = transform.position;
+        //var speed = _rb.linearVelocity.magnitude;
 
-        if (Input.GetMouseButtonDown(0))
+        //if (speed < 0.01)
+        //{
+        //    Debug.LogWarning($"{this.name} : {speed}");
+        //}
+    }
+
+    public void CheckEventTriggerDragBegin()
+    {
+        //   Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
+
+        status = 0;
+        _rb.isKinematic = false;
+        startPos = Input.mousePosition;
+    }
+
+
+
+
+    public void CheckEventTriggerDragEnd()
+    {
+        //  Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
+
+        endPos = Input.mousePosition;
+
+
+        //  Debug.Log("startPos:" + startPos + " endPos:" + endPos);
+
+
+        //var mode = ForceMode.Impulse;
+
+        float vec = startPos.y - endPos.y;
+
+        if (vec < 0)
         {
-            this.startPos = Input.mousePosition;
+            status = 1;//ª
+                       //   _rb.AddForce(force * accel, mode);
+            force = Vector3.up;
+
+
+        }
+        else
+        {
+            status = 2;//«
+                       //   _rb.AddForce(-force * accel, mode);
+            force = Vector3.down;
         }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            endPos = Input.mousePosition;
 
-            float vec = startPos.y - endPos.y;
-            if (vec < 0)
-            {
-                _rb.AddForce(0, 1, 0);
-            }
-            else
-            {
-                _rb.AddForce(0, -1, 0);
-            }
-        }
+        Debug.Log(status);
 
     }
 
 
     public void CheckUpTrrigerEnter()
     {
-        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
+        //  Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
+        if (status == 1)
+        {
+            KinematicFalse();
+        }
     }
+
+    private void KinematicFalse()
+    {
+        //  Debug.Log(this.name);
+        _rb.isKinematic = true;
+        StartCoroutine(KinematicFalseCoroutine());
+    }
+
+    private IEnumerator KinematicFalseCoroutine()
+    {
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        status = 0;
+        _rb.isKinematic = false;
+    }
+
 
     public void CheckUpTrrigerExit()
     {
-        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
-
+        //  Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
     }
 
     public void CheckDownTrrigerEnter()
     {
-        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
+        //    Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
+        //  KinematicFalse();
 
+        if (status == 2)
+        {
+            KinematicFalse();
+        }
     }
 
     public void CheckDownTrrigerExit()
     {
-        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
-
+        //   Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
     }
 
 }
