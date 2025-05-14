@@ -77,7 +77,7 @@ public class Tama : MonoBehaviour
 
         if (vec < 0)
         {
-            status = 1;//ª
+            status = 1;//  
                        //   _rb.AddForce(force * accel, mode);
             force = Vector3.up;
 
@@ -85,7 +85,7 @@ public class Tama : MonoBehaviour
         }
         else
         {
-            status = 2;//«
+            status = 2;//  
                        //   _rb.AddForce(-force * accel, mode);
             force = Vector3.down;
         }

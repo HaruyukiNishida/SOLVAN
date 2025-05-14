@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Tama1 : MonoBehaviour
 {
@@ -20,12 +18,14 @@ public class Tama1 : MonoBehaviour
 
     public int index;
     public bool isOn;
-    private bool isActive;
 
-    public int moveStatus = 0;
+    public TamaStatus moveStatus = TamaStatus.Stop;
+
+    private bool isActive;
 
 
     void Awake()
+
     {
         _transform = transform;
         startPos = transform.position;
@@ -36,17 +36,18 @@ public class Tama1 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //   Debug.Log(moveStatus);
 
-        if (moveStatus != 0)
+        if (moveStatus != TamaStatus.Stop)
         {
             timer += Time.deltaTime;
             var rate = timer * speed / distance;
             if (rate >= 1)
             {
-
-                isOn = (moveStatus == 1);
+                isOn = this.GetIsOn();
                 moveStatus = 0;
+
+                transform.position = endPos;
+                TamaManager.instance.DispSubTotal();
 
                 transform.position = endPos;
             }
@@ -57,12 +58,16 @@ public class Tama1 : MonoBehaviour
         }
     }
 
+    public virtual bool GetIsOn()
+    {
+        return this.isOn = (moveStatus == TamaStatus.Up);
+    }
+
     public void CheckEventTriggerDragBegin()
     {
         Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
         if (moveStatus == 0)
         {
-            //    Debug.LogWarning(isOn);
             swipeStartPos = Input.mousePosition;
         }
     }
@@ -74,52 +79,74 @@ public class Tama1 : MonoBehaviour
         swipeEndPos = Input.mousePosition;
         float vec = swipeStartPos.y - swipeEndPos.y;
 
-        TamaManager.instance.MoveTamas(index, (vec < 0) ? 1 : 2);
-
+        CheckEventTriggerDragEndSub((vec < 0) ? TamaStatus.Up : TamaStatus.Down);
     }
 
-    public void SetTamaMove(int movestatus)
+    public virtual void CheckEventTriggerDragEndSub(TamaStatus movestatus)
     {
-        if (movestatus == 1 && !isOn || movestatus == 2 && isOn)
+        TamaManager.instance.MoveTamas(index, movestatus);
+    }
+
+
+    public void SetTamaMove(TamaStatus movestatus)
+    {
+        if (SetTamaMoveSub(movestatus))
         {
             moveStatus = movestatus;
 
             startPos = this.transform.position;
             timer = 0f;
 
-            endPos = startPos + ((movestatus == 1) ? Vector3.up : Vector3.down) * distance;
+            endPos = startPos + ((movestatus == TamaStatus.Up) ? Vector3.up : Vector3.down) * distance;
         }
         else
         {
-            moveStatus = 0;
+            moveStatus = TamaStatus.Stop;
         }
     }
+
+    public virtual bool SetTamaMoveSub(TamaStatus movestatus)
+    {
+        return (movestatus == TamaStatus.Up && !isOn || movestatus == TamaStatus.Down && isOn);
+    }
+
+    
+
+    public void SetTamaMove(int movestatus)
+    {
+        startPos = this.transform.position;
+        timer = 0f;
+
+        endPos = startPos + ((movestatus == 1) ? Vector3.up : Vector3.down) * distance;
+    }
+
 
     public void CheckUpTrrigerEnter(Collider collider)
     {
         Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-        if (moveStatus == 1)
+        if (moveStatus == TamaStatus.Up)
+        {
+            //   collider.gameObject.GetComponent<Tama1>().moveStatus=1;
+        }
+    }
+
+    
+
+    public void CheckDownTrrigerEnter(Collider collider)
+    {
+        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+        if (moveStatus == TamaStatus.Down)
         {
 
-            //   collider.gameObject.GetComponent<Tama1>().moveStatus=1;
+            //  collider.gameObject.GetComponent<Tama1>().moveStatus = 2;
         }
     }
 
     public void CheckUpTrrigerExit()
     {
         //  Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
-    }
-
-    public void CheckDownTrrigerEnter(Collider collider)
-    {
-        Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
-
-        if (moveStatus == 2)
-        {
-
-            //  collider.gameObject.GetComponent<Tama1>().moveStatus = 2;
-        }
     }
 
     public void CheckDownTrrigerExit()

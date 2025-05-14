@@ -1,11 +1,15 @@
+using TMPro;
 using UnityEngine;
 
 public class TamaManager : MonoBehaviour
 {
     public static TamaManager instance;
 
+    public TextMeshProUGUI txt;
+
     public Tama1[] tamas;
 
+    public int subTotal = 0;
     public int keta = 1;
 
     private void Awake()
@@ -31,7 +35,7 @@ public class TamaManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+     //   tamas = new Tama1[5];
     }
 
     // Update is called once per frame
@@ -46,13 +50,31 @@ public class TamaManager : MonoBehaviour
 
     }
 
-    public void MoveTamas(int index, int movestatus)
+    public void DispSubTotal()
     {
-        if (movestatus == 1)
-        {
-            for (int i = index; i <= 3; i++)
-            {
 
+        txt.text = DispSubTotalSub().ToString();
+    }
+
+    public int DispSubTotalSub()
+    {
+        subTotal = 0;
+        for (int i = 0; i <= 4; i++)
+        {
+            subTotal += (tamas[i].isOn) ? ((i == 4) ? 5 : 1) : 0;
+        }
+
+        return subTotal * keta;
+
+    }
+
+
+    public void MoveTamas(int index, TamaStatus movestatus)
+    {
+        if (movestatus == TamaStatus.Up)
+        {
+            for (int i = index; i < 4; i++)
+            {
                 tamas[i].SetTamaMove(movestatus);
             }
         }
@@ -60,10 +82,7 @@ public class TamaManager : MonoBehaviour
         {
             for (int i = index; i >= 0; i--)
             {
-                //  if (!tamas[i].isOn)
-                {
-                    tamas[i].SetTamaMove(movestatus);
-                }
+                tamas[i].SetTamaMove(movestatus);
             }
 
         }

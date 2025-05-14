@@ -102,10 +102,10 @@ GameObject:
   - component: {fileID: 1187289973628860286}
   - component: {fileID: 810167302417516478}
   - component: {fileID: 4453677885698250928}
-  - component: {fileID: 3461755401672601720}
+  - component: {fileID: -3453407041611427434}
   - component: {fileID: 5845107566318921687}
   m_Layer: 0
-  m_Name: Tama 1
+  m_Name: Tama 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,7 +202,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3461755401672601720
+--- !u!114 &-3453407041611427434
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7745021266473044691}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09f954efe58eb0240b0f4b89aa5628d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 4eb0044a47fcf2a448500f28fe56049b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3461755401672601720}
+        - m_Target: {fileID: -3453407041611427434}
           m_TargetAssemblyTypeName: Tama1, Assembly-CSharp
           m_MethodName: CheckEventTriggerDragBegin
           m_Mode: 1
@@ -250,7 +250,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3461755401672601720}
+        - m_Target: {fileID: -3453407041611427434}
           m_TargetAssemblyTypeName: Tama1, Assembly-CSharp
           m_MethodName: CheckEventTriggerDragEnd
           m_Mode: 1
