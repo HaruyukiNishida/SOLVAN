@@ -5,6 +5,7 @@ public class Tama1 : MonoBehaviour
 {
     private Transform _transform;
 
+    private TamaManager _tamaManager;
     //   public UnityEvent<int,int> tamaManager_Invoke;
 
     private Vector3 startPos;
@@ -13,7 +14,7 @@ public class Tama1 : MonoBehaviour
     private Vector3 swipeEndPos;
 
     private float timer = 0f;
-    private float speed = 10f;
+    private float speed = 1f;
     private float distance = 1.0f;
 
     public int index;
@@ -29,6 +30,8 @@ public class Tama1 : MonoBehaviour
     {
         _transform = transform;
         startPos = transform.position;
+
+        _tamaManager = GetComponentInParent<TamaManager>();
     }
 
     //   void Update(){}
@@ -47,7 +50,7 @@ public class Tama1 : MonoBehaviour
                 moveStatus = 0;
 
                 transform.position = endPos;
-                TamaManager.instance.DispSubTotal();
+                _tamaManager.DispSubTotal();
 
                 transform.position = endPos;
             }
@@ -65,16 +68,19 @@ public class Tama1 : MonoBehaviour
 
     public void CheckEventTriggerDragBegin()
     {
-        Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
-        if (moveStatus == 0)
-        {
-            swipeStartPos = Input.mousePosition;
-        }
+        if (moveStatus != TamaStatus.Stop) return;
+
+     //   Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
+
+        swipeStartPos = Input.mousePosition;
+
     }
 
     public void CheckEventTriggerDragEnd()
     {
-        Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
+        if (moveStatus != TamaStatus.Stop) return;
+
+    //    Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
 
         swipeEndPos = Input.mousePosition;
         float vec = swipeStartPos.y - swipeEndPos.y;
@@ -84,7 +90,7 @@ public class Tama1 : MonoBehaviour
 
     public virtual void CheckEventTriggerDragEndSub(TamaStatus movestatus)
     {
-        TamaManager.instance.MoveTamas(index, movestatus);
+        _tamaManager.MoveTamas(index, movestatus);
     }
 
 
@@ -110,15 +116,6 @@ public class Tama1 : MonoBehaviour
         return (movestatus == TamaStatus.Up && !isOn || movestatus == TamaStatus.Down && isOn);
     }
 
-    
-
-    public void SetTamaMove(int movestatus)
-    {
-        startPos = this.transform.position;
-        timer = 0f;
-
-        endPos = startPos + ((movestatus == 1) ? Vector3.up : Vector3.down) * distance;
-    }
 
 
     public void CheckUpTrrigerEnter(Collider collider)
@@ -131,7 +128,7 @@ public class Tama1 : MonoBehaviour
         }
     }
 
-    
+
 
     public void CheckDownTrrigerEnter(Collider collider)
     {
