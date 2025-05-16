@@ -69,7 +69,7 @@ public class Tama11 : MonoBehaviour
 
     public void CheckEventTriggerDragBegin()
     {
-        if (moveStatus != TamaStatus.Stop) return;
+     //   if (moveStatus != TamaStatus.Stop) return;
 
         //   Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
 
@@ -79,7 +79,7 @@ public class Tama11 : MonoBehaviour
 
     public void CheckEventTriggerDragEnd()
     {
-        if (moveStatus != TamaStatus.Stop) return;
+     //   if (moveStatus != TamaStatus.Stop) return;
 
         //    Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
 
@@ -108,7 +108,7 @@ public class Tama11 : MonoBehaviour
         }
         else
         {
-            moveStatus = TamaStatus.Stop;
+         //   moveStatus = TamaStatus.Stop;
         }
     }
 

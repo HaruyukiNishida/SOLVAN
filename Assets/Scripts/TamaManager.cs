@@ -25,9 +25,9 @@ public class TamaManager : MonoBehaviour
     {
     }
 
-    public void SetTamas(Tama1[] tamas)
+    public Tama1[] GetTamas()
     {
-        this.tamas = tamas;
+        return this.tamas;
     }
 
     public void DispSubTotal()
@@ -55,7 +55,7 @@ public class TamaManager : MonoBehaviour
         {
             for (int i = index; i < 4; i++)
             {
-                if (tamas[i].moveStatus == TamaStatus.Stop)
+                if (tamas[i].moveStatus == TamaStatus.Off)
                 {
                     tamas[i].SetTamaMove(movestatus);
                 }
@@ -65,7 +65,7 @@ public class TamaManager : MonoBehaviour
         {
             for (int i = index; i >= 0; i--)
             {
-                if (tamas[i].moveStatus == TamaStatus.Stop)
+                if (tamas[i].moveStatus == TamaStatus.On)
                 {
                     tamas[i].SetTamaMove(movestatus);
                 }
