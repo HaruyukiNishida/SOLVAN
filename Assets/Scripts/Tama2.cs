@@ -15,13 +15,13 @@ public class Tama2 : Tama1
         
     }
 
-    public override bool GetIsOn()
+    public override TamaStatus GetIsOn()
     {
         Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
 
         Debug.Log(moveStatus == TamaStatus.Down);
 
-        return isOn = (moveStatus == TamaStatus.Down);
+        return (moveStatus == TamaStatus.Down) ? TamaStatus.On : TamaStatus.Off;
     }
 
     public override void CheckEventTriggerDragEndSub(TamaStatus movestatus)

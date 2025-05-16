@@ -31,7 +31,6 @@ public class Tama1 : MonoBehaviour
 
 
     void Awake()
-
     {
         _transform = transform;
         startPos = _transform.localPosition;
@@ -64,7 +63,7 @@ public class Tama1 : MonoBehaviour
             }
             else
             {
-                Debug.Log("this:" + moveStatus + " hitTama:" + hitTama.moveStatus);
+                Debug.Log($"[{index}] moveStatus:{moveStatus} /  [{index}] moveStatus:{hitTama.moveStatus}");
 
                 this.moveStatus = hitTama.moveStatus;
                 this.SetTamaMove(hitTama.moveStatus);
@@ -108,8 +107,9 @@ public class Tama1 : MonoBehaviour
             rate = timer * speed / distance;
             if (rate >= 1)
             {
-                isOn = this.GetIsOn();
-                moveStatus = isOn ? TamaStatus.On : TamaStatus.Off;
+                transform.localPosition = endPos;
+
+                moveStatus = GetIsOn();
 
                 transform.localPosition = endPos;
                 _tamaManager.DispSubTotal();
@@ -121,14 +121,15 @@ public class Tama1 : MonoBehaviour
         }
     }
 
-    public virtual bool GetIsOn()
+    public virtual TamaStatus GetIsOn()
     {
-        return this.isOn = (moveStatus == TamaStatus.Up);
+        return (moveStatus == TamaStatus.Up)? TamaStatus.On: TamaStatus.Off;
+        
     }
 
     public void CheckEventTriggerDragBegin()
     {
-        if (IsTamaStop()) return;
+        if (!IsTamaStop()) return;
 
         swipeStartPos = Input.mousePosition;
 
@@ -136,7 +137,7 @@ public class Tama1 : MonoBehaviour
 
     public void CheckEventTriggerDragEnd()
     {
-        if (IsTamaStop()) return;
+        if (!IsTamaStop()) return;
 
         //    Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
 
@@ -148,8 +149,8 @@ public class Tama1 : MonoBehaviour
 
     public virtual void CheckEventTriggerDragEndSub(TamaStatus movestatus)
     {
-        //SetTamaMove(movestatus);
-        _tamaManager.MoveTamas(index, movestatus);
+        SetTamaMove(movestatus);
+        //_tamaManager.MoveTamas(index, movestatus);
     }
 
 
@@ -178,7 +179,8 @@ public class Tama1 : MonoBehaviour
 
     public virtual bool SetTamaMoveSub(TamaStatus movestatus)
     {
-        return (movestatus == TamaStatus.Up && !isOn || movestatus == TamaStatus.Down && isOn);
+        return (movestatus == TamaStatus.Up && transform.localPosition != onPos 
+            || movestatus == TamaStatus.Down && transform.localPosition != offPos);
     }
 
     public bool IsTamaStop()
