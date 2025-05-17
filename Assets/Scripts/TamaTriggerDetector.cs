@@ -9,8 +9,6 @@ public class TamaTriggerDetector : MonoBehaviour
     [SerializeField] private TriggerEvent<Collider> onTriggerEnter = new TriggerEvent<Collider>();
     [SerializeField] private TriggerEvent<Collider> onTriggerExit = new TriggerEvent<Collider>();
 
-    public UnityEvent<Collider> tamaMoveUp_EventInvoke;
-    public UnityEvent<Collider> tamaMoveDown_EventInvoke;
 
     private void OnTriggerEnter(Collider collider)
     {

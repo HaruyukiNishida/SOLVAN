@@ -49,7 +49,7 @@ public class TamaManager : MonoBehaviour
     }
 
 
-    public void MoveTamas(int index, TamaStatus movestatus)
+    public void SetTamasMove(int index, TamaStatus movestatus)
     {
         if (movestatus == TamaStatus.Up)
         {

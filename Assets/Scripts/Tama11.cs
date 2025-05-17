@@ -91,7 +91,7 @@ public class Tama11 : MonoBehaviour
 
     public virtual void CheckEventTriggerDragEndSub(TamaStatus movestatus)
     {
-        _tamaManager.MoveTamas(index, movestatus);
+        _tamaManager.SetTamasMove(index, movestatus);
     }
 
 

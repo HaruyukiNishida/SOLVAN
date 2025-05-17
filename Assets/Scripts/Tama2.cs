@@ -13,6 +13,10 @@ public class Tama2 : Tama1
         Debug.Log($"index:{index} startPos:{startPos} endPos:{endPos}");
     }
 
+    public override void IsHitTama()
+    {
+    }
+
     public override TamaStatus GetIsOn()
     {
         return (moveStatus == TamaStatus.Down) ? TamaStatus.On : TamaStatus.Off;

@@ -39,74 +39,48 @@ public class Tama1 : MonoBehaviour
 
         onPos = endPos;
         offPos = startPos;
-
-
-
     }
 
-    /*
-    void Update()
+    public virtual void IsHitTama()
     {
-        if (IsTamaStop()) return;
-
-        var hitTama = IsHitTama();
-
-        if (hitTama != null)
-        {
-            //Debug.LogWarning("H I T: " + hitTama);
-
-            //Debug.LogWarning($"{moveStatus}: {hitTama.moveStatus}");
-
-            if (rate > hitTama.rate)
-            {
-                Debug.Log("hitTama");
-                hitTama.SetTamaMove(this.moveStatus);
-            }
-            else
-            {
-                Debug.Log($"[{index}] moveStatus:{moveStatus} /  [{hitTama.index}] moveStatus:{hitTama.moveStatus}");
-
-                this.moveStatus = hitTama.moveStatus;
-                this.SetTamaMove(hitTama.moveStatus);
-            }
-
-        }
-    }
-
-    private Tama1 IsHitTama()
-    {
-        if (IsTamaStop()) return null;
-
         var tamas = _tamaManager.GetTamas();
 
-        for (int i = 0; i < tamas.Length; i++)
+        if (moveStatus == TamaStatus.Up)
+        {
+            if (index < 3)
+            {
+                if (IsTamaStop(tamas[this.index + 1]))
+                {
+                    tamas[this.index + 1].SetTamaMove(TamaStatus.Up);
+                }
+            }
+        }
+        else
         {
 
-            if (i != index)
+            if (index > 0)
             {
-                if (Math.Abs(transform.localPosition.y - tamas[i].transform.localPosition.y) < 1
-                    && this.moveStatus != tamas[i].moveStatus)
+                if (IsTamaStop(tamas[this.index - 1]))
                 {
-                    return tamas[i];
+                    tamas[this.index - 1].SetTamaMove(TamaStatus.Down);
                 }
-
             }
-
-
         }
-        return null;
+
     }
-    */
+
     private void FixedUpdate()
     {
         //  Debug.LogWarning($"index:{index} msts{moveStatus}");
 
-        if (!IsTamaStop())
+        if (!IsTamaStop(this))
         {
             timer += Time.deltaTime;
             rate = Mathf.Clamp01(timer * speed / distance);
             if (rate < 1)
             {
+                IsHitTama();
+
                 transform.position = Vector3.Lerp(startPos, endPos, rate);
 
             }
@@ -128,7 +102,7 @@ public class Tama1 : MonoBehaviour
 
     public void CheckEventTriggerDragBegin()
     {
-        if (!IsTamaStop()) return;
+        if (!IsTamaStop(this)) return;
 
         swipeStartPos = Input.mousePosition;
 
@@ -136,7 +110,7 @@ public class Tama1 : MonoBehaviour
 
     public void CheckEventTriggerDragEnd()
     {
-        if (!IsTamaStop()) return;
+        if (!IsTamaStop(this)) return;
 
         swipeEndPos = Input.mousePosition;
         float vec = swipeStartPos.y - swipeEndPos.y;
@@ -148,13 +122,15 @@ public class Tama1 : MonoBehaviour
     {
         if (moveStatus == TamaStatus.Off && vec)
         {
-            _tamaManager.MoveTamas(index, TamaStatus.Up);
+            //   _tamaManager.SeSetTamasMovetMoveTamas(index, TamaStatus.Up);
+            SetTamaMove(TamaStatus.Up);
 
         }
 
         if (moveStatus == TamaStatus.On && !vec)
         {
-            _tamaManager.MoveTamas(index, TamaStatus.Down);
+            //   _tamaManager.SetTamasMove(index, TamaStatus.Down);
+            SetTamaMove(TamaStatus.Down);
 
         }
     }
@@ -166,6 +142,7 @@ public class Tama1 : MonoBehaviour
 
         timer = 0f;
         rate = 0f;
+        distance = Math.Abs(startPos.y - endPos.y);
 
         moveStatus = movestatus;
 
@@ -181,21 +158,20 @@ public class Tama1 : MonoBehaviour
 
 
 
-    public bool IsTamaStop()
+    public bool IsTamaStop(Tama1 tgt)
     {
-        return (moveStatus == TamaStatus.Off || moveStatus == TamaStatus.On);
+        return (tgt.moveStatus == TamaStatus.Off || tgt.moveStatus == TamaStatus.On);
     }
 
 
     public void CheckUpTrrigerEnter(Collider collider)
     {
-        //Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
-
+         //   Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
     }
 
     public void CheckDownTrrigerEnter(Collider collider)
     {
-        //Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
+        //   Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
     }
 
     public void CheckUpTrrigerExit()
