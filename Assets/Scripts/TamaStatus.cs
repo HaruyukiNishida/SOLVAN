@@ -2,7 +2,10 @@ using UnityEngine;
 
 public enum TamaStatus
 {
-    Stop,
+    Off,
     Up,
     Down,
+    On,
+
+    Stop,
 }
