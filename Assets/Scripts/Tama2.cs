@@ -1,39 +1,39 @@
-using System.Reflection;
 using UnityEngine;
 
 public class Tama2 : Tama1
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void TamaPosInit()
     {
-        
-    }
+        startPos = transform.localPosition;
+        endPos = transform.localPosition + Vector3.down * 1.0f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        onPos = endPos;
+        offPos = startPos;
+
+        Debug.Log($"index:{index} startPos:{startPos} endPos:{endPos}");
     }
 
     public override TamaStatus GetIsOn()
     {
-        Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
-
-        Debug.Log(moveStatus == TamaStatus.Down);
-
         return (moveStatus == TamaStatus.Down) ? TamaStatus.On : TamaStatus.Off;
     }
 
-    public override void CheckEventTriggerDragEndSub(TamaStatus movestatus)
+    public override void CheckEventTriggerDragEndSub(bool vec)
     {
-        SetTamaMove(movestatus);
+        if (moveStatus == TamaStatus.On && vec)
+        {
+            SetTamaMove(TamaStatus.Up);
+        }
+
+        if (moveStatus == TamaStatus.Off && !vec)
+        {
+            SetTamaMove(TamaStatus.Down);
+        }
     }
 
-    public override bool SetTamaMoveSub(TamaStatus movestatus)
+    public override void SetTamaMoveSub(TamaStatus movestatus)
     {
-     //   Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
-     //   Debug.Log($"{movestatus} {isOn}");
-
-        return (movestatus == TamaStatus.Down && !isOn || movestatus == TamaStatus.Up && isOn);
+        startPos = this.transform.localPosition;
+        endPos = (movestatus == TamaStatus.Down) ? onPos : offPos;
     }
 }

@@ -41,7 +41,7 @@ public class TamaManager : MonoBehaviour
         subTotal = 0;
         for (int i = 0; i <= 4; i++)
         {
-            subTotal += (tamas[i].isOn) ? ((i == 4) ? 5 : 1) : 0;
+            subTotal += (tamas[i].moveStatus==TamaStatus.On) ? ((i == 4) ? 5 : 1) : 0;
         }
 
         return subTotal * keta;
