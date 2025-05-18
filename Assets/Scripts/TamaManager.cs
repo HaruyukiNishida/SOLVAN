@@ -13,8 +13,9 @@ public class TamaManager : MonoBehaviour
 
     private void Awake()
     {
-        
+        tamas = GetComponentsInChildren<Tama1>();
 
+         
     }
 
     void Start()
