@@ -4,8 +4,8 @@ public class Tama2 : Tama1
 {
     public override void TamaPosInit()
     {
-        startPos = transform.localPosition;
-        endPos = transform.localPosition + Vector3.down * 1.0f;
+        startPos = transform.position;
+        endPos = transform.position + Vector3.down * 1.0f;
 
         onPos = endPos;
         offPos = startPos;
@@ -37,7 +37,7 @@ public class Tama2 : Tama1
 
     public override void SetTamaMoveSub(TamaStatus movestatus)
     {
-        startPos = this.transform.localPosition;
+        startPos = this.transform.position;
         endPos = (movestatus == TamaStatus.Down) ? onPos : offPos;
     }
 }

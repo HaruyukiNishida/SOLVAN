@@ -6,10 +6,10 @@ public class Tama1 : MonoBehaviour
     private TamaManager _tamaManager;
     //   public UnityEvent<int,int> tamaManager_Invoke;
 
-    public Vector3 startPos;
-    public Vector3 endPos;
-    public Vector3 onPos;
-    public Vector3 offPos;
+    protected Vector3 startPos;
+    protected Vector3 endPos;
+    protected Vector3 onPos;
+    protected Vector3 offPos;
 
     private Vector3 swipeStartPos;
     private Vector3 swipeEndPos;
@@ -34,8 +34,8 @@ public class Tama1 : MonoBehaviour
 
     public virtual void TamaPosInit()
     {
-        startPos = transform.localPosition;
-        endPos = transform.localPosition + Vector3.up * 1.0f;
+        startPos = transform.position;
+        endPos = transform.position + Vector3.up * 1.0f;
 
         onPos = endPos;
         offPos = startPos;
@@ -88,7 +88,7 @@ public class Tama1 : MonoBehaviour
             {
                 moveStatus = GetIsOn();
 
-                transform.localPosition = endPos;
+                transform.position = endPos;
                 _tamaManager.DispSubTotal();
             }
         }
@@ -151,7 +151,7 @@ public class Tama1 : MonoBehaviour
 
     public virtual void SetTamaMoveSub(TamaStatus movestatus)
     {
-        startPos = this.transform.localPosition;
+        startPos = transform.position;
         endPos = (movestatus == TamaStatus.Up) ? onPos : offPos;
     }
 

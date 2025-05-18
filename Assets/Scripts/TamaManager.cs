@@ -27,7 +27,7 @@ public class TamaManager : MonoBehaviour
 
     public Tama1[] GetTamas()
     {
-        return this.tamas;
+        return this.GetComponentsInChildren<Tama1>();
     }
 
     public void DispSubTotal()
@@ -49,7 +49,7 @@ public class TamaManager : MonoBehaviour
     }
 
 
-    public void SetTamasMove(int index, TamaStatus movestatus)
+    public void SetTamasMove2(int index, TamaStatus movestatus)
     {
         if (movestatus == TamaStatus.Up)
         {
