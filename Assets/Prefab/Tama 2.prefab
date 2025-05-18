@@ -84,12 +84,6 @@ MonoBehaviour:
   onTriggerExit:
     m_PersistentCalls:
       m_Calls: []
-  tamaMoveUp_EventInvoke:
-    m_PersistentCalls:
-      m_Calls: []
-  tamaMoveDown_EventInvoke:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7745021266473044691
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +96,7 @@ GameObject:
   - component: {fileID: 1187289973628860286}
   - component: {fileID: 810167302417516478}
   - component: {fileID: 4453677885698250928}
-  - component: {fileID: -3453407041611427434}
+  - component: {fileID: -8214126975831135304}
   - component: {fileID: 5845107566318921687}
   m_Layer: 0
   m_Name: Tama 2
@@ -121,7 +115,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4627860922132180146}
@@ -202,7 +196,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-3453407041611427434
+--- !u!114 &-8214126975831135304
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,8 +208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb0044a47fcf2a448500f28fe56049b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rate: 0
   index: 0
-  isOn: 0
   moveStatus: 0
 --- !u!114 &5845107566318921687
 MonoBehaviour:
@@ -234,7 +228,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: -3453407041611427434}
+        - m_Target: {fileID: -8214126975831135304}
           m_TargetAssemblyTypeName: Tama1, Assembly-CSharp
           m_MethodName: CheckEventTriggerDragBegin
           m_Mode: 1
@@ -250,7 +244,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: -3453407041611427434}
+        - m_Target: {fileID: -8214126975831135304}
           m_TargetAssemblyTypeName: Tama1, Assembly-CSharp
           m_MethodName: CheckEventTriggerDragEnd
           m_Mode: 1
@@ -344,11 +338,5 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
-  tamaMoveUp_EventInvoke:
-    m_PersistentCalls:
-      m_Calls: []
-  tamaMoveDown_EventInvoke:
     m_PersistentCalls:
       m_Calls: []

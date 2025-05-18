@@ -24,7 +24,6 @@ public class Tama1 : MonoBehaviour
     public TamaStatus moveStatus = TamaStatus.Off;
 
 
-
     void Awake()
     {
         TamaPosInit();
@@ -35,7 +34,7 @@ public class Tama1 : MonoBehaviour
     public virtual void TamaPosInit()
     {
         startPos = transform.position;
-        endPos = transform.position + Vector3.up * 1.0f;
+        endPos = transform.position + transform.parent.up * 1.0f;
 
         onPos = endPos;
         offPos = startPos;
@@ -122,14 +121,12 @@ public class Tama1 : MonoBehaviour
     {
         if (moveStatus == TamaStatus.Off && vec)
         {
-            //   _tamaManager.SeSetTamasMovetMoveTamas(index, TamaStatus.Up);
             SetTamaMove(TamaStatus.Up);
 
         }
 
         if (moveStatus == TamaStatus.On && !vec)
         {
-            //   _tamaManager.SetTamasMove(index, TamaStatus.Down);
             SetTamaMove(TamaStatus.Down);
 
         }

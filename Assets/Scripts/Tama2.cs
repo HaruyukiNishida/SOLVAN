@@ -5,7 +5,7 @@ public class Tama2 : Tama1
     public override void TamaPosInit()
     {
         startPos = transform.position;
-        endPos = transform.position + Vector3.down * 1.0f;
+        endPos = transform.position + transform.parent.up * -1.0f;
 
         onPos = endPos;
         offPos = startPos;
