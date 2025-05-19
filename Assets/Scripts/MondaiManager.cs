@@ -43,7 +43,7 @@ public class MondaiManager : MonoBehaviour
             var x = Random.Range(-3f, 3f) * 100f;
             var y = Random.Range(-2f, 2f) * 100f;
 
-            mondai.transform.localPosition = new Vector3(0, 0, 0);
+            mondai.transform.localPosition = new Vector3(x, y, 0);
             mondai.GetComponentInChildren<TextMeshProUGUI>().text = randNum.ToString();
 
 
