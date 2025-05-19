@@ -4,6 +4,7 @@ using UnityEngine;
 public class Tama1 : MonoBehaviour
 {
     private TamaManager _tamaManager;
+    private VanManager _vanManager;
     //   public UnityEvent<int,int> tamaManager_Invoke;
 
     protected Vector3 startPos;
@@ -29,6 +30,7 @@ public class Tama1 : MonoBehaviour
         TamaPosInit();
 
         _tamaManager = GetComponentInParent<TamaManager>();
+        _vanManager = GetComponentInParent<VanManager>();
     }
 
     public virtual void TamaPosInit()
@@ -88,7 +90,7 @@ public class Tama1 : MonoBehaviour
                 moveStatus = GetIsOn();
 
                 transform.position = endPos;
-                _tamaManager.DispSubTotal();
+                _vanManager.UpdateTotal();
             }
         }
     }

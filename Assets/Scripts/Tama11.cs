@@ -51,9 +51,6 @@ public class Tama11 : MonoBehaviour
                 moveStatus = 0;
 
                 transform.position = endPos;
-                _tamaManager.DispSubTotal();
-
-                transform.position = endPos;
             }
             else
             {
