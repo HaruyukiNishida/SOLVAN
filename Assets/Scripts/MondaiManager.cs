@@ -9,6 +9,8 @@ public class MondaiManager : MonoBehaviour
 
     List<Mondai> mondaiList = new List<Mondai>();
 
+    Canvas canvas;
+
     private int mondaiCount = 10;
     private float interval = 3.0f;
 
@@ -47,12 +49,17 @@ public class MondaiManager : MonoBehaviour
         int randNum = Random.Range(0, 1000);
         mondai.GetComponent<Mondai>().num = randNum;
         mondai.GetComponent<Mondai>().index = i;
+        mondai.GetComponent<TextMeshPro>().text = randNum.ToString();
+
 
         int x = (int)Random.Range(-3f, 3f);
-        int y = (int)Random.Range(-2f, 2f);
+        int y = (int)Random.Range(-3f, 3f);
+
+        x = 3;
+        y = -1;
 
         mondai.transform.localPosition = new Vector3(x, y, -5.0f);
-        mondai.GetComponent<TextMeshPro>().text = randNum.ToString();
+
     }
 
     public void Syutudai()
