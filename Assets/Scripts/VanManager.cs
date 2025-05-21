@@ -1,21 +1,21 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using NUnit.Framework;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VanManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI totalTxt;
     TamaManager[] ketas;
-    public int subTotal;
     private List<Mondai> mondaiList;
 
     [SerializeField] MondaiManager _mondaiManager;
     [SerializeField] TextMeshProUGUI resultTxt;
 
+    [SerializeField] Slider slider;
+
     int currentCount = 0;
+    int currentSubTotal = 0;
 
     private void Awake()
     {
@@ -23,14 +23,16 @@ public class VanManager : MonoBehaviour
         TxtClear();
     }
 
-
-
-
     public void UpdateTotal()
     {
-        totalTxt.text = GetTotal().ToString();
+        UpdateTotalDisp();
 
         GameDir();
+    }
+
+    public void UpdateTotalDisp()
+    {
+        totalTxt.text = GetTotal().ToString();
     }
 
     public void GameDir()
@@ -39,7 +41,7 @@ public class VanManager : MonoBehaviour
 
         mondaiList = _mondaiManager.GetMondaiList();
 
-        int currentTotal = GetTotal();
+        int currentSum = GetTotal();
 
         int sum = 0;
         for (int i = 0; i <= currentCount; i++)
@@ -47,24 +49,57 @@ public class VanManager : MonoBehaviour
             sum += mondaiList[i].num;
         }
 
-        if (currentTotal == sum)
+        if (currentSum == sum)
         {
-            mondaiList[currentCount].GetComponent<TextMeshPro>().enabled=false;
+            //mondaiList[currentCount].GetComponent<TextMeshPro>().enabled = false;
+            mondaiList[currentCount].GetComponent<TextMeshPro>().color = Color.gray;
 
             currentCount++;
-            resultTxt.text = $"{currentCount} Clear";
-            Invoke("TxtClear", 3f);
+            currentSubTotal = currentSum;
 
+            resultTxt.text = $"{currentSubTotal}";
+         //   Invoke("TxtClear", 3f);
 
         }
-
-
     }
 
     void TxtClear()
     {
         resultTxt.text = $"---";
 
+    }
+
+    public void VanRotate()
+    {
+        Debug.Log(slider.value);
+
+        Vector3 eulerAngles = transform.eulerAngles; // ローカル変数に格納
+        eulerAngles.x = (float)slider.value; // ローカル変数に格納した値を上書き
+        transform.eulerAngles = eulerAngles; // ローカル変数を代入
+    }
+
+
+    public void VanReset()
+    {
+        for (int i = 0; i < ketas.Length; i++)
+        {
+            ketas[i].SetPositionTama(0);
+        }
+
+        UpdateTotalDisp();
+    }
+
+    public void VanUndo()
+    {
+        int value = currentSubTotal;
+
+        for (int i = 0; i < ketas.Length; i++)
+        {
+            ketas[i].SetPositionTama(value % 10);
+            value /= 10;
+        }
+
+        UpdateTotalDisp();
     }
 
 

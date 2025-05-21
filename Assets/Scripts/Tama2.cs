@@ -9,13 +9,10 @@ public class Tama2 : Tama1
 
         onPos = endPos;
         offPos = startPos;
-
-     //   Debug.Log($"index:{index} startPos:{startPos} endPos:{endPos}");
     }
 
-    public override void IsHitTama()
-    {
-    }
+    public override void IsHitTama() { }
+    
 
     public override TamaStatus GetIsOn()
     {

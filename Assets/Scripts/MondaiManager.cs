@@ -18,11 +18,17 @@ public class MondaiManager : MonoBehaviour
     private Vector3 topLeft;
     private Vector3 topRight;
 
+    private Vector3 canvas;
+
     public int level = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+     //   SetPositionsScreenToWorld();
+     //   transform.position = new Vector3(topLeft.x,topLeft.y,topLeft.z);
+        transform.position = GameObject.Find("VanManager").transform.position;
+
 
         MondaiMake();
 
@@ -31,7 +37,6 @@ public class MondaiManager : MonoBehaviour
         //   Invoke("SyutudaiEnd", interval * mondais.Count);
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -49,8 +54,9 @@ public class MondaiManager : MonoBehaviour
 
         for (int i = 0; i < mondaiCount; i++)
         {
-            MondaiHaiti(i);
+            MondaiArrangeLine(mondaiList[i]);
 
+         //   MondaiArrangeRandom(mondaiList[i]);
 
         }
 
@@ -96,16 +102,30 @@ public class MondaiManager : MonoBehaviour
         mondai.GetComponent<Mondai>().index = i;
         mondai.GetComponent<TextMeshPro>().text = randNum.ToString();
 
-        //   MondaiArrange(mondai);
+        MondaiArrangeRandom(mondai);
     }
 
-    void MondaiHaiti(int i)
+    void MondaiArrangeRandom(Mondai mondai)
+    {
+
+
+        float coefficient = 200f;
+
+        int x = (int)Random.Range(-Screen.width / coefficient, Screen.width / coefficient);
+        int y = (int)Random.Range(-Screen.height / coefficient, Screen.height / coefficient);
+
+        //int x = (int)Random.Range(topLeft.x, topRight.x );
+        //int y = (int)Random.Range(topLeft.y , bottomLeft.y);
+
+        mondai.transform.position = new Vector3(x, y, 0f);
+
+    }
+    void MondaiArrangeLine(Mondai mondai)
     {
         var dx = topLeft.x;
-        var mondai = mondaiList[i];
 
-        float x = dx + 2 * i;
-        float y = topLeft.y + 10;
+        float x = dx + 1 * mondai.index;
+        float y = 9.5f;//topLeft.y;
 
         mondai.transform.position = new Vector3(x, y, 0f);
 
@@ -154,16 +174,7 @@ public class MondaiManager : MonoBehaviour
 
     }
 
-    void MondaiArrange(Mondai mondai)
-    {
-        float coefficient = 200f;
-
-        int x = (int)Random.Range(-Screen.width / coefficient, Screen.width / coefficient);
-        int y = (int)Random.Range(-Screen.height / coefficient, Screen.height / coefficient);
-
-        mondai.transform.position = new Vector3(x, y, 0f);
-
-    }
+    
 
 
 
@@ -195,3 +206,13 @@ public class MondaiManager : MonoBehaviour
     }
 
 }
+
+/*
+public class Zahyou
+{
+    public Vector3 bottomLeft;
+    public Vector3 bottomRight;
+    public Vector3 topLeft;
+    public Vector3 topRight; 
+}
+*/

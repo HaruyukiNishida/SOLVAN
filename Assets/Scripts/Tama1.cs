@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Tama1 : MonoBehaviour
@@ -46,34 +47,30 @@ public class Tama1 : MonoBehaviour
     {
         var tamas = _tamaManager.GetTamas();
 
-        if (moveStatus == TamaStatus.Up)
+        if (moveStatus == TamaStatus.Down)
         {
             if (index < 3)
             {
                 if (IsTamaStop(tamas[this.index + 1]))
                 {
-                    tamas[this.index + 1].SetTamaMove(TamaStatus.Up);
+                    tamas[this.index + 1].SetTamaMove(TamaStatus.Down);
                 }
             }
         }
         else
         {
-
             if (index > 0)
             {
                 if (IsTamaStop(tamas[this.index - 1]))
                 {
-                    tamas[this.index - 1].SetTamaMove(TamaStatus.Down);
+                    tamas[this.index - 1].SetTamaMove(TamaStatus.Up);
                 }
             }
         }
-
     }
 
     private void FixedUpdate()
     {
-        //  Debug.LogWarning($"index:{index} msts{moveStatus}");
-
         if (!IsTamaStop(this))
         {
             timer += Time.deltaTime;
@@ -162,6 +159,21 @@ public class Tama1 : MonoBehaviour
         return (tgt.moveStatus == TamaStatus.Off || tgt.moveStatus == TamaStatus.On);
     }
 
+    public void SetPositionTama(bool isOn)
+    {
+        if (isOn)
+        {
+            transform.position = onPos;
+            moveStatus = TamaStatus.On;
+        }
+        else
+        {
+            transform.position = offPos;
+            moveStatus = TamaStatus.Off;
+        }
+    }
+
+    
 
     public void CheckUpTrrigerEnter(Collider collider)
     {

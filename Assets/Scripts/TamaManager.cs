@@ -28,4 +28,21 @@ public class TamaManager : MonoBehaviour
         return subTotal * keta;
     }
 
+    public void SetPositionTama(int value)
+    {
+        if (value > 4)
+        {
+            tamas[4].SetPositionTama(true);
+            value -= 5;
+        }
+        else
+        {
+            tamas[4].SetPositionTama(false);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            tamas[i].SetPositionTama(i < value);
+        }
+    }
 }
