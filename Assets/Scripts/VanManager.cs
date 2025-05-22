@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class VanManager : MonoBehaviour
 {
@@ -15,12 +16,12 @@ public class VanManager : MonoBehaviour
     [SerializeField] Slider slider;
 
     int currentCount = 0;
-    int currentSubTotal = 0;
+    int subTotal = 0;
 
     private void Awake()
     {
         ketas = GetComponentsInChildren<TamaManager>();
-        TxtClear();
+        resultTxt.enabled=false;
     }
 
     public void UpdateTotal()
@@ -55,18 +56,18 @@ public class VanManager : MonoBehaviour
             mondaiList[currentCount].GetComponent<TextMeshPro>().color = Color.gray;
 
             currentCount++;
-            currentSubTotal = currentSum;
+            subTotal = currentSum;
 
-            resultTxt.text = $"{currentSubTotal}";
-         //   Invoke("TxtClear", 3f);
-
+            if (currentCount >= 10)
+            {
+                GameClear();
+            }
         }
     }
 
-    void TxtClear()
+    void GameClear()
     {
-        resultTxt.text = $"---";
-
+        resultTxt.enabled = true;
     }
 
     public void VanRotate()
@@ -76,30 +77,39 @@ public class VanManager : MonoBehaviour
         Vector3 eulerAngles = transform.eulerAngles; // ローカル変数に格納
         eulerAngles.x = (float)slider.value; // ローカル変数に格納した値を上書き
         transform.eulerAngles = eulerAngles; // ローカル変数を代入
-    }
 
+        for (int i = 0; i < ketas.Length; i++)
+        {
+            ketas[i].transform.eulerAngles = eulerAngles;
+            ketas[i].SetTamasInit();
+        }
+
+
+    }
 
     public void VanReset()
     {
-        for (int i = 0; i < ketas.Length; i++)
-        {
-            ketas[i].SetPositionTama(0);
-        }
+        VanSet(0);
 
         UpdateTotalDisp();
     }
 
     public void VanUndo()
     {
-        int value = currentSubTotal;
+        Debug.Log(subTotal);
 
+        VanSet(subTotal);
+
+        UpdateTotalDisp();
+    }
+
+    public void VanSet(int value)
+    {
         for (int i = 0; i < ketas.Length; i++)
         {
             ketas[i].SetPositionTama(value % 10);
             value /= 10;
         }
-
-        UpdateTotalDisp();
     }
 
 

@@ -2,21 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class MondaiManager : MonoBehaviour
 {
     [SerializeField] public Mondai mondaiPrefab;
 
+
     List<Mondai> mondaiList = new List<Mondai>();
 
 
     private int mondaiCount = 10;
-    private float interval = 3.0f;
+    private float interval = 1.0f;
 
     private Vector3 bottomLeft;
     private Vector3 bottomRight;
     private Vector3 topLeft;
     private Vector3 topRight;
+
+    private float posZ = -2f;
 
     private Vector3 canvas;
 
@@ -25,21 +30,18 @@ public class MondaiManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-     //   SetPositionsScreenToWorld();
-     //   transform.position = new Vector3(topLeft.x,topLeft.y,topLeft.z);
-        transform.position = GameObject.Find("VanManager").transform.position;
+        //   SetPositionsScreenToWorld();
+        //transform.position = new Vector3(Screen.width , Screen.height , 0f);
+
+        //transform.position = GameObject.Find("VanManager").transform.position;
 
 
         MondaiMake();
 
-        //   Invoke("Syutudai", interval);
-
-        //   Invoke("SyutudaiEnd", interval * mondais.Count);
     }
 
     void Update()
     {
-
     }
 
     private void MondaiMake()
@@ -48,19 +50,20 @@ public class MondaiManager : MonoBehaviour
         for (int i = 0; i < mondaiCount; i++)
         {
             MondaiMakeSub(i);
-
-
         }
 
         for (int i = 0; i < mondaiCount; i++)
         {
-            MondaiArrangeLine(mondaiList[i]);
+            //    MondaiArrangeLine(mondaiList[i]);
 
-         //   MondaiArrangeRandom(mondaiList[i]);
+            //   MondaiArrangeRandom(mondaiList[i]);
+            MondaiArrangeRight(mondaiList[i]);
+
+
 
         }
 
-
+        MondaiMove();
     }
 
 
@@ -71,25 +74,7 @@ public class MondaiManager : MonoBehaviour
     }
 
 
-    void DrawLine()
-    {
-        LineRenderer renderer = gameObject.GetComponent<LineRenderer>();
 
-
-        var positions = new Vector3[]
-        {
-            bottomLeft,
-            bottomRight,
-            topRight,
-            topLeft,
-            bottomLeft,
-        };
-
-        renderer.positionCount = positions.Length;
-        // ê¸Çà¯Ç≠èÍèäÇéwíËÇ∑ÇÈ
-        renderer.SetPositions(positions);
-
-    }
 
 
     void MondaiMakeSub(int i)
@@ -98,38 +83,74 @@ public class MondaiManager : MonoBehaviour
         mondaiList.Add(mondai);
 
         int randNum = Random.Range(1, 10 * level);
-        mondai.GetComponent<Mondai>().num = randNum;
         mondai.GetComponent<Mondai>().index = i;
-        mondai.GetComponent<TextMeshPro>().text = randNum.ToString();
+        mondai.GetComponent<Mondai>().num = randNum;
+        mondai.GetComponentInChildren<TMP_Text>().text = randNum.ToString();
 
-        MondaiArrangeRandom(mondai);
     }
 
     void MondaiArrangeRandom(Mondai mondai)
     {
+        float coefficientX = 400f;
+        float coefficientY = 400f;
+
+        int x = (int)Random.Range(-Screen.width / coefficientX, Screen.width / coefficientX);
+        int y = (int)Random.Range(-Screen.height / coefficientY, Screen.height / coefficientY);
 
 
-        float coefficient = 200f;
 
-        int x = (int)Random.Range(-Screen.width / coefficient, Screen.width / coefficient);
-        int y = (int)Random.Range(-Screen.height / coefficient, Screen.height / coefficient);
-
-        //int x = (int)Random.Range(topLeft.x, topRight.x );
-        //int y = (int)Random.Range(topLeft.y , bottomLeft.y);
-
-        mondai.transform.position = new Vector3(x, y, 0f);
+        mondai.transform.position = new Vector3(x, y, posZ);
 
     }
     void MondaiArrangeLine(Mondai mondai)
     {
-        var dx = topLeft.x;
+        var dx = 0;
 
-        float x = dx + 1 * mondai.index;
-        float y = 9.5f;//topLeft.y;
+        float x = dx + 1f * mondai.index;
+        float y = 4f;
 
-        mondai.transform.position = new Vector3(x, y, 0f);
+        mondai.transform.position = new Vector3(x, y, posZ);
 
     }
+
+    void MondaiArrangeRight(Mondai mondai)
+    {
+        Camera cam = Camera.main;
+        Vector3 viewportPosition = new Vector3(1f, 1f, cam.nearClipPlane);
+        Vector3 worldPosition = cam.ViewportToWorldPoint(viewportPosition);
+        Vector3 screenPosition = cam.ViewportToScreenPoint(viewportPosition);
+        Debug.Log("worldPosition: " + worldPosition);
+        Debug.Log("screenPosition: " + screenPosition);
+
+        float dx = worldPosition.x;
+        float dy = worldPosition.y;
+
+        float x = dx;
+        float y = Random.Range(0, dy);
+
+        mondai.transform.position = new Vector3(x, y, posZ);
+
+
+    }
+
+    void MondaiMove()
+    {
+
+        StartCoroutine(MondaiMoveSub());
+    }
+
+    IEnumerator MondaiMoveSub()
+    {
+        foreach (Mondai mondai in mondaiList)
+        {
+            mondai.active = true;
+            yield return new WaitForSeconds(interval);
+        }
+    }
+
+
+
+
 
 
     void SetPositionsScreenToWorld()
@@ -159,7 +180,6 @@ public class MondaiManager : MonoBehaviour
         return positions;
         */
     }
-
     void SetPositionsScreenWidth()
     {
         bottomLeft = new Vector3(0, 0, 0);
@@ -174,37 +194,25 @@ public class MondaiManager : MonoBehaviour
 
     }
 
-    
-
-
-
-
-
-
-    public void Syutudai()
+    void DrawLine()
     {
-        StartCoroutine(SyutudaiSub());
+        LineRenderer renderer = gameObject.GetComponent<LineRenderer>();
 
 
-    }
-
-    IEnumerator SyutudaiSub()
-    {
-        foreach (Mondai mondai in mondaiList)
+        var positions = new Vector3[]
         {
-            yield return new WaitForSeconds(interval);
-            //   Destroy(mondai,interval);
-        }
+            bottomLeft,
+            bottomRight,
+            topRight,
+            topLeft,
+            bottomLeft,
+        };
+
+        renderer.positionCount = positions.Length;
+        // ê¸Çà¯Ç≠èÍèäÇéwíËÇ∑ÇÈ
+        renderer.SetPositions(positions);
+
     }
-
-
-    public void SyutudaiEnd()
-    {
-        CancelInvoke("Syutudai");
-        Debug.Log("End");
-
-    }
-
 }
 
 /*

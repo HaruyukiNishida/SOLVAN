@@ -2,13 +2,25 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    //ゲーム時　Undoボタン
+    //非
+
+    //ゲーム時にはポーズ機能＆解除、終了ボタンを表示
+    //非ゲーム時では以下の設定を変更できる
+
+    //問題数
+    //スピード
+    //読み上げ音声ONOFF
+    //珠の種類
+    //盤の種類
+    //盤の傾き
+
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         

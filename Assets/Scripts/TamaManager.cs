@@ -45,4 +45,13 @@ public class TamaManager : MonoBehaviour
             tamas[i].SetPositionTama(i < value);
         }
     }
+
+    public void SetTamasInit()
+    {
+        for (int i = 0; i <= 4; i++)
+        {
+            tamas[i].TamaPosInit();
+        }
+    }
+
 }
