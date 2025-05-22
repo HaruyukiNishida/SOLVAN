@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class VanManager : MonoBehaviour
 {
@@ -53,7 +52,7 @@ public class VanManager : MonoBehaviour
         if (currentSum == sum)
         {
             //mondaiList[currentCount].GetComponent<TextMeshPro>().enabled = false;
-            mondaiList[currentCount].GetComponent<TextMeshPro>().color = Color.gray;
+            mondaiList[currentCount].GetComponentInChildren<TextMeshPro>().color = Color.gray;
 
             currentCount++;
             subTotal = currentSum;

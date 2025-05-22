@@ -63,7 +63,7 @@ public class MondaiManager : MonoBehaviour
 
         }
 
-        MondaiMove();
+        MondaiActive();
     }
 
 
@@ -116,11 +116,9 @@ public class MondaiManager : MonoBehaviour
     void MondaiArrangeRight(Mondai mondai)
     {
         Camera cam = Camera.main;
-        Vector3 viewportPosition = new Vector3(1f, 1f, cam.nearClipPlane);
+        Vector3 viewportPosition = new Vector3(1f, 1f, -cam.transform.position.z);
         Vector3 worldPosition = cam.ViewportToWorldPoint(viewportPosition);
         Vector3 screenPosition = cam.ViewportToScreenPoint(viewportPosition);
-        Debug.Log("worldPosition: " + worldPosition);
-        Debug.Log("screenPosition: " + screenPosition);
 
         float dx = worldPosition.x;
         float dy = worldPosition.y;
@@ -128,18 +126,20 @@ public class MondaiManager : MonoBehaviour
         float x = dx;
         float y = Random.Range(0, dy);
 
+        Debug.Log(cam.transform.position.z);
+
         mondai.transform.position = new Vector3(x, y, posZ);
 
 
     }
 
-    void MondaiMove()
+    void MondaiActive()
     {
 
-        StartCoroutine(MondaiMoveSub());
+        StartCoroutine(MondaiActiveSub());
     }
 
-    IEnumerator MondaiMoveSub()
+    IEnumerator MondaiActiveSub()
     {
         foreach (Mondai mondai in mondaiList)
         {
