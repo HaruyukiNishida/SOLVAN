@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Mondai : MonoBehaviour
@@ -8,9 +10,12 @@ public class Mondai : MonoBehaviour
     public int index;
     public bool active;
     public int mode;
+    public float duration;
+
 
     private void Start()
     {
+        duration = 3f;
     }
 
 
@@ -18,39 +23,56 @@ public class Mondai : MonoBehaviour
 
     void Update()
     {
-        if (!active) return;
 
-        if (mode == 0)
-        {
-            MoveLeftToRight();
-        }
 
     }
 
-    private void MoveLeftToRight()
+    public void MoveRightToLeft()
     {
-        if (!active) return;
+        //    if (!active) return;
 
-        transform.Translate(-0.1f, 0f, 0f);
+        
+        Vector3 startPos = transform.position;
+        Vector3 endPos = new Vector3(CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Left), startPos.y, startPos.z);
 
-      //  Debug.Log($"[{index}] / {transform.position.x} / {active}");
+        StartCoroutine(MoveRightToLeftSub(startPos, endPos));
+    }
 
+    IEnumerator MoveRightToLeftSub(Vector3 startPos, Vector3 endPos)
+    {
+        /*
         if (!GetComponent<SpriteRenderer>().isVisible)
         {
-         //   active = false;
-         //   Debug.LogWarning($"[{index}] / {transform.position.x}");
-
-            //Destroy(gameObject);
+            //   active = false;
+            //   Destroy(gameObject);
+            Debug.LogWarning("画面外にいる");
         }
+        */
+     //   Debug.Log($"{index}/{active}");
 
+        float elapsed = 0f;
+
+          Debug.Log($"{elapsed}/{duration}");
+
+        while (elapsed < duration)
+    //        while (true)
+        {
+            transform.position = Vector3.Lerp(startPos, endPos, Mathf.Clamp01(elapsed / duration));
+            elapsed += Time.deltaTime;
+
+         //   Debug.Log($"[{index}]/{startPos}/{endPos}/{elapsed}");
+
+            
+            yield return null;
+        }
+        transform.position = endPos; // 最終位置を確定
+        Debug.Log($"{index}/End");
     }
 
     void OnBecameInvisible()
     {
-       
-     //       Debug.LogWarning(transform.position.x);
-     //       active = false;
-        
+        Debug.LogWarning("画面外にいる");
 
+        //       active = false;
     }
 }
