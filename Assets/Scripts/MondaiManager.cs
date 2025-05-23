@@ -14,6 +14,7 @@ public class MondaiManager : MonoBehaviour
 
     public float interval = 1.0f;
     public int level = 1;
+    public float duration;
 
     void Start()
     {
@@ -83,6 +84,7 @@ public class MondaiManager : MonoBehaviour
 
     void MondaiArrangeRight(Mondai mondai)
     {
+
         float y1 = CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Top);
         float y2 = CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Bottom);
 
