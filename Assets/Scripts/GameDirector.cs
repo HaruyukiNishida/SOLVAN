@@ -1,32 +1,57 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameDirector : MonoBehaviour
 {
-
-    [SerializeField] TextMeshProUGUI totalTxt;
-    [SerializeField] TextMeshProUGUI resultTxt;
+    [SerializeField] TextMeshProUGUI _totalTxt;
+    [SerializeField] TextMeshProUGUI _resultTxt;
     [SerializeField] private VanManager _vanManager;
     [SerializeField] private MondaiManager _mondaiManager;
+
+    [SerializeField] GameObject _startBtn;
+    [SerializeField] GameObject _menuBtn;
+    [SerializeField] GameObject _undoBtn;
+    [SerializeField] GameObject _pauseBtn;
 
     TamaManager[] ketas;
     private List<Mondai> mondaiList;
 
-    int currentSum = 0;
-    int currentCount = 0;
-    int subTotal = 0;
-    int answer = 0;
+    int currentSum { get; set; }
+    int currentCount { get; set; }
+    int subTotal { get; set; }
+    int answer { get; set; }
 
     public bool gameActive = false;
 
+    private void Awake()
+    {
+        gameActive = false;
+    }
+
     void Start()
     {
+        BtnDisp();
     }
 
     void Update()
     {
 
+    }
+
+    void BtnDisp()
+    {
+        _startBtn.SetActive(!gameActive);
+        _menuBtn.SetActive(!gameActive);
+        _undoBtn.SetActive(gameActive);
+        _pauseBtn.SetActive(gameActive);
+    }
+
+    public void BtnIntaractable(bool interactable)
+    {
+        _startBtn.GetComponent<Button>().interactable = interactable;
+        _undoBtn.GetComponent<Button>().interactable = interactable;
     }
 
     public void GameInit()
@@ -50,14 +75,17 @@ public class GameDirector : MonoBehaviour
             _vanManager.VanReset();
             _mondaiManager.MondaiReset();
         }
+
+        BtnDisp();
     }
 
     public void GameQuit()
     {
-        _vanManager.Quit();
+        _vanManager.VanReset();
+        _mondaiManager.MondaiDestroy();
         gameActive = false;
 
-        
+        BtnDisp();
 
     }
 
@@ -65,13 +93,12 @@ public class GameDirector : MonoBehaviour
     {
         if (!gameActive) return;
 
-        Debug.Log("Calc");
-
         if (currentCount >= 10) return;
 
         mondaiList = _mondaiManager.GetMondaiList();
 
         currentSum = _vanManager.GetTotal();
+
 
         /*
         int sum = 0;
@@ -89,15 +116,12 @@ public class GameDirector : MonoBehaviour
 
         for (int i = 0; i < mondaiList.Count; i++)
         {
-            Debug.Log($"{i} / {currentSum} /{subTotal + mondaiList[i].num}");
+        //    Debug.Log($"{i} / {currentSum} /{subTotal + mondaiList[i].num}");
 
             if (mondaiList[i].active)
             {
-
                 if (currentSum == subTotal + mondaiList[i].num)
                 {
-
-
                     MondaiHit(i);
                     break;
                 }
@@ -109,7 +133,7 @@ public class GameDirector : MonoBehaviour
 
     void MondaiHit(int i)
     {
-        
+        mondaiList[i].MondaiHit();
 
         currentCount++;
         subTotal = currentSum;
@@ -124,9 +148,18 @@ public class GameDirector : MonoBehaviour
 
     void GameClear()
     {
-        resultTxt.GetComponent<TMP_Text>().text = $"{_vanManager.GetTotal()}";
-        resultTxt.enabled = true;
+        _resultTxt.GetComponent<TMP_Text>().text = $"{_vanManager.GetTotal()}";
+        _resultTxt.enabled = true;
     }
 
+    public void TotalDisp()
+    {
+        _totalTxt.text = $"currentSum / {currentSum}\n subTotal / {subTotal}";
 
+    }
+
+    public void UndoBtn()
+    {
+        _vanManager.VanUndo(subTotal);
+    }
 }

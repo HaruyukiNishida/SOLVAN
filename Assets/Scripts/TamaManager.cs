@@ -17,6 +17,19 @@ public class TamaManager : MonoBehaviour
         return this.GetComponentsInChildren<Tama1>();
     }
 
+    public bool IsTamasStop()
+    {
+        for (int i = 0; i <= 4; i++)
+        {
+            if (tamas[i].moveStatus == TamaStatus.Up || tamas[i].moveStatus == TamaStatus.Down)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
     public int GetSubTotal()
     {
         var subTotal = 0;

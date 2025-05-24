@@ -1,21 +1,14 @@
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class VanManager : MonoBehaviour
 {
     TamaManager[] ketas;
-    //   private List<Mondai> mondaiList;
 
     [SerializeField] GameDirector _gameDirector;
-    [SerializeField] TextMeshProUGUI totalTxt;
 
     [SerializeField] Slider slider;
 
-    //   int currentSum = 0;
-    //   int currentCount = 0;
-    int subTotal = 0;
 
     private void Awake()
     {
@@ -24,93 +17,20 @@ public class VanManager : MonoBehaviour
 
     public void UpdateTotal()
     {
-        UpdateTotalDisp();
+    
 
         _gameDirector.Calc();
-        
+
     }
 
     public void UpdateTotalDisp()
     {
-        var gettotal = GetTotal();
-        var subtotal = subTotal;
-
-        //   totalTxt.text = GetTotal().ToString();
-        totalTxt.text = $"getTotal / {gettotal}\n subTotal / {subtotal}";
+        _gameDirector.TotalDisp();
     }
 
-    /*
-    public void GameDir()
-    {
-        if (currentCount >= 10) return;
-
-        mondaiList = _mondaiManager.GetMondaiList();
-
-        currentSum = GetTotal();
-
-        
-        //int sum = 0;
-        //for (int i = 0; i <= currentCount; i++)
-        //{
-        //    sum += mondaiList[i].num;
-        //}
-        
-        //if (currentSum == sum)
-        //{
-        //    MondaiHit(currentCount);
-
-        //}
-        
-
-        for (int i = 0; i < mondaiList.Count; i++)
-        {
-            Debug.Log($"{i} / {currentSum} /{subTotal + mondaiList[i].num}");
-
-            if (mondaiList[i].active)
-            {
-
-                if (currentSum == subTotal + mondaiList[i].num)
-                {
-
-
-                    MondaiHit(i);
-                    break;
-                }
-            }
-        }
-
-        
-    }
-
-    void MondaiHit(int i)
-    {
-        //mondaiList[i].GetComponent<TextMeshPro>().enabled = false;
-        mondaiList[i].GetComponentInChildren<TextMeshPro>().color = Color.gray;
-
-        mondaiList[i].active = false;
-
-        currentCount++;
-        subTotal = currentSum;
-
-        if (currentCount >= 10)
-        {
-            GameClear();
-        }
-
-    }
-
-
-    void GameClear()
-    {
-        resultTxt.GetComponent<TMP_Text>().text = $"{GetTotal()}";
-        resultTxt.enabled = true;
-    }
-    */
 
     public void VanRotate()
     {
-        Debug.Log(slider.value);
-
         Vector3 eulerAngles = transform.eulerAngles; // ƒ[ƒJƒ‹•Ï”‚ÉŠi”[
         eulerAngles.x = (float)slider.value; // ƒ[ƒJƒ‹•Ï”‚ÉŠi”[‚µ‚½’l‚ğã‘‚«
         transform.eulerAngles = eulerAngles; // ƒ[ƒJƒ‹•Ï”‚ğ‘ã“ü
@@ -131,7 +51,7 @@ public class VanManager : MonoBehaviour
         UpdateTotalDisp();
     }
 
-    public void VanUndo()
+    public void VanUndo(int subTotal)
     {
         VanSet(subTotal);
 
@@ -150,13 +70,13 @@ public class VanManager : MonoBehaviour
 
     public int GetTotal()
     {
-        var subTotal = 0;
+        var total = 0;
         foreach (TamaManager keta in ketas)
         {
-            subTotal += keta.GetSubTotal();
+            total += keta.GetSubTotal();
         }
 
-        return subTotal;
+        return total;
     }
 
 }

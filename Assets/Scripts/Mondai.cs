@@ -106,11 +106,17 @@ public class Mondai : MonoBehaviour
         //mondaiList[i].GetComponent<TextMeshPro>().enabled = false;
         GetComponentInChildren<TextMeshPro>().color = Color.gray;
 
-        
+        Debug.Log("HIT");
+
         active = false;
 
     }
 
+    public void Destroy()
+    {
+        active = false;
+        Destroy(gameObject);
+    }
 
     void OnBecameInvisible()
     {

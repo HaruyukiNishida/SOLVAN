@@ -2,35 +2,40 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
-    //ゲーム時　Undoボタン
-    //非
+    [SerializeField] GameDirector _gameDirector;
+    [SerializeField] GameObject _menuPanel;
 
-    //ゲーム時にはポーズ機能＆解除、終了ボタンを表示
-    //非ゲーム時では以下の設定を変更できる
+    public float interval;//発生間隔（1～１０ｆ）
+    public float duration;//画面に映る時間（５～２０ｆ）
+    public int level;//桁（１～３）
 
-    //問題数
-    //スピード
+    public int mode;//出現方式（２パターン）
+
+
     //読み上げ音声ONOFF
-    //珠の種類
-    //盤の種類
-    //盤の傾き
+    //出現方法
+    //
 
+    //盤の傾き
 
     void Start()
     {
-        
+
+        interval = 10;
+        level = 1;
+        duration = 8;
+        mode = 1;
+        Debug.Log($"{interval} {level} {duration} {mode}");
+
     }
 
-    void Update()
-    {
-        
-    }
+
 
     public void Toggle()
     {
-        this.gameObject.SetActive(!this.gameObject.activeSelf);
+        _menuPanel.gameObject.SetActive(!_menuPanel.gameObject.activeSelf);
 
-
+        _gameDirector.BtnIntaractable(!_menuPanel.gameObject.activeSelf);
     }
 
 

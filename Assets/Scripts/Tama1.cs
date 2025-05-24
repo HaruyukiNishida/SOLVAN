@@ -1,12 +1,10 @@
 using System;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class Tama1 : MonoBehaviour
 {
     private TamaManager _tamaManager;
     private VanManager _vanManager;
-    //   public UnityEvent<int,int> tamaManager_Invoke;
 
     protected Vector3 startPos;
     protected Vector3 endPos;
@@ -80,14 +78,17 @@ public class Tama1 : MonoBehaviour
                 IsHitTama();
 
                 transform.position = Vector3.Lerp(startPos, endPos, rate);
-
             }
             else
             {
                 moveStatus = GetIsOn();
 
                 transform.position = endPos;
-                _vanManager.UpdateTotal();
+
+                if (_tamaManager.IsTamasStop())
+                {
+                    _vanManager.UpdateTotal();
+                }
             }
         }
     }
@@ -95,7 +96,6 @@ public class Tama1 : MonoBehaviour
     public virtual TamaStatus GetIsOn()
     {
         return (moveStatus == TamaStatus.Up) ? TamaStatus.On : TamaStatus.Off;
-
     }
 
     public void CheckEventTriggerDragBegin()
@@ -103,7 +103,6 @@ public class Tama1 : MonoBehaviour
         if (!IsTamaStop(this)) return;
 
         swipeStartPos = Input.mousePosition;
-
     }
 
     public void CheckEventTriggerDragEnd()
@@ -141,8 +140,6 @@ public class Tama1 : MonoBehaviour
         distance = Math.Abs(startPos.y - endPos.y);
 
         moveStatus = movestatus;
-
-        //Debug.LogWarning($"index:{index} msts{moveStatus}");
     }
 
     public virtual void SetTamaMoveSub(TamaStatus movestatus)
@@ -150,9 +147,6 @@ public class Tama1 : MonoBehaviour
         startPos = transform.position;
         endPos = (movestatus == TamaStatus.Up) ? onPos : offPos;
     }
-
-
-
 
     public bool IsTamaStop(Tama1 tgt)
     {
@@ -173,23 +167,18 @@ public class Tama1 : MonoBehaviour
         }
     }
 
-    
-
     public void CheckUpTrrigerEnter(Collider collider)
     {
          //   Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
     }
-
     public void CheckDownTrrigerEnter(Collider collider)
     {
         //   Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
     }
-
     public void CheckUpTrrigerExit()
     {
         //  Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
     }
-
     public void CheckDownTrrigerExit()
     {
         //   Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);

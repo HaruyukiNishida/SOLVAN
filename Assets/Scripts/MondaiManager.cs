@@ -5,23 +5,24 @@ using UnityEngine;
 
 public class MondaiManager : MonoBehaviour
 {
-    [SerializeField] public Mondai mondaiPrefab;
+    [SerializeField] Mondai _mondaiPrefab;
+    [SerializeField] Menu _menu;
 
     List<Mondai> mondaiList = new List<Mondai>();
+
+    private Coroutine coroutine;
 
     private int mondaiCount = 10;
     private float mondaiPosZ = -2f;
 
-    public float interval;
-    public int level;
-    public float duration;
-    public int mode;
+    private float interval;
+    private int level;
+    private float duration;
+    private int mode;
+
     void Start()
     {
-        interval = 1;
-        level = 1;
-        duration = 8;
-        mode = 1;
+       
     }
 
     void Update()
@@ -33,20 +34,23 @@ public class MondaiManager : MonoBehaviour
         return mondaiList;
     }
 
-    public void MondaiInit()
+    void SetParamFromMenu()
     {
-
-        MondaiMake();
+        interval = _menu.interval;
+        level = _menu.level;
+        duration = _menu.duration;
+        mode = _menu.mode;
     }
 
 
-
-    private void MondaiMake()
+    public void MondaiInit()
     {
+        SetParamFromMenu();
+        mondaiList.Clear();
 
         for (int i = 0; i < mondaiCount; i++)
         {
-            MondaiMakeSub(i);
+            MondaiMake(i);
 
             //    MondaiArrangeLine(mondaiList[i]);
 
@@ -63,9 +67,9 @@ public class MondaiManager : MonoBehaviour
         MondaiActive();
     }
 
-    void MondaiMakeSub(int i)
+    void MondaiMake(int i)
     {
-        Mondai mondai = Instantiate(mondaiPrefab, transform);
+        Mondai mondai = Instantiate(_mondaiPrefab, transform);
         mondaiList.Add(mondai);
 
         int randNum = Random.Range(1, (int)Mathf.Pow(10, level));
@@ -96,7 +100,7 @@ public class MondaiManager : MonoBehaviour
 
 
         mondai.transform.position = new Vector3(x, y, mondaiPosZ);
-        mondai.transform.localScale = Vector3.zero;
+        mondai.transform.localScale = Vector3.one;
 
     }
     void MondaiArrangeLine(Mondai mondai)
@@ -125,22 +129,11 @@ public class MondaiManager : MonoBehaviour
         mondai.transform.position = new Vector3(x, y, mondaiPosZ);
     }
 
-    public void MondaiReset()
-    {
-        StopCoroutine(MondaiActiveSub());
-        
-        for (int i = 0; i < mondaiCount; i++)
-        {
-            mondaiList[i].MondaiRestart();
-        }
-
-        MondaiActive();
-    }
-
+    
 
     void MondaiActive()
     {
-        StartCoroutine(MondaiActiveSub());
+        coroutine = StartCoroutine(MondaiActiveSub());
     }
 
     IEnumerator MondaiActiveSub()
@@ -159,21 +152,33 @@ public class MondaiManager : MonoBehaviour
             {
                 mondaiList[i].MoveRightToLeft();
             }
-            //   
 
             yield return wait;
         }
     }
 
-    public void MondaiDestroy()
+    public void MondaiReset()
     {
+        StopCoroutine(coroutine);
+
         for (int i = 0; i < mondaiCount; i++)
         {
-            Destroy(mondaiList[i]);
+            mondaiList[i].MondaiRestart();
         }
 
+        MondaiActive();
+    }
 
-            mondaiList.Clear();
+
+    public void MondaiDestroy()
+    {
+        StopCoroutine(coroutine);
+
+        for (int i = 0; i < mondaiCount; i++)
+        {
+            mondaiList[i].Destroy();
+        }
+
     }
 
 
