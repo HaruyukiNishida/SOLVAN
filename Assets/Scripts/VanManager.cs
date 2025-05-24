@@ -5,69 +5,107 @@ using UnityEngine.UI;
 
 public class VanManager : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI totalTxt;
     TamaManager[] ketas;
-    private List<Mondai> mondaiList;
+    //   private List<Mondai> mondaiList;
 
-    [SerializeField] MondaiManager _mondaiManager;
-    [SerializeField] TextMeshProUGUI resultTxt;
+    [SerializeField] GameDirector _gameDirector;
+    [SerializeField] TextMeshProUGUI totalTxt;
 
     [SerializeField] Slider slider;
 
-    int currentCount = 0;
+    //   int currentSum = 0;
+    //   int currentCount = 0;
     int subTotal = 0;
 
     private void Awake()
     {
         ketas = GetComponentsInChildren<TamaManager>();
-        resultTxt.enabled=false;
     }
 
     public void UpdateTotal()
     {
         UpdateTotalDisp();
 
-        GameDir();
+        _gameDirector.Calc();
+        
     }
 
     public void UpdateTotalDisp()
     {
-        totalTxt.text = GetTotal().ToString();
+        var gettotal = GetTotal();
+        var subtotal = subTotal;
+
+        //   totalTxt.text = GetTotal().ToString();
+        totalTxt.text = $"getTotal / {gettotal}\n subTotal / {subtotal}";
     }
 
+    /*
     public void GameDir()
     {
         if (currentCount >= 10) return;
 
         mondaiList = _mondaiManager.GetMondaiList();
 
-        int currentSum = GetTotal();
+        currentSum = GetTotal();
 
-        int sum = 0;
-        for (int i = 0; i <= currentCount; i++)
+        
+        //int sum = 0;
+        //for (int i = 0; i <= currentCount; i++)
+        //{
+        //    sum += mondaiList[i].num;
+        //}
+        
+        //if (currentSum == sum)
+        //{
+        //    MondaiHit(currentCount);
+
+        //}
+        
+
+        for (int i = 0; i < mondaiList.Count; i++)
         {
-            sum += mondaiList[i].num;
-        }
+            Debug.Log($"{i} / {currentSum} /{subTotal + mondaiList[i].num}");
 
-        if (currentSum == sum)
-        {
-            //mondaiList[currentCount].GetComponent<TextMeshPro>().enabled = false;
-            mondaiList[currentCount].GetComponentInChildren<TextMeshPro>().color = Color.gray;
-
-            currentCount++;
-            subTotal = currentSum;
-
-            if (currentCount >= 10)
+            if (mondaiList[i].active)
             {
-                GameClear();
+
+                if (currentSum == subTotal + mondaiList[i].num)
+                {
+
+
+                    MondaiHit(i);
+                    break;
+                }
             }
         }
+
+        
     }
+
+    void MondaiHit(int i)
+    {
+        //mondaiList[i].GetComponent<TextMeshPro>().enabled = false;
+        mondaiList[i].GetComponentInChildren<TextMeshPro>().color = Color.gray;
+
+        mondaiList[i].active = false;
+
+        currentCount++;
+        subTotal = currentSum;
+
+        if (currentCount >= 10)
+        {
+            GameClear();
+        }
+
+    }
+
 
     void GameClear()
     {
+        resultTxt.GetComponent<TMP_Text>().text = $"{GetTotal()}";
         resultTxt.enabled = true;
     }
+    */
 
     public void VanRotate()
     {
@@ -95,8 +133,6 @@ public class VanManager : MonoBehaviour
 
     public void VanUndo()
     {
-        Debug.Log(subTotal);
-
         VanSet(subTotal);
 
         UpdateTotalDisp();
