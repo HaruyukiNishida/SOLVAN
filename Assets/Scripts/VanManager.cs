@@ -17,8 +17,6 @@ public class VanManager : MonoBehaviour
 
     public void UpdateTotal()
     {
-    
-
         _gameDirector.Calc();
 
     }
