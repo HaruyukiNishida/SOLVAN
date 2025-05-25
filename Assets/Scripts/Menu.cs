@@ -38,6 +38,10 @@ public class Menu : MonoBehaviour
         _gameDirector.BtnIntaractable(!_menuPanel.gameObject.activeSelf);
     }
 
+    public void Demo()
+    {
+        Debug.LogWarning("D E M O");
 
+    }
 
 }

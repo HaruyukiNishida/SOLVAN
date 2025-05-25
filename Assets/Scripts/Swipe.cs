@@ -24,11 +24,12 @@ public class Swipe : MonoBehaviour, IDragHandler
 
 public abstract class SwipeMenuItem : Swipe
 {
-    [SerializeField] TMP_Text _text;
-    private int value = 0;
+    [SerializeField] protected TMP_Text _text;
+    protected int value = 0;
 
     protected override void HandleSwipe(float deltaX)
     {
+        /*
         if (deltaX > 0)
         {
             value++;
@@ -39,6 +40,7 @@ public abstract class SwipeMenuItem : Swipe
         }
 
         Debug.Log(value);
+        */
         if(_text!=null)
         _text.text = value.ToString();
     }
