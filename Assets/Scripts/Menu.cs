@@ -3,6 +3,7 @@ using UnityEngine;
 public class Menu : MonoBehaviour
 {
     [SerializeField] GameDirector _gameDirector;
+    [SerializeField] BtnManager _btnManager;
     [SerializeField] GameObject _menuPanel;
 
     public float interval;//î≠ê∂ä‘äuÅi1Å`ÇPÇOÇÜÅj
@@ -17,6 +18,11 @@ public class Menu : MonoBehaviour
     //
 
     //î’ÇÃåXÇ´
+
+    private void Awake()
+    {
+        _menuPanel.SetActive(false);
+    }
 
     void Start()
     {
@@ -35,7 +41,7 @@ public class Menu : MonoBehaviour
     {
         _menuPanel.gameObject.SetActive(!_menuPanel.gameObject.activeSelf);
 
-        _gameDirector.BtnIntaractable(!_menuPanel.gameObject.activeSelf);
+        _btnManager.BtnIntaractable(!_menuPanel.gameObject.activeSelf);
     }
 
     public void Demo()

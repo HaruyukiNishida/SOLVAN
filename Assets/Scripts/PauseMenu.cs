@@ -1,37 +1,48 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField]GameDirector _gameDirector;
+    [SerializeField] GameDirector _gameDirector;
+    [SerializeField] BtnManager _btnManager;
+
+    private void Awake()
+    {
+        this.gameObject.SetActive(false);
+    }
+
 
     public void Toggle()
     {
         this.gameObject.SetActive(!this.gameObject.activeSelf);
 
-        _gameDirector.BtnIntaractable(!this.gameObject.activeSelf);
+        _btnManager.BtnIntaractable(!this.gameObject.activeSelf);
 
         Time.timeScale = (!this.gameObject.activeSelf) ? 1.0f : 0f;
     }
 
     public void PauseMenuRestart()
     {
-        PauseMenuExit();
-
         _gameDirector.GameInit();
+
+        PauseMenuExit();
     }
 
     public void PauseMenuQuit()
     {
-        PauseMenuExit();
+        //_gameDirector.GameQuit();
 
-        _gameDirector.GameQuit();
+        //PauseMenuExit();
+        Time.timeScale = 1.0f;
+
+        SceneManager.LoadScene("MainScene");
     }
 
     private void PauseMenuExit()
     {
         this.gameObject.SetActive(false);
 
-        _gameDirector.BtnIntaractable(true);
+        _btnManager.BtnIntaractable(true);
 
         Time.timeScale = 1.0f;
     }

@@ -9,11 +9,7 @@ public class GameDirector : MonoBehaviour
     [SerializeField] TextMeshProUGUI _resultTxt;
     [SerializeField] private VanManager _vanManager;
     [SerializeField] private MondaiManager _mondaiManager;
-
-    [SerializeField] GameObject _startBtn;
-    [SerializeField] GameObject _menuBtn;
-    [SerializeField] GameObject _undoBtn;
-    [SerializeField] GameObject _pauseBtn;
+    [SerializeField] private BtnManager _btnManager;
 
     TamaManager[] ketas;
     private List<Mondai> mondaiList;
@@ -32,7 +28,6 @@ public class GameDirector : MonoBehaviour
 
     void Start()
     {
-        BtnDisp();
     }
 
     void Update()
@@ -40,19 +35,7 @@ public class GameDirector : MonoBehaviour
 
     }
 
-    void BtnDisp()
-    {
-        _startBtn.SetActive(!gameActive);
-        _menuBtn.SetActive(!gameActive);
-        _undoBtn.SetActive(gameActive);
-        _pauseBtn.SetActive(gameActive);
-    }
-
-    public void BtnIntaractable(bool interactable)
-    {
-        _startBtn.GetComponent<Button>().interactable = interactable;
-        _undoBtn.GetComponent<Button>().interactable = interactable;
-    }
+    
 
     public void GameInit()
     {
@@ -66,17 +49,17 @@ public class GameDirector : MonoBehaviour
         {
             gameActive = true;
 
-
             _vanManager.VanReset();
             _mondaiManager.MondaiInit();
         }
         else
         {
+            //RestartéûÇÃèàóù
             _vanManager.VanReset();
             _mondaiManager.MondaiReset();
         }
 
-        BtnDisp();
+        _btnManager.BtnDisp(gameActive);
     }
 
     public void GameQuit()
@@ -85,8 +68,7 @@ public class GameDirector : MonoBehaviour
         _mondaiManager.MondaiDestroy();
         gameActive = false;
 
-        BtnDisp();
-
+        _btnManager.BtnDisp(false);
     }
 
     public void Calc()

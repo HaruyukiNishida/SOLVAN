@@ -159,24 +159,31 @@ public class MondaiManager : MonoBehaviour
 
     public void MondaiReset()
     {
-        StopCoroutine(coroutine);
-
-        for (int i = 0; i < mondaiCount; i++)
+        if (coroutine != null)
         {
-            mondaiList[i].MondaiRestart();
+            StopCoroutine(coroutine);
+
+            for (int i = 0; i < mondaiCount; i++)
+            {
+                mondaiList[i].MondaiRestart();
+            }
+
+            MondaiActive();
         }
 
-        MondaiActive();
     }
 
 
     public void MondaiDestroy()
     {
-        StopCoroutine(coroutine);
-
-        for (int i = 0; i < mondaiCount; i++)
+        if (coroutine != null)
         {
-            mondaiList[i].Destroy();
+            StopCoroutine(coroutine);
+
+            for (int i = 0; i < mondaiCount; i++)
+            {
+                mondaiList[i].Destroy();
+            }
         }
 
     }
