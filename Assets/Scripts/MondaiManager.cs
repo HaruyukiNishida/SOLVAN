@@ -101,6 +101,7 @@ public class MondaiManager : MonoBehaviour
 
         mondai.transform.position = new Vector3(x, y, mondaiPosZ);
         mondai.transform.localScale = Vector3.one;
+        mondai.GetComponentInChildren<TextMeshPro>().color=new Color(0,0,0,0);
 
     }
     void MondaiArrangeLine(Mondai mondai)
@@ -143,7 +144,7 @@ public class MondaiManager : MonoBehaviour
         for (int i = 0; i < mondaiCount; i++)
         {
             mondaiList[i].active = true;
-
+            
             if (mode == 0)
             {
                 mondaiList[i].Scaling();

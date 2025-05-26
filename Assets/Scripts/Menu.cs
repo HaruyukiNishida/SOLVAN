@@ -4,6 +4,8 @@ public class Menu : MonoBehaviour
 {
     [SerializeField] GameDirector _gameDirector;
     [SerializeField] BtnManager _btnManager;
+    [SerializeField] MondaiManager _mondaiManager;
+
     [SerializeField] GameObject _menuPanel;
 
     public float interval;//î≠ê∂ä‘äuÅi1Å`ÇPÇOÇÜÅj
@@ -35,6 +37,12 @@ public class Menu : MonoBehaviour
 
     }
 
+    public void UpdateMenu()
+    {
+        
+    }
+
+
 
 
     public void Toggle()
@@ -42,11 +50,17 @@ public class Menu : MonoBehaviour
         _menuPanel.gameObject.SetActive(!_menuPanel.gameObject.activeSelf);
 
         _btnManager.BtnIntaractable(!_menuPanel.gameObject.activeSelf);
+
+        _mondaiManager.MondaiDestroy();
     }
 
     public void Demo()
     {
         Debug.LogWarning("D E M O");
+
+        _mondaiManager.MondaiDestroy();
+
+        _mondaiManager.MondaiInit();
 
     }
 

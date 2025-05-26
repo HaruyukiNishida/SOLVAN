@@ -10,14 +10,10 @@ public class Mondai : MonoBehaviour
     public int mode;
     public float duration;
 
-
     private void Start()
     {
         GetComponentInChildren<TextMeshPro>().color = Color.white;
     }
-
-
-
 
     void Update()
     {
@@ -60,14 +56,19 @@ public class Mondai : MonoBehaviour
         Vector3 startScale = transform.localScale;
         Vector3 endScale = new Vector3(2f,2f,1f);
 
+     //   GetComponentInChildren<TextMeshPro>().color = Color.white;
+
+        //   GetComponentInChildren<TextMeshPro>().gameObject.SetActive();
         StartCoroutine(ScalingSub(startScale, endScale));
 
     }
 
     public IEnumerator ScalingSub(Vector3 startScale, Vector3 endScale)
     {
-
         float elapsed = 0f;
+
+       
+
 
         while (elapsed < duration && active)
         {
@@ -83,7 +84,6 @@ public class Mondai : MonoBehaviour
         active = false;
         StopAllCoroutines();
         GetComponentInChildren<TextMeshPro>().color = Color.white;
-
 
         if (mode == 0)
         {

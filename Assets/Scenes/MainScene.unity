@@ -639,6 +639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1904492930}
+  _menu: {fileID: 0}
 --- !u!1 &113444967
 GameObject:
   m_ObjectHideFlags: 0
@@ -2512,6 +2513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1207310488}
+  _menu: {fileID: 0}
 --- !u!1001 &574991966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3361,6 +3363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1634044070}
+  _menu: {fileID: 0}
 --- !u!1 &844090149
 GameObject:
   m_ObjectHideFlags: 0
@@ -3787,7 +3790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &966478166
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3823,6 +3826,7 @@ MonoBehaviour:
   _gameDirector: {fileID: 67916665}
   _btnManager: {fileID: 796192734}
   _menuPanel: {fileID: 1079415136}
+  _mondaiManager: {fileID: 1018726850}
   interval: 0
   duration: 0
   level: 0
@@ -3890,7 +3894,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1079415137
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6976,6 +6980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1652058322}
+  _menu: {fileID: 0}
 --- !u!1 &1904492928
 GameObject:
   m_ObjectHideFlags: 0

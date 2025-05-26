@@ -19,29 +19,26 @@ public class Swipe : MonoBehaviour, IDragHandler
     {
         Debug.Log("Swipe detected: " + deltaX);
     }
-
 }
 
 public abstract class SwipeMenuItem : Swipe
 {
     [SerializeField] protected TMP_Text _text;
-    protected int value = 0;
+    [SerializeField] protected Menu _menu;
+
+    protected float value = 0;
+    private void Awake()
+    {
+        _menu = FindFirstObjectByType<Menu>();
+    }
 
     protected override void HandleSwipe(float deltaX)
     {
-        /*
-        if (deltaX > 0)
-        {
-            value++;
-        }
-        else
-        {
-            value--;
-        }
+        ValueDisp(value);
+    }
 
-        Debug.Log(value);
-        */
-        if(_text!=null)
+    protected virtual void ValueDisp(float value)
+    {
         _text.text = value.ToString();
     }
 

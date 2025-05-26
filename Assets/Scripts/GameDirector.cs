@@ -26,24 +26,12 @@ public class GameDirector : MonoBehaviour
         gameActive = false;
     }
 
-    void Start()
-    {
-    }
-
-    void Update()
-    {
-
-    }
-
-    
-
     public void GameInit()
     {
         currentSum = 0;
         currentCount = 0;
         subTotal = 0;
         answer = 0;
-
 
         if (!gameActive)
         {
