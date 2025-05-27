@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class Swipe : MonoBehaviour, IDragHandler
 {
-    protected float swipeThreshold = 50f;
+    protected float swipeThreshold = 10f;
 
     public void OnDrag(PointerEventData data)
     {
@@ -23,11 +23,11 @@ public class Swipe : MonoBehaviour, IDragHandler
 
 public abstract class SwipeMenuItem : Swipe
 {
-    [SerializeField] protected TMP_Text _text;
-    [SerializeField] protected Menu _menu;
+    [SerializeField]protected TMP_Text _text;
+    protected Menu _menu;
 
     protected float value = 0;
-    private void Awake()
+    protected void Awake()
     {
         _menu = FindFirstObjectByType<Menu>();
     }
@@ -39,8 +39,14 @@ public abstract class SwipeMenuItem : Swipe
 
     protected virtual void ValueDisp(float value)
     {
+        _text.text = value.ToString("F1");
+    }
+
+    protected virtual void ValueDisp(int value)
+    {
         _text.text = value.ToString();
     }
+
 
 }
 

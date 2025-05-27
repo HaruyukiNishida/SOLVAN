@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,14 +11,16 @@ public class GameDirector : MonoBehaviour
     [SerializeField] private VanManager _vanManager;
     [SerializeField] private MondaiManager _mondaiManager;
     [SerializeField] private BtnManager _btnManager;
+    [SerializeField] private Menu _menu;
 
     TamaManager[] ketas;
     private List<Mondai> mondaiList;
 
-    int currentSum { get; set; }
-    int currentCount { get; set; }
-    int subTotal { get; set; }
-    int answer { get; set; }
+    int currentSum;
+    int currentCount;
+    int countMax;
+    int subTotal;
+    int answer;
 
     public bool gameActive = false;
 
@@ -26,10 +29,22 @@ public class GameDirector : MonoBehaviour
         gameActive = false;
     }
 
+    private void Update()
+    {
+        if (gameActive && currentCount >= countMax)
+        {
+            Time.timeScale = 0;
+            GameClear();
+        }
+    }
+
+
+
     public void GameInit()
     {
         currentSum = 0;
         currentCount = 0;
+        countMax = 10;
         subTotal = 0;
         answer = 0;
 
@@ -44,7 +59,7 @@ public class GameDirector : MonoBehaviour
         {
             //RestartéûÇÃèàóù
             _vanManager.VanReset();
-            _mondaiManager.MondaiReset();
+            _mondaiManager.MondaiRestart();
         }
 
         _btnManager.BtnDisp(gameActive);
@@ -86,9 +101,9 @@ public class GameDirector : MonoBehaviour
 
         for (int i = 0; i < mondaiList.Count; i++)
         {
-        //    Debug.Log($"{i} / {currentSum} /{subTotal + mondaiList[i].num}");
+            //    Debug.Log($"{i} / {currentSum} /{subTotal + mondaiList[i].num}");
 
-            if (mondaiList[i].active)
+            if (mondaiList[i].status == MondaiStatus.Active)
             {
                 if (currentSum == subTotal + mondaiList[i].num)
                 {
@@ -108,17 +123,17 @@ public class GameDirector : MonoBehaviour
         currentCount++;
         subTotal = currentSum;
 
-        if (currentCount >= 10)
-        {
-            GameClear();
-        }
+
 
     }
 
 
     void GameClear()
     {
-        _resultTxt.GetComponent<TMP_Text>().text = $"{_vanManager.GetTotal()}";
+        int answer=_mondaiManager.GetAnswer();
+
+
+        _resultTxt.GetComponent<TMP_Text>().text = $"{_vanManager.GetTotal()} / {answer}";
         _resultTxt.enabled = true;
     }
 
@@ -131,5 +146,10 @@ public class GameDirector : MonoBehaviour
     public void UndoBtn()
     {
         _vanManager.VanUndo(subTotal);
+    }
+
+    public void CountUp()
+    {
+        currentCount++;
     }
 }

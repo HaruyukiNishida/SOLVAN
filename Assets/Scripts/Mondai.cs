@@ -2,11 +2,13 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class Mondai : MonoBehaviour
+public partial class Mondai : MonoBehaviour
 {
+    [SerializeField]GameDirector _gameDirector;
+
     public int num;
     public int index;
-    public bool active;
+    public MondaiStatus status;
     public int mode;
     public float duration;
 
@@ -14,6 +16,8 @@ public class Mondai : MonoBehaviour
     {
         GetComponentInChildren<TextMeshPro>().color = Color.white;
     }
+
+
 
     void Update()
     {
@@ -24,7 +28,7 @@ public class Mondai : MonoBehaviour
     public void MoveRightToLeft()
     {
         mode = 1;
-        active = true;
+        status = MondaiStatus.Active;
 
         Vector3 startPos = transform.position;
         Vector3 endPos = new Vector3(CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Left), startPos.y, startPos.z);
@@ -37,7 +41,7 @@ public class Mondai : MonoBehaviour
     {
         float elapsed = 0f;
 
-        while (elapsed < duration && active)
+        while (elapsed < duration && status==MondaiStatus.Active)
         {
             transform.position = Vector3.Lerp(startPos, endPos, Mathf.Clamp01(elapsed / duration));
 
@@ -47,18 +51,19 @@ public class Mondai : MonoBehaviour
             yield return null;
         }
         transform.position = endPos; // 最終位置を確定
+        status = MondaiStatus.Gone;
+        _gameDirector.CountUp();
+
     }
 
     public void Scaling()
     {
         mode = 0;
+        status = MondaiStatus.Active;
 
         Vector3 startScale = transform.localScale;
         Vector3 endScale = new Vector3(2f,2f,1f);
 
-     //   GetComponentInChildren<TextMeshPro>().color = Color.white;
-
-        //   GetComponentInChildren<TextMeshPro>().gameObject.SetActive();
         StartCoroutine(ScalingSub(startScale, endScale));
 
     }
@@ -67,21 +72,23 @@ public class Mondai : MonoBehaviour
     {
         float elapsed = 0f;
 
-       
-
-
-        while (elapsed < duration && active)
+        while (elapsed < duration && status == MondaiStatus.Active)
         {
             transform.localScale = Vector3.Lerp(startScale, endScale, Mathf.Clamp01(elapsed / duration));
             elapsed += Time.deltaTime;
             yield return null;
         }
+
         transform.localScale = endScale; // 最終位置を確定
+        status = MondaiStatus.Gone;
+        _gameDirector.CountUp();
+
+
     }
 
     public void MondaiRestart()
     {
-        active = false;
+        status = MondaiStatus.StandBy;
         StopAllCoroutines();
         GetComponentInChildren<TextMeshPro>().color = Color.white;
 
@@ -108,13 +115,13 @@ public class Mondai : MonoBehaviour
 
         Debug.Log("HIT");
 
-        active = false;
-
+        status = MondaiStatus.Gone;
+        _gameDirector.CountUp();
     }
 
     public void Destroy()
     {
-        active = false;
+        status = MondaiStatus.StandBy;
         Destroy(gameObject);
     }
 

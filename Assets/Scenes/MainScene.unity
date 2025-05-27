@@ -586,7 +586,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 480, y: 80}
   m_EdgeRadius: 0
 --- !u!114 &109338575
 MonoBehaviour:
@@ -639,7 +639,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1904492930}
-  _menu: {fileID: 0}
 --- !u!1 &113444967
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,7 +2459,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 480, y: 80}
   m_EdgeRadius: 0
 --- !u!114 &557017253
 MonoBehaviour:
@@ -2513,7 +2512,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1207310488}
-  _menu: {fileID: 0}
+  min: 0.1
+  max: 10
 --- !u!1001 &574991966
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3310,7 +3310,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 480, y: 80}
   m_EdgeRadius: 0
 --- !u!114 &842943821
 MonoBehaviour:
@@ -3363,7 +3363,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1634044070}
-  _menu: {fileID: 0}
 --- !u!1 &844090149
 GameObject:
   m_ObjectHideFlags: 0
@@ -3825,8 +3824,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameDirector: {fileID: 67916665}
   _btnManager: {fileID: 796192734}
-  _menuPanel: {fileID: 1079415136}
   _mondaiManager: {fileID: 1018726850}
+  _menuPanel: {fileID: 1079415136}
   interval: 0
   duration: 0
   level: 0
@@ -6927,7 +6926,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 480, y: 80}
   m_EdgeRadius: 0
 --- !u!114 &1877497519
 MonoBehaviour:
@@ -6980,7 +6979,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 1652058322}
-  _menu: {fileID: 0}
+  min: 0.1
+  max: 10
 --- !u!1 &1904492928
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 public class MondaiManager : MonoBehaviour
 {
     [SerializeField] Mondai _mondaiPrefab;
+    [SerializeField] GameDirector _gameDirector;
     [SerializeField] Menu _menu;
 
     List<Mondai> mondaiList = new List<Mondai>();
@@ -19,6 +20,9 @@ public class MondaiManager : MonoBehaviour
     private int level;
     private float duration;
     private int mode;
+    private int answer;
+    
+
 
     void Start()
     {
@@ -27,11 +31,17 @@ public class MondaiManager : MonoBehaviour
 
     void Update()
     {
+        
     }
 
     public List<Mondai> GetMondaiList()
     {
         return mondaiList;
+    }
+
+    public int GetAnswer()
+    {
+        return answer;
     }
 
     void SetParamFromMenu()
@@ -62,8 +72,11 @@ public class MondaiManager : MonoBehaviour
             {
                 MondaiArrangeRight(mondaiList[i]);
             }
+            
+            answer += mondaiList[i].num;
         }
 
+        
         MondaiActive();
     }
 
@@ -141,10 +154,9 @@ public class MondaiManager : MonoBehaviour
     {
         var wait = new WaitForSeconds(interval);
 
+
         for (int i = 0; i < mondaiCount; i++)
         {
-            mondaiList[i].active = true;
-            
             if (mode == 0)
             {
                 mondaiList[i].Scaling();
@@ -158,7 +170,7 @@ public class MondaiManager : MonoBehaviour
         }
     }
 
-    public void MondaiReset()
+    public void MondaiRestart()
     {
         if (coroutine != null)
         {
@@ -171,7 +183,6 @@ public class MondaiManager : MonoBehaviour
 
             MondaiActive();
         }
-
     }
 
 
@@ -209,4 +220,6 @@ public class MondaiManager : MonoBehaviour
         renderer.SetPositions(positions);
 
     }
+
+    
 }
