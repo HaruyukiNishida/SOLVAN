@@ -234,6 +234,8 @@ MonoBehaviour:
   _vanManager: {fileID: 1481535413}
   _mondaiManager: {fileID: 1018726850}
   _btnManager: {fileID: 796192734}
+  _menu: {fileID: 966478167}
+  _pauseMenu: {fileID: 518271635}
   gameActive: 0
 --- !u!1 &73036755
 GameObject:
@@ -1082,7 +1084,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2984,7 +2986,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Restart
+  m_text: Quit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3826,6 +3828,7 @@ MonoBehaviour:
   _btnManager: {fileID: 796192734}
   _mondaiManager: {fileID: 1018726850}
   _menuPanel: {fileID: 1079415136}
+  mondaiCount: 0
   interval: 0
   duration: 0
   level: 0
@@ -3860,6 +3863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mondaiPrefab: {fileID: 4139616193736651042, guid: 5ca57339710b54b45b7bc1065540981c, type: 3}
+  _gameDirector: {fileID: 0}
   _menu: {fileID: 966478167}
 --- !u!4 &1018726851
 Transform:

@@ -23,7 +23,7 @@ public class MenuItemInterval : SwipeMenuItem
     {
         float amount = 0.1f;
 
-        if (deltaX > 30) amount =1.0f;
+        if (Mathf.Abs(deltaX) > 30) amount = 1.0f;
 
         value = Mathf.Clamp(value + (deltaX > 0 ? amount : -amount), min, max);
 

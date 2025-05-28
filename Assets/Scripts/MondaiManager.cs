@@ -154,7 +154,6 @@ public class MondaiManager : MonoBehaviour
     {
         var wait = new WaitForSeconds(interval);
 
-
         for (int i = 0; i < mondaiCount; i++)
         {
             if (mode == 0)

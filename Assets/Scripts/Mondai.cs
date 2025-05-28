@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public partial class Mondai : MonoBehaviour
 {
-    [SerializeField]GameDirector _gameDirector;
+    [SerializeField] GameDirector _gameDirector;
 
     public int num;
     public int index;
@@ -14,7 +15,9 @@ public partial class Mondai : MonoBehaviour
 
     private void Start()
     {
+        _gameDirector = FindAnyObjectByType<GameDirector>();
         GetComponentInChildren<TextMeshPro>().color = Color.white;
+        GetComponentInChildren<TextMeshPro>().enabled = false;
     }
 
 
@@ -33,6 +36,8 @@ public partial class Mondai : MonoBehaviour
         Vector3 startPos = transform.position;
         Vector3 endPos = new Vector3(CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Left), startPos.y, startPos.z);
 
+        GetComponentInChildren<TextMeshPro>().enabled = true;
+
 
         StartCoroutine(MoveRightToLeftSub(startPos, endPos));
     }
@@ -41,16 +46,16 @@ public partial class Mondai : MonoBehaviour
     {
         float elapsed = 0f;
 
-        while (elapsed < duration && status==MondaiStatus.Active)
+        while (elapsed < duration && status == MondaiStatus.Active)
         {
             transform.position = Vector3.Lerp(startPos, endPos, Mathf.Clamp01(elapsed / duration));
 
-         //   transform.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(0f, 1080f, Mathf.Clamp01(elapsed / duration)));
+            //   transform.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(0f, 1080f, Mathf.Clamp01(elapsed / duration)));
 
             elapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = endPos; // 最終位置を確定
+        //    transform.position = endPos; // 最終位置を確定
         status = MondaiStatus.Gone;
         _gameDirector.CountUp();
 
@@ -62,7 +67,10 @@ public partial class Mondai : MonoBehaviour
         status = MondaiStatus.Active;
 
         Vector3 startScale = transform.localScale;
-        Vector3 endScale = new Vector3(2f,2f,1f);
+        Vector3 endScale = new Vector3(2f, 2f, 1f);
+
+        GetComponentInChildren<TextMeshPro>().enabled = true;
+
 
         StartCoroutine(ScalingSub(startScale, endScale));
 
@@ -79,7 +87,8 @@ public partial class Mondai : MonoBehaviour
             yield return null;
         }
 
-        transform.localScale = endScale; // 最終位置を確定
+        GetComponentInChildren<TextMeshPro>().enabled = false;
+        //   transform.localScale = endScale; // 最終位置を確定
         status = MondaiStatus.Gone;
         _gameDirector.CountUp();
 
@@ -108,15 +117,30 @@ public partial class Mondai : MonoBehaviour
 
     }
 
-    public void MondaiHit()
+    public void MondaiGone()
     {
         //mondaiList[i].GetComponent<TextMeshPro>().enabled = false;
-        GetComponentInChildren<TextMeshPro>().color = Color.gray;
-
-        Debug.Log("HIT");
+        GetComponentInChildren<TextMeshPro>().color = Color.black;
 
         status = MondaiStatus.Gone;
-        _gameDirector.CountUp();
+
+        StartCoroutine(MondaiGoneSub());
+
+    }
+
+    IEnumerator MondaiGoneSub()
+    {
+        var color = GetComponentInChildren<TextMeshPro>().color;
+        var alpha = new Color32(0, 0, 0, 16);
+
+        for (int i = 255; i >= 0; i -= 16)
+        {
+            color -= alpha;
+            GetComponentInChildren<TextMeshPro>().color = color;
+
+            yield return new WaitForSeconds(0.01f);
+        }
+
     }
 
     public void Destroy()

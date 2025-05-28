@@ -8,6 +8,7 @@ public class Menu : MonoBehaviour
 
     [SerializeField] GameObject _menuPanel;
 
+    public int mondaiCount;
     public float interval;//”­¶ŠÔŠui1`‚P‚O‚†j
     public float duration;//‰æ–Ê‚É‰f‚éŠÔi‚T`‚Q‚O‚†j
     public int level;//Œ…i‚P`‚Rj
@@ -28,12 +29,12 @@ public class Menu : MonoBehaviour
 
     void Start()
     {
-
-        interval = 10;
+        mondaiCount = 10;
+        interval = 5;
+        duration = 5;
         level = 1;
-        duration = 8;
-        mode = 1;
-        Debug.Log($"{interval} {level} {duration} {mode}");
+        
+        mode = 0;
 
     }
 

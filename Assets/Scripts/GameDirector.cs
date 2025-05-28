@@ -12,26 +12,38 @@ public class GameDirector : MonoBehaviour
     [SerializeField] private MondaiManager _mondaiManager;
     [SerializeField] private BtnManager _btnManager;
     [SerializeField] private Menu _menu;
+    [SerializeField] private PauseMenu _pauseMenu;
 
     TamaManager[] ketas;
     private List<Mondai> mondaiList;
 
-    int currentSum;
+    int hitCount;
+
+    int currentTotal;
     int currentCount;
     int countMax;
     int subTotal;
-    int answer;
 
     public bool gameActive = false;
 
     private void Awake()
     {
+        //android用横画面固定
+        // 縦
+        Screen.autorotateToPortrait = false;
+        // 左
+     //   Screen.autorotateToLandscapeLeft = true;
+        // 右
+     //   Screen.autorotateToLandscapeRight = true;
+        // 上下反転
+        Screen.autorotateToPortraitUpsideDown = true;
+
         gameActive = false;
     }
 
     private void Update()
     {
-        if (gameActive && currentCount >= countMax)
+        if (gameActive && currentCount >= _menu.mondaiCount)
         {
             Time.timeScale = 0;
             GameClear();
@@ -42,11 +54,11 @@ public class GameDirector : MonoBehaviour
 
     public void GameInit()
     {
-        currentSum = 0;
-        currentCount = 0;
-        countMax = 10;
-        subTotal = 0;
-        answer = 0;
+        hitCount = 0;                   //問題当てた数
+        currentTotal = 0;                 //
+        currentCount = 0;               //今何問目？
+        countMax = _menu.mondaiCount;   //問題数
+        subTotal = 0;   //現在の小計
 
         if (!gameActive)
         {
@@ -54,6 +66,8 @@ public class GameDirector : MonoBehaviour
 
             _vanManager.VanReset();
             _mondaiManager.MondaiInit();
+
+            _pauseMenu.gameObject.SetActive(false);
         }
         else
         {
@@ -82,7 +96,7 @@ public class GameDirector : MonoBehaviour
 
         mondaiList = _mondaiManager.GetMondaiList();
 
-        currentSum = _vanManager.GetTotal();
+        currentTotal = _vanManager.GetTotal();
 
 
         /*
@@ -95,17 +109,14 @@ public class GameDirector : MonoBehaviour
         if (currentSum == sum)
         {
             MondaiHit(currentCount);
-
         }
         */
 
         for (int i = 0; i < mondaiList.Count; i++)
         {
-            //    Debug.Log($"{i} / {currentSum} /{subTotal + mondaiList[i].num}");
-
             if (mondaiList[i].status == MondaiStatus.Active)
             {
-                if (currentSum == subTotal + mondaiList[i].num)
+                if (currentTotal == subTotal + mondaiList[i].num)
                 {
                     MondaiHit(i);
                     break;
@@ -118,13 +129,10 @@ public class GameDirector : MonoBehaviour
 
     void MondaiHit(int i)
     {
-        mondaiList[i].MondaiHit();
+        mondaiList[i].MondaiGone();
 
-        currentCount++;
-        subTotal = currentSum;
-
-
-
+        hitCount++;
+        subTotal = currentTotal;
     }
 
 
@@ -139,7 +147,11 @@ public class GameDirector : MonoBehaviour
 
     public void TotalDisp()
     {
-        _totalTxt.text = $"currentSum / {currentSum}\n subTotal / {subTotal}";
+        
+        //   _totalTxt.text = $"currentSum / {currentSum}\n subTotal / {subTotal}";
+        //   _resultTxt.text = currentCount.ToString() ;
+        // HIT数/出現数/総数
+        _totalTxt.text = $"Hit : {hitCount}  / Count : {currentCount} / Max : {_menu.mondaiCount} ";
 
     }
 
@@ -151,5 +163,7 @@ public class GameDirector : MonoBehaviour
     public void CountUp()
     {
         currentCount++;
+
+        TotalDisp();
     }
 }

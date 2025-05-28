@@ -30,20 +30,20 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseMenuQuit()
     {
-        //_gameDirector.GameQuit();
+        _gameDirector.GameQuit();
 
-        //PauseMenuExit();
-        Time.timeScale = 1.0f;
+        PauseMenuExit();
+     //   Time.timeScale = 1.0f;
 
-        SceneManager.LoadScene("MainScene");
+     //   SceneManager.LoadScene("MainScene");
     }
 
     private void PauseMenuExit()
     {
-        this.gameObject.SetActive(false);
-
         _btnManager.BtnIntaractable(true);
 
         Time.timeScale = 1.0f;
+        
+        this.gameObject.SetActive(false);
     }
 }

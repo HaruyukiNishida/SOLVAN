@@ -17,7 +17,7 @@ public class Swipe : MonoBehaviour, IDragHandler
     }
     protected virtual void HandleSwipe(float deltaX)
     {
-        Debug.Log("Swipe detected: " + deltaX);
+        //Debug.Log("Swipe detected: " + deltaX);
     }
 }
 

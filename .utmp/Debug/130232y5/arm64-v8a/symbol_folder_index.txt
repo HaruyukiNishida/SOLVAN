@@ -1,0 +1,1 @@
+C:\Users\R6_12uni\Desktop\MyUnityProjects\SOLVAN\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\Debug\130232y5\obj\arm64-v8a
