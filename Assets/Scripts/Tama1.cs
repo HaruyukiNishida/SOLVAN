@@ -23,6 +23,8 @@ public class Tama1 : MonoBehaviour
 
     public TamaStatus moveStatus = TamaStatus.Off;
 
+    [SerializeField] AudioClip click1;
+    [SerializeField] AudioClip click2;
 
     void Awake()
     {
