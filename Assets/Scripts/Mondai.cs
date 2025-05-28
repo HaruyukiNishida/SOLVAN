@@ -15,7 +15,7 @@ public partial class Mondai : MonoBehaviour
 
     private void Start()
     {
-        _gameDirector = FindAnyObjectByType<GameDirector>();
+     //   _gameDirector = FindAnyObjectByType<GameDirector>();
         GetComponentInChildren<TextMeshPro>().color = Color.white;
         GetComponentInChildren<TextMeshPro>().enabled = false;
     }
@@ -27,6 +27,12 @@ public partial class Mondai : MonoBehaviour
 
 
     }
+
+    public void SetGD(GameDirector gd)
+    {
+        _gameDirector = gd;
+    }
+
 
     public void MoveRightToLeft()
     {
@@ -87,7 +93,6 @@ public partial class Mondai : MonoBehaviour
             yield return null;
         }
 
-        GetComponentInChildren<TextMeshPro>().enabled = false;
         //   transform.localScale = endScale; // ç≈èIà íuÇämíË
         status = MondaiStatus.Gone;
         _gameDirector.CountUp();

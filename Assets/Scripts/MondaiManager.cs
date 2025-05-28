@@ -83,6 +83,7 @@ public class MondaiManager : MonoBehaviour
     void MondaiMake(int i)
     {
         Mondai mondai = Instantiate(_mondaiPrefab, transform);
+        mondai.SetGD(_gameDirector);
         mondaiList.Add(mondai);
 
         int randNum = Random.Range(1, (int)Mathf.Pow(10, level));
@@ -193,6 +194,7 @@ public class MondaiManager : MonoBehaviour
 
             for (int i = 0; i < mondaiCount; i++)
             {
+                if (mondaiList[i]!=null)
                 mondaiList[i].Destroy();
             }
         }

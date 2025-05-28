@@ -3863,7 +3863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mondaiPrefab: {fileID: 4139616193736651042, guid: 5ca57339710b54b45b7bc1065540981c, type: 3}
-  _gameDirector: {fileID: 0}
+  _gameDirector: {fileID: 67916665}
   _menu: {fileID: 966478167}
 --- !u!4 &1018726851
 Transform:
