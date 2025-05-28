@@ -21,8 +21,8 @@ public class MondaiManager : MonoBehaviour
     private float duration;
     private int mode;
     private int answer;
-    
 
+    private WaitForSeconds wait;
 
     void Start()
     {
@@ -50,6 +50,8 @@ public class MondaiManager : MonoBehaviour
         level = _menu.level;
         duration = _menu.duration;
         mode = _menu.mode;
+
+        wait = new WaitForSeconds(interval);
     }
 
 
@@ -153,7 +155,7 @@ public class MondaiManager : MonoBehaviour
 
     IEnumerator MondaiActiveSub()
     {
-        var wait = new WaitForSeconds(interval);
+     //   var wait = new WaitForSeconds(interval);
 
         for (int i = 0; i < mondaiCount; i++)
         {

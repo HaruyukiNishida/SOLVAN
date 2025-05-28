@@ -103,7 +103,7 @@ public class Tama1 : MonoBehaviour
         if (!IsTamaStop(this)) return;
 
         swipeStartPos = Input.mousePosition;
-        Input.GetTouch(0);
+     //   Input.GetTouch(0);
     }
 
     public void CheckEventTriggerDragEnd()
