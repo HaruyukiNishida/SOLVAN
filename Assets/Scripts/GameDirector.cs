@@ -17,12 +17,15 @@ public class GameDirector : MonoBehaviour
     TamaManager[] ketas;
     private List<Mondai> mondaiList;
 
-    int hitCount;
+    public int hitCount;
+    public int countMax;
+    public int answer;
 
     int currentTotal;
-    int currentCount;
-    int countMax;
+    public int currentCount;
+
     int subTotal;
+
 
     public bool gameActive = false;
 
@@ -32,9 +35,9 @@ public class GameDirector : MonoBehaviour
         // 縦
         Screen.autorotateToPortrait = false;
         // 左
-     //   Screen.autorotateToLandscapeLeft = true;
+        //   Screen.autorotateToLandscapeLeft = true;
         // 右
-     //   Screen.autorotateToLandscapeRight = true;
+        //   Screen.autorotateToLandscapeRight = true;
         // 上下反転
         Screen.autorotateToPortraitUpsideDown = true;
 
@@ -50,8 +53,6 @@ public class GameDirector : MonoBehaviour
         }
     }
 
-
-
     public void GameInit()
     {
         hitCount = 0;                   //問題当てた数
@@ -59,6 +60,7 @@ public class GameDirector : MonoBehaviour
         currentCount = 0;               //今何問目？
         countMax = _menu.mondaiCount;   //問題数
         subTotal = 0;   //現在の小計
+        answer = 0;
 
         if (!gameActive)
         {
@@ -67,7 +69,7 @@ public class GameDirector : MonoBehaviour
             _vanManager.VanReset();
             _mondaiManager.MondaiInit();
 
-            _pauseMenu.gameObject.SetActive(false);
+            _pauseMenu.PauseMenuInit();
         }
         else
         {
@@ -138,9 +140,9 @@ public class GameDirector : MonoBehaviour
 
     void GameClear()
     {
-        int answer=_mondaiManager.GetAnswer();
+        answer = _mondaiManager.GetAnswer();
 
-        _pauseMenu.gameObject.SetActive(true);
+        _pauseMenu.GameClear(answer);
 
         _resultTxt.GetComponent<TMP_Text>().text = $"{_vanManager.GetTotal()} / {answer}";
         _resultTxt.enabled = true;
@@ -148,7 +150,7 @@ public class GameDirector : MonoBehaviour
 
     public void TotalDisp()
     {
-        
+
         //   _totalTxt.text = $"currentSum / {currentSum}\n subTotal / {subTotal}";
         //   _resultTxt.text = currentCount.ToString() ;
         // HIT数/出現数/総数

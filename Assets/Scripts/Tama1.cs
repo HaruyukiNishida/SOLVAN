@@ -120,7 +120,7 @@ public class Tama1 : MonoBehaviour
         swipeEndPos = Input.mousePosition;
       //  swipeEndPos = Input.GetTouch(0).position;
 
-        var delta = Input.GetTouch(0).deltaPosition;
+      //  var delta = Input.GetTouch(0).deltaPosition;
 
        
         

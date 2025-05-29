@@ -1,3 +1,6 @@
+using System;
+using System.Runtime.ConstrainedExecution;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,21 +8,79 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameDirector _gameDirector;
     [SerializeField] BtnManager _btnManager;
+    [SerializeField] TMP_Text _titleText;
+    [SerializeField] TMP_Text _answerText;
+    [SerializeField] TMP_Text _countText;
+    [SerializeField] TMP_Text _hitText;
+
+    private bool _active = false;
 
     private void Awake()
     {
+        PauseMenuInit();
+    }
+
+    public void PauseMenuInit()
+    {
+        _active = false;
+
+        PauseMenuTitle(false);
+
         this.gameObject.SetActive(false);
     }
 
-
     public void Toggle()
     {
-        this.gameObject.SetActive(!this.gameObject.activeSelf);
+        _active = !_active;
 
-        _btnManager.BtnIntaractable(!this.gameObject.activeSelf);
-
-        Time.timeScale = (!this.gameObject.activeSelf) ? 1.0f : 0f;
+        SetPauseMenu(_active);
     }
+
+    void SetPauseMenu(bool active)
+    {
+        this.gameObject.SetActive(active);
+
+        _btnManager.BtnIntaractable(!active);
+
+        Time.timeScale = (!active) ? 1.0f : 0f;
+
+        if (active)
+        {
+            PauseMenuUpdate();
+        }
+
+    }
+
+
+    private void PauseMenuUpdate()
+    {
+        int count = _gameDirector.currentCount;
+        int hit = _gameDirector.hitCount;
+        int max = _gameDirector.countMax;
+        int answer = _gameDirector.answer;
+
+        _countText.text = $"{count} / {max}";
+        _hitText.text = $"{hit}";
+        _answerText.text = (answer == 0) ? "?????" : answer.ToString();
+
+    }
+
+    public void GameClear(int answer)
+    {
+        _active = false;
+
+        Toggle();
+
+        PauseMenuTitle(true);
+
+        PauseMenuUpdate();
+    }
+
+    void PauseMenuTitle(bool clear)
+    {
+        _titleText.text = (clear) ? "Result" : "Pause";
+    }
+
 
     public void PauseMenuRestart()
     {
@@ -30,20 +91,25 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseMenuQuit()
     {
+
         _gameDirector.GameQuit();
 
         PauseMenuExit();
-     //   Time.timeScale = 1.0f;
+        //   Time.timeScale = 1.0f;
 
-     //   SceneManager.LoadScene("MainScene");
+        //   SceneManager.LoadScene("MainScene");
     }
 
     private void PauseMenuExit()
     {
+        PauseMenuInit();
+
         _btnManager.BtnIntaractable(true);
 
         Time.timeScale = 1.0f;
-        
-        this.gameObject.SetActive(false);
+
+       
     }
+
+
 }
