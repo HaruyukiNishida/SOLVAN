@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -14,6 +13,9 @@ public partial class Mondai : MonoBehaviour
     public MondaiStatus status;
     public int mode;
     public float duration;
+
+    private Color defaultColor = Color.white + new Color32(0, 0, 0, 255);
+    private Color alphaColor = new Color32(0, 0, 0, 16);
 
     private void Awake()
     {
@@ -46,8 +48,9 @@ public partial class Mondai : MonoBehaviour
         Vector3 startPos = transform.position;
         Vector3 endPos = new Vector3(CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Left), startPos.y, startPos.z);
 
+        tmpTxt.color = defaultColor;
         tmpTxt.enabled = true;
-    
+
 
         StartCoroutine(MoveRightToLeftSub(startPos, endPos));
     }
@@ -79,6 +82,7 @@ public partial class Mondai : MonoBehaviour
         Vector3 startScale = transform.localScale;
         Vector3 endScale = new Vector3(2f, 2f, 1f);
 
+        tmpTxt.color = defaultColor;
         tmpTxt.enabled = true;
 
 
@@ -130,6 +134,8 @@ public partial class Mondai : MonoBehaviour
 
     public void MondaiGone()
     {
+        AudioManager.instance.PlaySE(TypePlaySE.spunch);
+
         tmpTxt.color = Color.black;
 
         status = MondaiStatus.Gone;
@@ -141,11 +147,10 @@ public partial class Mondai : MonoBehaviour
     IEnumerator MondaiGoneSub()
     {
         var color = tmpTxt.color;
-        var alpha = new Color32(0, 0, 0, 16);
-
+        
         for (int i = 255; i >= 0; i -= 16)
         {
-            color -= alpha;
+            color -= alphaColor;
             tmpTxt.color = color;
 
             yield return new WaitForSeconds(0.01f);

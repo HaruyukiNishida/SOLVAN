@@ -29,9 +29,9 @@ public class Menu : MonoBehaviour
 
     void Start()
     {
-        mondaiCount = 3;
-        interval = 5;
-        duration = 5;
+        mondaiCount = 5;
+        interval = 5.0f;
+        duration = 5.0f;
         level = 1;
         
         mode = 1;

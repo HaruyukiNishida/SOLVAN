@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MenuItemDuration : SwipeMenuItem
 {
-    public float min = 0.1f;
+    public float min = 0.5f;
     public float max = 10.0f;
 
     private new void Awake()

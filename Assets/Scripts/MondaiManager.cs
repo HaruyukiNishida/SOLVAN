@@ -177,14 +177,14 @@ public class MondaiManager : MonoBehaviour
         if (coroutine != null)
         {
             StopCoroutine(coroutine);
-
+}
             for (int i = 0; i < mondaiCount; i++)
             {
                 mondaiList[i].MondaiRestart();
             }
 
             MondaiActive();
-        }
+        
     }
 
 

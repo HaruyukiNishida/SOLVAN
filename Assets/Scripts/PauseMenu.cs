@@ -1,8 +1,5 @@
-using System;
-using System.Runtime.ConstrainedExecution;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -82,7 +79,7 @@ public class PauseMenu : MonoBehaviour
     }
 
 
-    public void PauseMenuRestart()
+    public void PauseMenuRetry()
     {
         _gameDirector.GameInit();
 
@@ -91,13 +88,9 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseMenuQuit()
     {
-
         _gameDirector.GameQuit();
 
         PauseMenuExit();
-        //   Time.timeScale = 1.0f;
-
-        //   SceneManager.LoadScene("MainScene");
     }
 
     private void PauseMenuExit()
@@ -107,8 +100,6 @@ public class PauseMenu : MonoBehaviour
         _btnManager.BtnIntaractable(true);
 
         Time.timeScale = 1.0f;
-
-       
     }
 
 

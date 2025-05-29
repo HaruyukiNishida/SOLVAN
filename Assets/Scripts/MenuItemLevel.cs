@@ -1,4 +1,4 @@
-using UnityEditor;
+using System.Collections;
 using UnityEngine;
 
 public class MenuItemLevel : SwipeMenuItem
@@ -12,12 +12,12 @@ public class MenuItemLevel : SwipeMenuItem
     {
         value = _menu.level;
         ValueDisp((int)value);
-        swipeThreshold = 40f; // スワイプ感度設定
+        swipeThreshold = 30f; // スワイプ感度設定
     }
 
     protected override void HandleSwipe(float deltaX)
     {
-        //Debug.Log(deltaX);
+    //    Debug.Log(deltaX);
 
         switch ((int)_menu.level)
         {
@@ -36,6 +36,12 @@ public class MenuItemLevel : SwipeMenuItem
         _menu.level = (int)value;
 
         ValueDisp((int)value);
+
+        StartCoroutine(HandSwipeSub());
+    }
+    IEnumerator HandSwipeSub()
+    {
+        yield return new WaitForSeconds(1f);
     }
 
 }
