@@ -71,7 +71,7 @@ public class Tama1 : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (!IsTamaStop(this))
         {
@@ -85,6 +85,8 @@ public class Tama1 : MonoBehaviour
             }
             else
             {
+
+
                 moveStatus = GetIsOn();
 
                 transform.position = endPos;
@@ -92,10 +94,10 @@ public class Tama1 : MonoBehaviour
                 if (_tamaManager.IsTamasStop())
                 {
                     _vanManager.UpdateTotal();
-                 //   _audioSource.PlayOneShot(click1);
+                    _audioSource.PlayOneShot((moveStatus == TamaStatus.On) ? click1 : click2);
                 }
 
-                
+
             }
         }
     }
@@ -110,7 +112,7 @@ public class Tama1 : MonoBehaviour
         if (!IsTamaStop(this)) return;
 
         swipeStartPos = Input.mousePosition;
-      //      swipeStartPos = Input.GetTouch(0).position;
+        //      swipeStartPos = Input.GetTouch(0).position;
     }
 
     public void CheckEventTriggerDragEnd()
@@ -118,12 +120,12 @@ public class Tama1 : MonoBehaviour
         if (!IsTamaStop(this)) return;
 
         swipeEndPos = Input.mousePosition;
-      //  swipeEndPos = Input.GetTouch(0).position;
+        //  swipeEndPos = Input.GetTouch(0).position;
 
-      //  var delta = Input.GetTouch(0).deltaPosition;
+        //  var delta = Input.GetTouch(0).deltaPosition;
 
-       
-        
+
+
         float vec = swipeStartPos.y - swipeEndPos.y;
 
         CheckEventTriggerDragEndSub((vec < 0));
@@ -183,7 +185,7 @@ public class Tama1 : MonoBehaviour
 
     public void CheckUpTrrigerEnter(Collider collider)
     {
-         //   Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
+        //   Debug.Log(System.Reflection.MethodBase.GetCurrentMethod().Name);
     }
     public void CheckDownTrrigerEnter(Collider collider)
     {

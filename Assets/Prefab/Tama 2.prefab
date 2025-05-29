@@ -212,8 +212,8 @@ MonoBehaviour:
   rate: 0
   index: 0
   moveStatus: 0
-  click1: {fileID: 8300000, guid: f58a79cb2a86c724da4cedfd3decd9bc, type: 3}
-  click2: {fileID: 8300000, guid: f58a79cb2a86c724da4cedfd3decd9bc, type: 3}
+  click1: {fileID: 8300000, guid: 6ea7800ec32165544a56a573e25e0891, type: 3}
+  click2: {fileID: 8300000, guid: 1f609d306adfba541bd605ccb87c55dd, type: 3}
 --- !u!114 &5845107566318921687
 MonoBehaviour:
   m_ObjectHideFlags: 0
