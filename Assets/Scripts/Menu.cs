@@ -29,12 +29,12 @@ public class Menu : MonoBehaviour
 
     void Start()
     {
-        mondaiCount = 10;
+        mondaiCount = 3;
         interval = 5;
         duration = 5;
         level = 1;
         
-        mode = 0;
+        mode = 1;
 
     }
 

@@ -140,6 +140,7 @@ public class GameDirector : MonoBehaviour
     {
         int answer=_mondaiManager.GetAnswer();
 
+        _pauseMenu.gameObject.SetActive(true);
 
         _resultTxt.GetComponent<TMP_Text>().text = $"{_vanManager.GetTotal()} / {answer}";
         _resultTxt.enabled = true;

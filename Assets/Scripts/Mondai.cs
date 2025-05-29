@@ -7,17 +7,21 @@ public partial class Mondai : MonoBehaviour
 {
     [SerializeField] GameDirector _gameDirector;
 
+    private TMP_Text tmpTxt;
+
     public int num;
     public int index;
     public MondaiStatus status;
     public int mode;
     public float duration;
 
-    private void Start()
+    private void Awake()
     {
-     //   _gameDirector = FindAnyObjectByType<GameDirector>();
-        GetComponentInChildren<TextMeshPro>().color = Color.white;
-        GetComponentInChildren<TextMeshPro>().enabled = false;
+        //   _gameDirector = FindAnyObjectByType<GameDirector>();
+
+        tmpTxt = GetComponentInChildren<TextMeshPro>();
+        tmpTxt.color = Color.white;
+        tmpTxt.enabled = false;
     }
 
 
@@ -42,8 +46,8 @@ public partial class Mondai : MonoBehaviour
         Vector3 startPos = transform.position;
         Vector3 endPos = new Vector3(CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Left), startPos.y, startPos.z);
 
-        GetComponentInChildren<TextMeshPro>().enabled = true;
-
+        tmpTxt.enabled = true;
+    
 
         StartCoroutine(MoveRightToLeftSub(startPos, endPos));
     }
@@ -75,7 +79,7 @@ public partial class Mondai : MonoBehaviour
         Vector3 startScale = transform.localScale;
         Vector3 endScale = new Vector3(2f, 2f, 1f);
 
-        GetComponentInChildren<TextMeshPro>().enabled = true;
+        tmpTxt.enabled = true;
 
 
         StartCoroutine(ScalingSub(startScale, endScale));
@@ -104,7 +108,9 @@ public partial class Mondai : MonoBehaviour
     {
         status = MondaiStatus.StandBy;
         StopAllCoroutines();
-        GetComponentInChildren<TextMeshPro>().color = Color.white;
+
+
+        tmpTxt.color = Color.white;
 
         if (mode == 0)
         {
@@ -124,8 +130,7 @@ public partial class Mondai : MonoBehaviour
 
     public void MondaiGone()
     {
-        //mondaiList[i].GetComponent<TextMeshPro>().enabled = false;
-        GetComponentInChildren<TextMeshPro>().color = Color.black;
+        tmpTxt.color = Color.black;
 
         status = MondaiStatus.Gone;
 
@@ -135,13 +140,13 @@ public partial class Mondai : MonoBehaviour
 
     IEnumerator MondaiGoneSub()
     {
-        var color = GetComponentInChildren<TextMeshPro>().color;
+        var color = tmpTxt.color;
         var alpha = new Color32(0, 0, 0, 16);
 
         for (int i = 255; i >= 0; i -= 16)
         {
             color -= alpha;
-            GetComponentInChildren<TextMeshPro>().color = color;
+            tmpTxt.color = color;
 
             yield return new WaitForSeconds(0.01f);
         }

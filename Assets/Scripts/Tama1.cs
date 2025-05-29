@@ -23,6 +23,7 @@ public class Tama1 : MonoBehaviour
 
     public TamaStatus moveStatus = TamaStatus.Off;
 
+    AudioSource _audioSource;
     [SerializeField] AudioClip click1;
     [SerializeField] AudioClip click2;
 
@@ -32,6 +33,7 @@ public class Tama1 : MonoBehaviour
 
         _tamaManager = GetComponentInParent<TamaManager>();
         _vanManager = GetComponentInParent<VanManager>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public virtual void TamaPosInit()
@@ -90,7 +92,10 @@ public class Tama1 : MonoBehaviour
                 if (_tamaManager.IsTamasStop())
                 {
                     _vanManager.UpdateTotal();
+                 //   _audioSource.PlayOneShot(click1);
                 }
+
+                
             }
         }
     }
@@ -105,7 +110,7 @@ public class Tama1 : MonoBehaviour
         if (!IsTamaStop(this)) return;
 
         swipeStartPos = Input.mousePosition;
-     //   Input.GetTouch(0);
+      //      swipeStartPos = Input.GetTouch(0).position;
     }
 
     public void CheckEventTriggerDragEnd()
@@ -113,6 +118,12 @@ public class Tama1 : MonoBehaviour
         if (!IsTamaStop(this)) return;
 
         swipeEndPos = Input.mousePosition;
+      //  swipeEndPos = Input.GetTouch(0).position;
+
+        var delta = Input.GetTouch(0).deltaPosition;
+
+       
+        
         float vec = swipeStartPos.y - swipeEndPos.y;
 
         CheckEventTriggerDragEndSub((vec < 0));
