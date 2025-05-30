@@ -11,6 +11,7 @@ public class GameDirector : MonoBehaviour
     [SerializeField] private BtnManager _btnManager;
     [SerializeField] private Menu _menu;
     [SerializeField] private PauseMenu _pauseMenu;
+    [SerializeField] private Title _title;
 
     TamaManager[] ketas;
     private List<Mondai> mondaiList;
@@ -68,6 +69,8 @@ public class GameDirector : MonoBehaviour
             _mondaiManager.MondaiInit();
 
             _pauseMenu.PauseMenuInit();
+
+            _title.LogoDisp(false);
         }
         else
         {
@@ -86,6 +89,7 @@ public class GameDirector : MonoBehaviour
         gameActive = false;
 
         _btnManager.BtnDisp(false);
+        _title.LogoDisp(true);
     }
 
     public void Calc()

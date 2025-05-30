@@ -7,6 +7,7 @@ public class Menu : MonoBehaviour
     [SerializeField] MondaiManager _mondaiManager;
 
     [SerializeField] GameObject _menuPanel;
+    [SerializeField] Title _title;
 
     public int mondaiCount;
     public float interval;//発生間隔
@@ -15,12 +16,13 @@ public class Menu : MonoBehaviour
 
     public int mode;//出現方式（２パターン）
 
-
+    private bool active;
     //読み上げ音声ONOFF
-    
+
 
     private void Awake()
     {
+        active = false;
         _menuPanel.SetActive(false);
     }
 
@@ -37,9 +39,14 @@ public class Menu : MonoBehaviour
 
     public void Toggle()
     {
-        _menuPanel.gameObject.SetActive(!_menuPanel.gameObject.activeSelf);
+        active = !active;
 
-        _btnManager.BtnIntaractable(!_menuPanel.gameObject.activeSelf);
+      //  _menuPanel.gameObject.SetActive(!_menuPanel.gameObject.activeSelf);
+        _menuPanel.gameObject.SetActive(active);
+
+        _btnManager.BtnIntaractable(!active);
+
+        _title.LogoDisp(!active);
 
         _mondaiManager.MondaiDestroy();
     }
