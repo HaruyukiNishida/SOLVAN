@@ -45,7 +45,6 @@ public class PauseMenu : MonoBehaviour
         {
             PauseMenuUpdate();
         }
-
     }
 
 
@@ -78,7 +77,6 @@ public class PauseMenu : MonoBehaviour
         _titleText.text = (clear) ? "Result" : "Pause";
     }
 
-
     public void PauseMenuRetry()
     {
         _gameDirector.GameInit();
@@ -101,6 +99,4 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 1.0f;
     }
-
-
 }

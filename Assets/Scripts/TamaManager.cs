@@ -28,7 +28,6 @@ public class TamaManager : MonoBehaviour
         return true;
     }
 
-
     public int GetSubTotal()
     {
         var subTotal = 0;
@@ -65,5 +64,4 @@ public class TamaManager : MonoBehaviour
             tamas[i].TamaPosInit();
         }
     }
-
 }

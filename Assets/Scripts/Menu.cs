@@ -9,18 +9,15 @@ public class Menu : MonoBehaviour
     [SerializeField] GameObject _menuPanel;
 
     public int mondaiCount;
-    public float interval;//”­¶ŠÔŠui1`‚P‚O‚†j
-    public float duration;//‰æ–Ê‚É‰f‚éŠÔi‚T`‚Q‚O‚†j
-    public int level;//Œ…i‚P`‚Rj
+    public float interval;//”­¶ŠÔŠu
+    public float duration;//‰æ–Ê‚É‰f‚éŠÔ
+    public int level;//Œ…
 
     public int mode;//oŒ»•û®i‚Qƒpƒ^[ƒ“j
 
 
     //“Ç‚İã‚°‰¹ºONOFF
-    //oŒ»•û–@
-    //
-
-    //”Õ‚ÌŒX‚«
+    
 
     private void Awake()
     {
@@ -37,14 +34,6 @@ public class Menu : MonoBehaviour
         mode = 1;
 
     }
-
-    public void UpdateMenu()
-    {
-
-    }
-
-
-
 
     public void Toggle()
     {

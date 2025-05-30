@@ -13,26 +13,16 @@ public class MondaiManager : MonoBehaviour
 
     private Coroutine coroutine;
 
-    private int mondaiCount = 10;
     private float mondaiPosZ = -2f;
 
     private float interval;
-    private int level;
     private float duration;
+    private int level;
+    private int mondaiCount;
     private int mode;
     private int answer;
 
-    private WaitForSeconds wait;
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
+    public bool hitFlag;
 
     public List<Mondai> GetMondaiList()
     {
@@ -47,11 +37,12 @@ public class MondaiManager : MonoBehaviour
     void SetParamFromMenu()
     {
         interval = _menu.interval;
-        level = _menu.level;
         duration = _menu.duration;
+        level = _menu.level;
+        mondaiCount = _menu.mondaiCount;
         mode = _menu.mode;
 
-        wait = new WaitForSeconds(interval);
+        hitFlag = false;
     }
 
 
@@ -78,22 +69,28 @@ public class MondaiManager : MonoBehaviour
             answer += mondaiList[i].num;
         }
 
-
         MondaiActive();
     }
 
     void MondaiMake(int i)
     {
         Mondai mondai = Instantiate(_mondaiPrefab, transform);
-        mondai.SetGD(_gameDirector);
-        mondaiList.Add(mondai);
+        mondai.DependencyInjection(_gameDirector);
+        mondai.DependencyInjection(_menu);
 
-        int randNum = Random.Range(1, (int)Mathf.Pow(10, level));
-        mondai.GetComponent<Mondai>().index = i;
-        mondai.GetComponent<Mondai>().num = randNum;
-        mondai.GetComponentInChildren<TMP_Text>().text = randNum.ToString();
-        mondai.duration = this.duration;
+        mondai.GetComponent<Mondai>().num = MondaiNumMake();
+
+        mondaiList.Add(mondai);
     }
+
+    private int MondaiNumMake()
+    {
+        int randNum = Random.Range(1, (int)Mathf.Pow(10, level));
+
+        return randNum;
+    }
+
+
 
     void MondaiArrangeRandom(Mondai mondai)
     {
@@ -125,7 +122,7 @@ public class MondaiManager : MonoBehaviour
         var dx = CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Left);
         var dy = CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Top);
 
-        float x = dx + 1f * mondai.index;
+        float x = dx + 1f * mondaiList.IndexOf(mondai);
         float y = 4f;
 
         mondai.transform.position = new Vector3(x, y, mondaiPosZ);
@@ -168,7 +165,16 @@ public class MondaiManager : MonoBehaviour
                 mondaiList[i].MoveRightToLeft();
             }
 
-            yield return wait;
+            float elapsedTime = 0f;
+
+            while (!hitFlag && elapsedTime < interval)
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null; // 毎フレーム待機
+            }
+
+            hitFlag = false;
+            //  yield return new WaitForSeconds(wait);
         }
     }
 
@@ -202,27 +208,5 @@ public class MondaiManager : MonoBehaviour
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-    void DrawLine(Vector3[] positions)
-    {
-        LineRenderer renderer = gameObject.GetComponent<LineRenderer>();
-
-
-        renderer.positionCount = positions.Length;
-        // 線を引く場所を指定する
-        renderer.SetPositions(positions);
-
-    }
-
 
 }

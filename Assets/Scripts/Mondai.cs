@@ -5,25 +5,24 @@ using UnityEngine;
 public partial class Mondai : MonoBehaviour
 {
     [SerializeField] GameDirector _gameDirector;
+    [SerializeField] Menu _menu;
 
     private TMP_Text tmpTxt;
 
     public int num;
-    public int index;
     public MondaiStatus status;
-    public int mode;
-    public float duration;
+    private int mode;
+    private float duration;
 
     private Color defaultColor = Color.white + new Color32(0, 0, 0, 255);
     private Color alphaColor = new Color32(0, 0, 0, 16);
 
     private void Awake()
     {
-        //   _gameDirector = FindAnyObjectByType<GameDirector>();
-
         tmpTxt = GetComponentInChildren<TextMeshPro>();
         tmpTxt.color = Color.white;
         tmpTxt.enabled = false;
+
     }
 
 
@@ -34,23 +33,35 @@ public partial class Mondai : MonoBehaviour
 
     }
 
-    public void SetGD(GameDirector gd)
+    public void DependencyInjection(GameDirector gd)
     {
         _gameDirector = gd;
     }
-
-
-    public void MoveRightToLeft()
+    public void DependencyInjection(Menu menu)
     {
-        mode = 1;
-        status = MondaiStatus.Active;
+        _menu = menu;
+    }
 
-        Vector3 startPos = transform.position;
-        Vector3 endPos = new Vector3(CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Left), startPos.y, startPos.z);
-
+    private void MondaiInit()
+    {
+        tmpTxt.text = num.ToString();
         tmpTxt.color = defaultColor;
         tmpTxt.enabled = true;
 
+        mode = _menu.mode;
+        duration = _menu.duration;
+
+        status = MondaiStatus.Active;
+
+    }
+
+    public void MoveRightToLeft()
+    {
+        MondaiInit();
+        mode = 1;
+
+        Vector3 startPos = transform.position;
+        Vector3 endPos = new Vector3(CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Left), startPos.y, startPos.z);
 
         StartCoroutine(MoveRightToLeftSub(startPos, endPos));
     }
@@ -76,18 +87,13 @@ public partial class Mondai : MonoBehaviour
 
     public void Scaling()
     {
+        MondaiInit();
         mode = 0;
-        status = MondaiStatus.Active;
 
         Vector3 startScale = transform.localScale;
         Vector3 endScale = new Vector3(2f, 2f, 1f);
 
-        tmpTxt.color = defaultColor;
-        tmpTxt.enabled = true;
-
-
         StartCoroutine(ScalingSub(startScale, endScale));
-
     }
 
     public IEnumerator ScalingSub(Vector3 startScale, Vector3 endScale)
@@ -114,7 +120,7 @@ public partial class Mondai : MonoBehaviour
         StopAllCoroutines();
 
 
-        tmpTxt.color = Color.white;
+        tmpTxt.color = defaultColor;
 
         if (mode == 0)
         {

@@ -130,6 +130,7 @@ public class GameDirector : MonoBehaviour
     void MondaiHit(int i)
     {
         mondaiList[i].MondaiGone();
+        _mondaiManager.hitFlag = true;
 
         hitCount++;
         subTotal = currentTotal;
