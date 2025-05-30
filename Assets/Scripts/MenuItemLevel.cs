@@ -17,7 +17,7 @@ public class MenuItemLevel : SwipeMenuItem
 
     protected override void HandleSwipe(float deltaX)
     {
-    //    Debug.Log(deltaX);
+        //    Debug.Log(deltaX);
 
         switch ((int)_menu.level)
         {

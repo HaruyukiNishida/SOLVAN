@@ -147,7 +147,7 @@ public partial class Mondai : MonoBehaviour
     IEnumerator MondaiGoneSub()
     {
         var color = tmpTxt.color;
-        
+
         for (int i = 255; i >= 0; i -= 16)
         {
             color -= alphaColor;

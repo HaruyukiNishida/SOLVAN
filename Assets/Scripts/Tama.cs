@@ -13,7 +13,7 @@ public class Tama : MonoBehaviour
     private Vector3 startPos;
     private Vector3 endPos;
     private Vector3 force = Vector3.up;
- //   private float moveSpeed = 1f;
+    //   private float moveSpeed = 1f;
 
     private int status;
 
@@ -38,7 +38,7 @@ public class Tama : MonoBehaviour
     private void FixedUpdate()
     {
 
-     //   _rb.MovePosition(_rb.position + force * moveSpeed * Time.fixedDeltaTime);
+        //   _rb.MovePosition(_rb.position + force * moveSpeed * Time.fixedDeltaTime);
 
 
         //var speed = _rb.linearVelocity.magnitude;

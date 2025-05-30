@@ -33,14 +33,14 @@ public class Menu : MonoBehaviour
         interval = 5.0f;
         duration = 5.0f;
         level = 1;
-        
+
         mode = 1;
 
     }
 
     public void UpdateMenu()
     {
-        
+
     }
 
 

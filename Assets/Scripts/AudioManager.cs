@@ -7,13 +7,13 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioClip[] _audioClip;
- [SerializeField, Range(20, -80)] private int volume = 0;
+    [SerializeField, Range(20, -80)] private int volume = 0;
 
     private Dictionary<string, AudioClip> clips = new Dictionary<string, AudioClip>();
     private AudioSource _audioSource;
     //  private List<SoundList> soundList = new List<SoundList>();
 
-   
+
 
 
 

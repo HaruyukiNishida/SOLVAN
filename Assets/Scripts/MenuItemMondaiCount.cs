@@ -14,14 +14,14 @@ public class MenuItemMondaiCount : SwipeMenuItem
     {
         value = _menu.mondaiCount;
         ValueDisp((int)value);
-      //  swipeThreshold = 40f; // スワイプ感度設定
+        //  swipeThreshold = 40f; // スワイプ感度設定
     }
 
     protected override void HandleSwipe(float deltaX)
     {
         //Debug.Log(deltaX);
 
-        float amount =5f;
+        float amount = 5f;
 
         value = Mathf.Clamp(value + (deltaX > 0 ? amount : -amount), min, max);
 

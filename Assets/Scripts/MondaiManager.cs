@@ -26,12 +26,12 @@ public class MondaiManager : MonoBehaviour
 
     void Start()
     {
-       
+
     }
 
     void Update()
     {
-        
+
     }
 
     public List<Mondai> GetMondaiList()
@@ -74,11 +74,11 @@ public class MondaiManager : MonoBehaviour
             {
                 MondaiArrangeRight(mondaiList[i]);
             }
-            
+
             answer += mondaiList[i].num;
         }
 
-        
+
         MondaiActive();
     }
 
@@ -117,7 +117,7 @@ public class MondaiManager : MonoBehaviour
 
         mondai.transform.position = new Vector3(x, y, mondaiPosZ);
         mondai.transform.localScale = Vector3.one;
-        mondai.GetComponentInChildren<TextMeshPro>().color=new Color(0,0,0,0);
+        mondai.GetComponentInChildren<TextMeshPro>().color = new Color(0, 0, 0, 0);
 
     }
     void MondaiArrangeLine(Mondai mondai)
@@ -146,7 +146,7 @@ public class MondaiManager : MonoBehaviour
         mondai.transform.position = new Vector3(x, y, mondaiPosZ);
     }
 
-    
+
 
     void MondaiActive()
     {
@@ -155,7 +155,7 @@ public class MondaiManager : MonoBehaviour
 
     IEnumerator MondaiActiveSub()
     {
-     //   var wait = new WaitForSeconds(interval);
+        //   var wait = new WaitForSeconds(interval);
 
         for (int i = 0; i < mondaiCount; i++)
         {
@@ -177,14 +177,14 @@ public class MondaiManager : MonoBehaviour
         if (coroutine != null)
         {
             StopCoroutine(coroutine);
-}
-            for (int i = 0; i < mondaiCount; i++)
-            {
-                mondaiList[i].MondaiRestart();
-            }
+        }
+        for (int i = 0; i < mondaiCount; i++)
+        {
+            mondaiList[i].MondaiRestart();
+        }
 
-            MondaiActive();
-        
+        MondaiActive();
+
     }
 
 
@@ -196,8 +196,8 @@ public class MondaiManager : MonoBehaviour
 
             for (int i = 0; i < mondaiCount; i++)
             {
-                if (mondaiList[i]!=null)
-                mondaiList[i].Destroy();
+                if (mondaiList[i] != null)
+                    mondaiList[i].Destroy();
             }
         }
 
@@ -224,5 +224,5 @@ public class MondaiManager : MonoBehaviour
 
     }
 
-    
+
 }

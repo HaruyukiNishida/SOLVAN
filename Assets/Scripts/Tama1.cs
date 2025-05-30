@@ -94,7 +94,7 @@ public class Tama1 : MonoBehaviour
                 if (_tamaManager.IsTamasStop())
                 {
                     _vanManager.UpdateTotal();
-                //    _audioSource.PlayOneShot((moveStatus == TamaStatus.On) ? click1 : click2);
+                    //    _audioSource.PlayOneShot((moveStatus == TamaStatus.On) ? click1 : click2);
                 }
 
 

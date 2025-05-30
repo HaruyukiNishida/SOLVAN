@@ -19,12 +19,12 @@ public class MenuItemDuration : SwipeMenuItem
 
     protected override void HandleSwipe(float deltaX)
     {
-        float amount = 0.1f;
+        float amount = 0.5f;
 
-        if (Mathf.Abs(deltaX) > 30) amount = 1.0f;
+        //if (Mathf.Abs(deltaX) > 30) amount = 1.0f;
 
         value = Mathf.Clamp(value + (deltaX > 0 ? amount : -amount), min, max);
-     
+
         _menu.duration = value;
 
         ValueDisp(value);

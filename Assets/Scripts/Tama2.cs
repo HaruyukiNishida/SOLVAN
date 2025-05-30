@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Tama2 : Tama1
 {
     public override void TamaPosInit()
@@ -12,7 +10,7 @@ public class Tama2 : Tama1
     }
 
     public override void IsHitTama() { }
-    
+
 
     public override TamaStatus GetIsOn()
     {
