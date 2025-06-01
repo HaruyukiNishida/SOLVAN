@@ -6,6 +6,10 @@ public partial class Mondai : MonoBehaviour
 {
     [SerializeField] GameDirector _gameDirector;
     [SerializeField] Menu _menu;
+    [SerializeField] SpriteRenderer _ones;
+    [SerializeField] SpriteRenderer _tens;
+    [SerializeField] SpriteRenderer _handreds;
+
 
     private TMP_Text tmpTxt;
 
