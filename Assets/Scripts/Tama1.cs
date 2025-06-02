@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Tama1 : MonoBehaviour
+public class Tama1 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private TamaManager _tamaManager;
     private VanManager _vanManager;
@@ -107,12 +108,35 @@ public class Tama1 : MonoBehaviour
         return (moveStatus == TamaStatus.Up) ? TamaStatus.On : TamaStatus.Off;
     }
 
+
+    public void OnBeginDrag(PointerEventData data)
+    {
+        if (!IsTamaStop(this)) return;
+
+        swipeStartPos = data.position;
+    }
+
     public void CheckEventTriggerDragBegin()
     {
         if (!IsTamaStop(this)) return;
 
         swipeStartPos = Input.mousePosition;
         //      swipeStartPos = Input.GetTouch(0).position;
+    }
+
+    public void OnDrag(PointerEventData data)
+    {
+        //Debug.Log(data.delta.y);
+
+        
+
+            CheckEventTriggerDragEndSub((data.delta.y > 0));
+
+    }
+
+    public void OnEndDrag(PointerEventData data)
+    {
+      //  CheckEventTriggerDragEnd();
     }
 
     public void CheckEventTriggerDragEnd()
