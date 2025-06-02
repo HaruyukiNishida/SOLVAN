@@ -9,6 +9,7 @@ public class Swipe : MonoBehaviour, IDragHandler
     public void OnDrag(PointerEventData data)
     {
         float deltaX = data.delta.x;
+        Debug.Log(data.clickTime);
 
         if (Mathf.Abs(deltaX) > swipeThreshold)
         {
@@ -23,7 +24,7 @@ public class Swipe : MonoBehaviour, IDragHandler
 
 public abstract class SwipeMenuItem : Swipe
 {
-    [SerializeField]protected TMP_Text _text;
+    [SerializeField] protected TMP_Text _text;
     protected Menu _menu;
 
     protected float value = 0;

@@ -42,7 +42,7 @@ public class CamPoint
 
     }
 
-    
+
 
     public Vector3 GetCorner(TypeCorners corner)
     {

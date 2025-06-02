@@ -7,50 +7,46 @@ public class Menu : MonoBehaviour
     [SerializeField] MondaiManager _mondaiManager;
 
     [SerializeField] GameObject _menuPanel;
+    [SerializeField] Title _title;
 
     public int mondaiCount;
-    public float interval;//”­¶ŠÔŠui1`‚P‚O‚†j
-    public float duration;//‰æ–Ê‚É‰f‚éŠÔi‚T`‚Q‚O‚†j
-    public int level;//Œ…i‚P`‚Rj
+    public float interval;//”­¶ŠÔŠu
+    public float duration;//‰æ–Ê‚É‰f‚éŠÔ
+    public int level;//Œ…
 
     public int mode;//oŒ»•û®i‚Qƒpƒ^[ƒ“j
 
-
+    private bool active;
     //“Ç‚İã‚°‰¹ºONOFF
-    //oŒ»•û–@
-    //
 
-    //”Õ‚ÌŒX‚«
 
     private void Awake()
     {
+        active = false;
         _menuPanel.SetActive(false);
     }
 
     void Start()
     {
-        mondaiCount = 3;
-        interval = 5;
-        duration = 5;
+        mondaiCount = 5;
+        interval = 5.0f;
+        duration = 5.0f;
         level = 1;
-        
+
         mode = 1;
 
     }
 
-    public void UpdateMenu()
-    {
-        
-    }
-
-
-
-
     public void Toggle()
     {
-        _menuPanel.gameObject.SetActive(!_menuPanel.gameObject.activeSelf);
+        active = !active;
 
-        _btnManager.BtnIntaractable(!_menuPanel.gameObject.activeSelf);
+      //  _menuPanel.gameObject.SetActive(!_menuPanel.gameObject.activeSelf);
+        _menuPanel.gameObject.SetActive(active);
+
+        _btnManager.BtnIntaractable(!active);
+
+        _title.LogoDisp(!active);
 
         _mondaiManager.MondaiDestroy();
     }

@@ -18,7 +18,6 @@ public class VanManager : MonoBehaviour
     public void UpdateTotal()
     {
         _gameDirector.Calc();
-
     }
 
     public void UpdateTotalDisp()
@@ -43,24 +42,19 @@ public class VanManager : MonoBehaviour
             ketas[i].SetTamasInit();
         }
 
-
     }
 
     public void VanReset()
     {
         VanSet(0);
-
-        UpdateTotalDisp();
     }
 
     public void VanUndo(int subTotal)
     {
         VanSet(subTotal);
-
-        UpdateTotalDisp();
     }
 
-    public void VanSet(int value)
+    private void VanSet(int value)
     {
         for (int i = 0; i < ketas.Length; i++)
         {
@@ -68,7 +62,6 @@ public class VanManager : MonoBehaviour
             value /= 10;
         }
     }
-
 
     public int GetTotal()
     {

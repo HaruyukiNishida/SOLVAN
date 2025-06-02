@@ -5,15 +5,15 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private AudioMixer audioMixer;
-
-    [SerializeField] private AudioClip[] audioClip;
+    [SerializeField] private AudioMixer _audioMixer;
+    [SerializeField] private AudioClip[] _audioClip;
+    [SerializeField, Range(20, -80)] private int volume = 0;
 
     private Dictionary<string, AudioClip> clips = new Dictionary<string, AudioClip>();
-
+    private AudioSource _audioSource;
     //  private List<SoundList> soundList = new List<SoundList>();
 
-    [SerializeField, Range(20, -80)] private int volume = 0;
+
 
 
 
@@ -40,9 +40,10 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        audioMixer.SetFloat("VolumeSE", volume);
+        _audioMixer.SetFloat("VolumeSE", volume);
+        _audioSource = GetComponent<AudioSource>();
 
-        foreach (var clip in audioClip)
+        foreach (var clip in _audioClip)
         {
             clips.Add(clip.name, clip);
         }
@@ -67,8 +68,7 @@ public class AudioManager : MonoBehaviour
     {
         if (clips.ContainsKey(clipname))
         {
-            //   Debug.Log(clipname);
-            GetComponent<AudioSource>().PlayOneShot(clips[clipname]);
+            _audioSource.PlayOneShot(clips[clipname]);
         }
         else
         {

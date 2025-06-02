@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class TamaManager : MonoBehaviour
@@ -28,7 +27,6 @@ public class TamaManager : MonoBehaviour
         }
         return true;
     }
-
 
     public int GetSubTotal()
     {
@@ -66,5 +64,4 @@ public class TamaManager : MonoBehaviour
             tamas[i].TamaPosInit();
         }
     }
-
 }

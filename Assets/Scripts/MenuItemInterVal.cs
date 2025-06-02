@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class MenuItemInterval : SwipeMenuItem
 {
-    public float min = 0.1f;
+    public float min = 0.5f;
     public float max = 10.0f;
 
     private new void Awake()
@@ -16,14 +15,14 @@ public class MenuItemInterval : SwipeMenuItem
         value = _menu.interval;
         ValueDisp(value);
         swipeThreshold = 10f; // スワイプ感度設定
-        
+
     }
 
     protected override void HandleSwipe(float deltaX)
     {
-        float amount = 0.1f;
+        float amount = 0.5f;
 
-        if (Mathf.Abs(deltaX) > 30) amount = 1.0f;
+        //if (Mathf.Abs(deltaX) > 30) amount = 1.0f;
 
         value = Mathf.Clamp(value + (deltaX > 0 ? amount : -amount), min, max);
 
