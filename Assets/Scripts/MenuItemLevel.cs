@@ -33,6 +33,8 @@ public class MenuItemLevel : SwipeMenuItem
 
         }
 
+        if (Mathf.Abs(deltaX) < 40) value = 2;
+
         _menu.level = (int)value;
 
         ValueDisp((int)value);

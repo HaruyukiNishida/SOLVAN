@@ -27,6 +27,7 @@ public class GameDirector : MonoBehaviour
 
 
     public bool gameActive = false;
+    public bool isClear = false;
 
     private void Awake()
     {
@@ -41,14 +42,20 @@ public class GameDirector : MonoBehaviour
         Screen.autorotateToPortraitUpsideDown = true;
 
         gameActive = false;
+        isClear = false;
+
     }
 
     private void Update()
     {
+        if (isClear) return;
+
         if (gameActive && currentCount >= _menu.mondaiCount)
         {
-            Time.timeScale = 0;
-            GameClear();
+            isClear = true; ;
+
+            Invoke("GameClear", 1f);
+        //    GameClear();
         }
     }
 
@@ -60,6 +67,8 @@ public class GameDirector : MonoBehaviour
         countMax = _menu.mondaiCount;   //–â‘è”
         subTotal = 0;   //Œ»İ‚Ì¬Œv
         answer = 0;
+
+        isClear = false;
 
         if (!gameActive)
         {
@@ -74,7 +83,7 @@ public class GameDirector : MonoBehaviour
         }
         else
         {
-            //Restart‚Ìˆ—
+            //Retry‚Ìˆ—
             _vanManager.VanReset();
             _mondaiManager.MondaiRestart();
         }
@@ -84,10 +93,11 @@ public class GameDirector : MonoBehaviour
 
     public void GameQuit()
     {
+        gameActive = false;
+     
         _vanManager.VanReset();
         _mondaiManager.MondaiDestroy();
-        gameActive = false;
-
+        
         _btnManager.BtnDisp(false);
         _title.LogoDisp(true);
     }
@@ -103,18 +113,6 @@ public class GameDirector : MonoBehaviour
         currentTotal = _vanManager.GetTotal();
 
 
-        /*
-        int sum = 0;
-        for (int i = 0; i <= currentCount; i++)
-        {
-            sum += mondaiList[i].num;
-        }
-        
-        if (currentSum == sum)
-        {
-            MondaiHit(currentCount);
-        }
-        */
 
         for (int i = 0; i < mondaiList.Count; i++)
         {
@@ -143,6 +141,8 @@ public class GameDirector : MonoBehaviour
 
     void GameClear()
     {
+        Time.timeScale = 0;
+
         answer = _mondaiManager.GetAnswer();
 
         _pauseMenu.GameClear(answer);

@@ -20,4 +20,12 @@ public class AtlasManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public Sprite GetSprite(int num)
+    {
+        return spriteAtlas.GetSprite(num.ToString()); ;
+    }
+
+
+
 }

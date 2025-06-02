@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Suji : MonoBehaviour
@@ -6,7 +8,7 @@ public class Suji : MonoBehaviour
     SpriteRenderer _tens;
     SpriteRenderer _handreds;
 
-    Sprite[] digitSprites;
+    SpriteRenderer[] _sprites;
 
     void Awake()
     {
@@ -15,8 +17,10 @@ public class Suji : MonoBehaviour
         Transform handreds = transform.Find("handreds");
 
         _ones = ones.GetComponent<SpriteRenderer>();
-        _tens = ones.GetComponent<SpriteRenderer>();
-        _handreds = ones.GetComponent<SpriteRenderer>();
+        _tens = tens.GetComponent<SpriteRenderer>();
+        _handreds = handreds.GetComponent<SpriteRenderer>();
+
+        _sprites = GetComponentsInChildren<SpriteRenderer>();
 
     }
 
@@ -44,9 +48,9 @@ public class Suji : MonoBehaviour
             int tens = (number / 10) % 10;
             int ones = number % 10;
 
-            _handreds.sprite = digitSprites[hundreds];
-            _tens.sprite = digitSprites[tens];
-            _ones.sprite = digitSprites[ones];
+            _handreds.sprite = AtlasManager.instance.GetSprite(hundreds);
+            _tens.sprite = AtlasManager.instance.GetSprite(tens);
+            _ones.sprite = AtlasManager.instance.GetSprite(ones);
         }
         else if (number >= 10)
         {
@@ -57,8 +61,8 @@ public class Suji : MonoBehaviour
 
             int tens = number / 10;
             int ones = number % 10;
-            _tens.sprite = digitSprites[tens];
-            _ones.sprite = digitSprites[ones];
+            _tens.sprite = AtlasManager.instance.GetSprite(tens);
+            _ones.sprite = AtlasManager.instance.GetSprite(ones);
         }
         else
         {
@@ -67,14 +71,28 @@ public class Suji : MonoBehaviour
             _tens.gameObject.SetActive(false);
             _ones.gameObject.SetActive(true);
 
-            _ones.sprite = digitSprites[number];
+            _ones.sprite = AtlasManager.instance.GetSprite(number);
         }
-
     }
 
+    public SpriteRenderer[] GetSprites()
+    {
+        return _sprites;
+    }
 
+    internal void setAlpha()
+    {
+        foreach (var sprite in _sprites)
+        {
+         //   if (sprite.gameObject.activeSelf)
+            {
+                var color = sprite.color;
+                color.a = 1f;
 
-
+                sprite.color = color;
+            }
+        }
+    }
 }
 
 

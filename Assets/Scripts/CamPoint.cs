@@ -10,7 +10,6 @@ public class CamPoint
     //今作で競合がおこる事はないだろうけど一応
     private static readonly object lockObj = new object(); // スレッドセーフ対策
 
-
     private Vector3 _topLeft;
     private Vector3 _topRight;
     private Vector3 _bottomLeft;

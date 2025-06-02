@@ -67,6 +67,7 @@ public class MondaiManager : MonoBehaviour
             }
 
             answer += mondaiList[i].num;
+            mondaiList[i].MondaiInit();
         }
 
         MondaiActive();
@@ -114,7 +115,7 @@ public class MondaiManager : MonoBehaviour
 
         mondai.transform.position = new Vector3(x, y, mondaiPosZ);
         mondai.transform.localScale = Vector3.one;
-        mondai.GetComponentInChildren<TextMeshPro>().color = new Color(0, 0, 0, 0);
+     //   mondai.GetComponentInChildren<TextMeshPro>().color = new Color(0, 0, 0, 0);
 
     }
     void MondaiArrangeLine(Mondai mondai)
@@ -132,7 +133,7 @@ public class MondaiManager : MonoBehaviour
     void MondaiArrangeRight(Mondai mondai)
     {
         //   float coefficientX = 0.75f;
-        float coefficientY = 0.75f;
+        float coefficientY = 0.70f;
 
         float y1 = CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Top);
         float y2 = CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Bottom);
@@ -184,8 +185,10 @@ public class MondaiManager : MonoBehaviour
         {
             StopCoroutine(coroutine);
         }
+
         for (int i = 0; i < mondaiCount; i++)
         {
+            mondaiList[i].MondaiInit();
             mondaiList[i].MondaiRestart();
         }
 

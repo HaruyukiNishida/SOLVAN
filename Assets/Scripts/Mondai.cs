@@ -6,12 +6,9 @@ public partial class Mondai : MonoBehaviour
 {
     [SerializeField] GameDirector _gameDirector;
     [SerializeField] Menu _menu;
-    [SerializeField] SpriteRenderer _ones;
-    [SerializeField] SpriteRenderer _tens;
-    [SerializeField] SpriteRenderer _handreds;
 
-
-    private TMP_Text tmpTxt;
+    private Suji _suji;
+    private TMP_Text _tmpTxt;
 
     public int num;
     public MondaiStatus status;
@@ -23,10 +20,19 @@ public partial class Mondai : MonoBehaviour
 
     private void Awake()
     {
-        tmpTxt = GetComponentInChildren<TextMeshPro>();
-        tmpTxt.color = Color.white;
-        tmpTxt.enabled = false;
+        _tmpTxt = GetComponentInChildren<TextMeshPro>();
 
+        if (_tmpTxt != null)
+        {
+         //   _tmpTxt.enabled = false;
+        }
+
+        _suji = GetComponentInChildren<Suji>();
+
+        if (_suji != null)
+        {
+            _suji.enabled = false;
+        }
     }
 
 
@@ -46,22 +52,32 @@ public partial class Mondai : MonoBehaviour
         _menu = menu;
     }
 
-    private void MondaiInit()
+    public void MondaiInit()
     {
-        tmpTxt.text = num.ToString();
-        tmpTxt.color = defaultColor;
-        tmpTxt.enabled = true;
+        if (_suji != null)
+        {
+         //   _suji.enabled = true;
+            _suji.SetSprite(num);
+            _suji.setAlpha();
+        }
+
+        if (_tmpTxt != null)
+        {
+         //   _tmpTxt.enabled = true;
+            _tmpTxt.text = num.ToString();
+            _tmpTxt.color = defaultColor;
+        }
 
         mode = _menu.mode;
         duration = _menu.duration;
-
-        status = MondaiStatus.Active;
 
     }
 
     public void MoveRightToLeft()
     {
         MondaiInit();
+        status = MondaiStatus.Active;
+
         mode = 1;
 
         Vector3 startPos = transform.position;
@@ -92,6 +108,8 @@ public partial class Mondai : MonoBehaviour
     public void Scaling()
     {
         MondaiInit();
+        status = MondaiStatus.Active;
+
         mode = 0;
 
         Vector3 startScale = transform.localScale;
@@ -123,8 +141,17 @@ public partial class Mondai : MonoBehaviour
         status = MondaiStatus.StandBy;
         StopAllCoroutines();
 
+        if (_tmpTxt != null)
+        {
+            _tmpTxt.color = defaultColor;
+        }
 
-        tmpTxt.color = defaultColor;
+        if(_suji!=null)
+        {
+            _suji.setAlpha();
+
+        }
+
 
         if (mode == 0)
         {
@@ -144,28 +171,58 @@ public partial class Mondai : MonoBehaviour
 
     public void MondaiGone()
     {
+        status = MondaiStatus.Gone;
         AudioManager.instance.PlaySE(TypePlaySE.spunch);
 
-        tmpTxt.color = Color.black;
+        if (_tmpTxt != null)
+        {
+            _tmpTxt.color = Color.black;
+            StartCoroutine(MondaiGoneSub());
+        }
 
-        status = MondaiStatus.Gone;
+        if (_suji != null)
+        {
+            StartCoroutine(MondaiGoneSub2());
 
-        StartCoroutine(MondaiGoneSub());
+        }
 
     }
 
     IEnumerator MondaiGoneSub()
     {
-        var color = tmpTxt.color;
+        var color = _tmpTxt.color;
 
         for (int i = 255; i >= 0; i -= 16)
         {
             color -= alphaColor;
-            tmpTxt.color = color;
+            _tmpTxt.color = color;
 
             yield return new WaitForSeconds(0.01f);
         }
+    }
 
+    IEnumerator MondaiGoneSub2()
+    {
+        var sprites = _suji.GetSprites();
+
+
+        for (int i = 255; i >= 0; i -= 16)
+        {
+            foreach (var sprite in sprites)
+            {
+
+                if (sprite.gameObject.activeSelf)
+                {
+                    var color = sprite.color;
+                    sprite.color -= alphaColor;
+
+                }
+
+
+            }
+            yield return new WaitForSeconds(0.01f);
+
+        }
     }
 
     public void Destroy()
