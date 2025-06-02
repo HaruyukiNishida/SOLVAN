@@ -9,7 +9,6 @@ public class Swipe : MonoBehaviour, IDragHandler
     public void OnDrag(PointerEventData data)
     {
         float deltaX = data.delta.x;
-        Debug.Log(data.clickTime);
 
         if (Mathf.Abs(deltaX) > swipeThreshold)
         {

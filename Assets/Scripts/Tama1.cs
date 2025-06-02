@@ -95,7 +95,7 @@ public class Tama1 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
                 if (_tamaManager.IsTamasStop())
                 {
                     _vanManager.UpdateTotal();
-                        _audioSource.PlayOneShot((moveStatus == TamaStatus.On) ? click1 : click2);
+                    _audioSource.PlayOneShot((moveStatus == TamaStatus.On) ? click1 : click2);
                 }
 
 
@@ -116,57 +116,31 @@ public class Tama1 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
         swipeStartPos = data.position;
     }
 
-    public void CheckEventTriggerDragBegin()
-    {
-        if (!IsTamaStop(this)) return;
-
-        swipeStartPos = Input.mousePosition;
-        //      swipeStartPos = Input.GetTouch(0).position;
-    }
-
     public void OnDrag(PointerEventData data)
     {
-        //Debug.Log(data.delta.y);
+        Debug.Log(data.delta.y);
 
-        
-
+        if (Mathf.Abs(data.delta.y) > 10)
+        {
             CheckEventTriggerDragEndSub((data.delta.y > 0));
-
+        }
     }
 
     public void OnEndDrag(PointerEventData data)
     {
-      //  CheckEventTriggerDragEnd();
+        //  CheckEventTriggerDragEnd();
     }
 
-    public void CheckEventTriggerDragEnd()
+    public virtual void CheckEventTriggerDragEndSub(bool deltaY)
     {
-        if (!IsTamaStop(this)) return;
-
-        swipeEndPos = Input.mousePosition;
-        //  swipeEndPos = Input.GetTouch(0).position;
-
-        //  var delta = Input.GetTouch(0).deltaPosition;
-
-
-
-        float vec = swipeStartPos.y - swipeEndPos.y;
-
-        CheckEventTriggerDragEndSub((vec < 0));
-    }
-
-    public virtual void CheckEventTriggerDragEndSub(bool vec)
-    {
-        if (moveStatus == TamaStatus.Off && vec)
+        if (moveStatus == TamaStatus.Off && deltaY)
         {
             SetTamaMove(TamaStatus.Up);
-
         }
 
-        if (moveStatus == TamaStatus.On && !vec)
+        if (moveStatus == TamaStatus.On && !deltaY)
         {
             SetTamaMove(TamaStatus.Down);
-
         }
     }
 

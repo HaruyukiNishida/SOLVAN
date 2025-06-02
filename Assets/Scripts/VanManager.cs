@@ -20,11 +20,6 @@ public class VanManager : MonoBehaviour
         _gameDirector.Calc();
     }
 
-    public void UpdateTotalDisp()
-    {
-        _gameDirector.TotalDisp();
-    }
-
 
     public void VanRotate()
     {
