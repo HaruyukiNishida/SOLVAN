@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Suji : MonoBehaviour
@@ -21,17 +19,6 @@ public class Suji : MonoBehaviour
         _handreds = handreds.GetComponent<SpriteRenderer>();
 
         _sprites = GetComponentsInChildren<SpriteRenderer>();
-
-    }
-
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
 
     }
 

@@ -25,7 +25,4 @@ public class AtlasManager : MonoBehaviour
     {
         return spriteAtlas.GetSprite(num.ToString()); ;
     }
-
-
-
 }
