@@ -54,6 +54,8 @@ public class Menu : MonoBehaviour
         _title.LogoDisp(!active);
 
         _mondaiManager.MondaiDestroy();
+
+        if(active) AudioManager.instance.PlaySE(TypePlaySE.WadaikoDon);
     }
 
     public void Demo()
