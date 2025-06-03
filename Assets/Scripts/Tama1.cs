@@ -86,8 +86,6 @@ public class Tama1 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
             }
             else
             {
-
-
                 moveStatus = GetIsOn();
 
                 transform.position = endPos;

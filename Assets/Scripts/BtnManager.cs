@@ -22,9 +22,14 @@ public class BtnManager : MonoBehaviour
         _pauseBtn.SetActive(active);
     }
 
-    public void BtnIntaractable(bool interactable)
+    public void BtnIntaractableStartAndUndo(bool interactable)
     {
         _startBtn.GetComponent<Button>().interactable = interactable;
         _undoBtn.GetComponent<Button>().interactable = interactable;
+    }
+
+    public void BtnIntaractablePause(bool interactable)
+    {
+        _pauseBtn.GetComponent<Button>().interactable = interactable;
     }
 }

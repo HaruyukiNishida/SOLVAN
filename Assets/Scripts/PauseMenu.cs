@@ -1,10 +1,12 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameDirector _gameDirector;
     [SerializeField] BtnManager _btnManager;
+    [SerializeField] GameObject _pauseMenuPanel;
     [SerializeField] TMP_Text _titleText;
     [SerializeField] TMP_Text _answerText;
     [SerializeField] TMP_Text _countText;
@@ -12,7 +14,7 @@ public class PauseMenu : MonoBehaviour
 
     private bool _active = false;
 
-    private void Awake()
+    private void Start()
     {
         PauseMenuInit();
     }
@@ -23,23 +25,22 @@ public class PauseMenu : MonoBehaviour
 
         PauseMenuTitle(false);
 
-        this.gameObject.SetActive(false);
+        _pauseMenuPanel.SetActive(false);
     }
 
     public void Toggle()
     {
         _active = !_active;
+        Time.timeScale = (!_active) ? 1.0f : 0f;
 
         SetPauseMenu(_active);
     }
 
     void SetPauseMenu(bool active)
     {
-        this.gameObject.SetActive(active);
+        _pauseMenuPanel.SetActive(active);
 
-        _btnManager.BtnIntaractable(!active);
-
-        Time.timeScale = (!active) ? 1.0f : 0f;
+        _btnManager.BtnIntaractableStartAndUndo(!active);
 
         if (active)
         {
@@ -63,13 +64,13 @@ public class PauseMenu : MonoBehaviour
 
     public void GameClear(int answer)
     {
-        _active = false;
+        _btnManager.BtnIntaractablePause(false);
 
-        Toggle();
+        SetPauseMenu(true);
 
         PauseMenuTitle(true);
 
-        PauseMenuUpdate();
+        //PauseMenuUpdate();
     }
 
     void PauseMenuTitle(bool clear)
@@ -95,7 +96,7 @@ public class PauseMenu : MonoBehaviour
     {
         PauseMenuInit();
 
-        _btnManager.BtnIntaractable(true);
+        _btnManager.BtnIntaractableStartAndUndo(true);
 
         Time.timeScale = 1.0f;
     }

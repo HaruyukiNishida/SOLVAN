@@ -57,16 +57,17 @@ public partial class Mondai : MonoBehaviour
 
     public void MondaiInit()
     {
+       
+
         if (_suji != null)
-        {
-         //   _suji.enabled = true;
+        { 
+            Debug.LogWarning(num);
             _suji.SetSprite(num);
             _suji.setAlpha();
         }
 
         if (_tmpTxt != null)
         {
-         //   _tmpTxt.enabled = true;
             _tmpTxt.text = num.ToString();
             _tmpTxt.color = defaultColor;
         }

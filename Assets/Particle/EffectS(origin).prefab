@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7937056537187575675}
   - component: {fileID: 2170146585521687206}
   m_Layer: 0
-  m_Name: EffectS 1
+  m_Name: EffectS(origin)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

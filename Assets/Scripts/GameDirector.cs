@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameDirector : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _countTxt;
-    [SerializeField] TextMeshProUGUI _answerTxt;
+    [SerializeField] TextMeshProUGUI _hitTxt;
     [SerializeField] VanManager _vanManager;
     [SerializeField] MondaiManager _mondaiManager;
     [SerializeField] BtnManager _btnManager;
@@ -90,6 +90,8 @@ public class GameDirector : MonoBehaviour
 
         TotalDisp();
         _btnManager.BtnDisp(gameActive);
+        _btnManager.BtnIntaractablePause(true);
+
     }
 
     public void GameQuit()
@@ -101,6 +103,8 @@ public class GameDirector : MonoBehaviour
 
         _btnManager.BtnDisp(false);
         _title.LogoDisp(true);
+
+        TotalDisp();
     }
 
     public void Calc()
@@ -138,19 +142,19 @@ public class GameDirector : MonoBehaviour
 
     void GameClear()
     {
-        Time.timeScale = 0;
-
         answer = _mondaiManager.GetAnswer();
 
         _pauseMenu.GameClear(answer);
 
+        GameObject.FindFirstObjectByType<GameClear>().ClearSub(hitCount == countMax);
     }
+
 
     public void TotalDisp()
     {
-        _countTxt.text = $"{currentCount} / {_menu.mondaiCount}";
+        _countTxt.text = (gameActive) ? $"{currentCount} / {_menu.mondaiCount}" : string.Empty;
 
-        _answerTxt.text = $"{hitCount}";
+        _hitTxt.text = (gameActive) ? $"{hitCount} Hit" : string.Empty;
 
     }
 

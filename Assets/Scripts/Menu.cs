@@ -44,7 +44,7 @@ public class Menu : MonoBehaviour
       //  _menuPanel.gameObject.SetActive(!_menuPanel.gameObject.activeSelf);
         _menuPanel.gameObject.SetActive(active);
 
-        _btnManager.BtnIntaractable(!active);
+        _btnManager.BtnIntaractableStartAndUndo(!active);
 
         _title.LogoDisp(!active);
 
