@@ -1,43 +1,62 @@
 using System;
+using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = System.Random;
 
-public class RandomMake
+public static class RandomMake
 {
-    private int[][] levels = new int[][]
+    private static int[][] levels = new int[][]
  {
+    new int[] { 100, 0, 0 },
     new int[] { 90, 10, 0 },
-    new int[] { 70, 20, 10 },
-    new int[] { 50, 30, 20 }
+    new int[] { 85, 15, 0 },
+    new int[] { 75, 25, 0 },
+    new int[] { 25, 75, 0 },
+    new int[] { 10, 90, 0 },
+    new int[] { 10, 80, 10 },
+    new int[] { 10, 50, 40 },
+    new int[] { 0, 50, 50 },
+    new int[] { 0, 0, 100 }
  };
 
-    public int[] GetRandoms(int lvl, int count)
-    {
-        var randoms = new int[count];
-        
+    static List<int> randoms;
+    static Random rand;
 
+    public static List<int> GetRandoms(int lvl, int count)
+    {
+        List<int> randoms = new List<int>();
         Random rand = new Random();
+
+        int[] ranges = { 1, 10, 100 };
+        int[] probabilities = levels[lvl];
 
         for (int i = 0; i < count; i++)
         {
-            var percent = rand.Next(1, 100);
+            int percent = rand.Next(1, 101);
+            int sum = 0;
 
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < probabilities.Length; j++)
             {
-                if (percent < levels[lvl][j])
+                sum += probabilities[j];
+                if (percent <= sum)
                 {
-                    randoms[i] = rand.Next(1, (int)Mathf.Pow(10, lvl));
+                    randoms.Add(rand.Next(ranges[j], ranges[j] * 10));
+                    break;
                 }
             }
         }
 
+        var str = $"Level:{lvl} count:{randoms.Count} / ";
 
-        for (int i = 0;i<randoms.Length;i++)
+        for (int i = 0; i < randoms.Count; i++)
         {
-            str += randoms[i] + "/";
+            str += randoms[i].ToString() + " / ";
         }
         Debug.Log(str);
 
         return randoms;
+
     }
+
 }

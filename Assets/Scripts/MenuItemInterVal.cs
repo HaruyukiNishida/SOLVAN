@@ -2,12 +2,14 @@
 
 public class MenuItemInterval : SwipeMenuItem
 {
-    public float min = 0.5f;
-    public float max = 10.0f;
+    float min = 0.5f;
+    float max = 20.0f;
 
     private new void Awake()
     {
         base.Awake();
+        min = _menu.interval_min;
+        max = _menu.interval_max;
     }
 
     private void Start()
@@ -21,8 +23,6 @@ public class MenuItemInterval : SwipeMenuItem
     protected override void HandleSwipe(float deltaX)
     {
         float amount = 0.5f;
-
-        //if (Mathf.Abs(deltaX) > 30) amount = 1.0f;
 
         value = Mathf.Clamp(value + (deltaX > 0 ? amount : -amount), min, max);
 

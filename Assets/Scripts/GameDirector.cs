@@ -53,8 +53,8 @@ public class GameDirector : MonoBehaviour
         {
             isClear = true; ;
 
-            Invoke("GameClear", 1f);
-            //    GameClear();
+          //  Invoke("GameClear", 1f);
+               GameClear();
         }
     }
 
@@ -75,7 +75,7 @@ public class GameDirector : MonoBehaviour
             gameActive = true;
 
             _vanManager.VanReset();
-            _mondaiManager.MondaiInit();
+            _mondaiManager.MondaiManagerInit();
 
             _pauseMenu.PauseMenuInit();
 

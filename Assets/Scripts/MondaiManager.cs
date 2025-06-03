@@ -10,6 +10,7 @@ public class MondaiManager : MonoBehaviour
     [SerializeField] Menu _menu;
 
     List<Mondai> mondaiList = new List<Mondai>();
+    List<int> nums = new List<int>();
 
     private Coroutine coroutine;
 
@@ -47,12 +48,14 @@ public class MondaiManager : MonoBehaviour
     }
 
 
-    public void MondaiInit()
+    public void MondaiManagerInit()
     {
         SetParamFromMenu();
-        mondaiList.Clear();
 
-       // List<int> ints = RandomMake.GetRandoms(level,mondaiCount);
+        mondaiList.Clear();
+        nums.Clear();
+
+        nums = RandomMake.GetRandoms(level, mondaiCount);
 
         for (int i = 0; i < mondaiCount; i++)
         {
@@ -82,7 +85,7 @@ public class MondaiManager : MonoBehaviour
         mondai.DependencyInjection(_gameDirector);
         mondai.DependencyInjection(_menu);
 
-        mondai.GetComponent<Mondai>().num = MondaiNumMake();
+        mondai.GetComponent<Mondai>().num = nums[i];
 
         mondaiList.Add(mondai);
     }
@@ -115,10 +118,12 @@ public class MondaiManager : MonoBehaviour
 
 
         mondai.transform.position = new Vector3(x, y, mondaiPosZ);
-        mondai.transform.localScale = Vector3.one;
-     //   mondai.GetComponentInChildren<TextMeshPro>().color = new Color(0, 0, 0, 0);
+     //   mondai.transform.localScale = Vector3.one;
+        mondai.SujiAlpha(false);
+
 
     }
+
     void MondaiArrangeLine(Mondai mondai)
     {
         var dx = CamPoint.Instance.GetBorder(CamPoint.TypeBorders.Left);

@@ -60,7 +60,7 @@ public partial class Mondai : MonoBehaviour
         if (_suji != null)
         { 
             _suji.SetSprite(num);
-            _suji.setAlpha();
+            SujiAlpha(false);
         }
 
         if (_tmpTxt != null)
@@ -79,6 +79,7 @@ public partial class Mondai : MonoBehaviour
         MondaiInit();
         status = MondaiStatus.Active;
 
+        SujiAlpha(true);
         mode = 1;
 
         Vector3 startPos = transform.position;
@@ -111,9 +112,10 @@ public partial class Mondai : MonoBehaviour
         MondaiInit();
         status = MondaiStatus.Active;
 
+        SujiAlpha(true);
         mode = 0;
 
-        Vector3 startScale = transform.localScale;
+        Vector3 startScale = new Vector3(0.5f, 0.5f, 1f); ;
         Vector3 endScale = new Vector3(2f, 2f, 1f);
 
         StartCoroutine(ScalingSub(startScale, endScale));
@@ -126,12 +128,17 @@ public partial class Mondai : MonoBehaviour
         while (elapsed < duration && status == MondaiStatus.Active)
         {
             transform.localScale = Vector3.Lerp(startScale, endScale, Mathf.Clamp01(elapsed / duration));
+
+             //  transform.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(0f, 1080f, Mathf.Clamp01(elapsed / duration)));
+
             elapsed += Time.deltaTime;
             yield return null;
         }
 
         //   transform.localScale = endScale; // ÅIˆÊ’u‚ðŠm’è
         status = MondaiStatus.Gone;
+        _suji.setAlpha(false);
+
         _gameDirector.CountUp(num);
 
 
@@ -149,7 +156,8 @@ public partial class Mondai : MonoBehaviour
 
         if(_suji!=null)
         {
-            _suji.setAlpha();
+            SujiAlpha(false);
+
 
         }
 
@@ -230,6 +238,12 @@ public partial class Mondai : MonoBehaviour
 
         }
     }
+
+    public void SujiAlpha(bool visible)
+    {
+        _suji.setAlpha(visible);
+    }
+
 
     public void Destroy()
     {

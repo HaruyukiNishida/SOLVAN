@@ -67,14 +67,14 @@ public class Suji : MonoBehaviour
         return _sprites;
     }
 
-    internal void setAlpha()
+    public void setAlpha(bool visible)
     {
         foreach (var sprite in _sprites)
         {
-         //   if (sprite.gameObject.activeSelf)
+            //   if (sprite.gameObject.activeSelf)
             {
                 var color = sprite.color;
-                color.a = 1f;
+                color.a = (visible) ? 1f : 0f;
 
                 sprite.color = color;
             }
