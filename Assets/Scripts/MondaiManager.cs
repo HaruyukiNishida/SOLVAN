@@ -52,6 +52,8 @@ public class MondaiManager : MonoBehaviour
         SetParamFromMenu();
         mondaiList.Clear();
 
+       // List<int> ints = RandomMake.GetRandoms(level,mondaiCount);
+
         for (int i = 0; i < mondaiCount; i++)
         {
             MondaiMake(i);

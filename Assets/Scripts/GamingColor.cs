@@ -18,7 +18,7 @@ public class GamingColor : MonoBehaviour
             // このクラスのインスタンスを設定
             instance = this;
             // シーンが切り替わってもオブジェクトが破棄されないように設定
-         //   DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
