@@ -101,7 +101,7 @@ public partial class Mondai : MonoBehaviour
         }
         //    transform.position = endPos; // 最終位置を確定
         status = MondaiStatus.Gone;
-        _gameDirector.CountUp();
+        _gameDirector.CountUp(num);
 
     }
 
@@ -131,7 +131,7 @@ public partial class Mondai : MonoBehaviour
 
         //   transform.localScale = endScale; // 最終位置を確定
         status = MondaiStatus.Gone;
-        _gameDirector.CountUp();
+        _gameDirector.CountUp(num);
 
 
     }
@@ -183,7 +183,6 @@ public partial class Mondai : MonoBehaviour
         if (_suji != null)
         {
             StartCoroutine(MondaiGoneSub2());
-
         }
 
     }

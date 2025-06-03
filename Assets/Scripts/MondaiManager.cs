@@ -42,6 +42,7 @@ public class MondaiManager : MonoBehaviour
         mondaiCount = _menu.mondaiCount;
         mode = _menu.mode;
 
+        answer = 0;
         hitFlag = false;
     }
 
