@@ -4,14 +4,17 @@ using UnityEngine;
 
 public partial class Mondai : MonoBehaviour
 {
-    [SerializeField] GameDirector _gameDirector;
-    [SerializeField] Menu _menu;
+    [SerializeField]GameObject _hitEffect;
 
-    private Suji _suji;
-    private TMP_Text _tmpTxt;
+    GameDirector _gameDirector;
+    Menu _menu;
+
+    Suji _suji;
+    TMP_Text _tmpTxt;
 
     public int num;
     public MondaiStatus status;
+
     private int mode;
     private float duration;
 
@@ -173,6 +176,12 @@ public partial class Mondai : MonoBehaviour
     {
         status = MondaiStatus.Gone;
         AudioManager.instance.PlaySE(TypePlaySE.spunch);
+
+        if(_hitEffect != null)
+        {
+            Instantiate(_hitEffect, transform.position, Quaternion.identity);
+            Debug.Log("Effect");
+        }
 
         if (_tmpTxt != null)
         {

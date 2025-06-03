@@ -181,8 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94295c2e97244654a82ba82135111df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameDirector: {fileID: 0}
-  _menu: {fileID: 0}
+  _hitEffect: {fileID: 2880945999856679121, guid: f8c324419d421c34ba1868478ed57cd6, type: 3}
   num: 0
   status: 0
 --- !u!1 &4112815246800014215

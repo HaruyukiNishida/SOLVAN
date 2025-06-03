@@ -92,8 +92,6 @@ public class MondaiManager : MonoBehaviour
         return randNum;
     }
 
-
-
     void MondaiArrangeRandom(Mondai mondai)
     {
         //  float coefficientX = 400f;
