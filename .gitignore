@@ -73,11 +73,7 @@ crashlytics-build.properties
 .utmp/RelWithDebInfo/14464o1d/arm64-v8a/.cmake/api/v1/query/client-agp/cache-v2
 /.utmp/RelWithDebInfo
 /.utmp/tools
-connectwebgl.zip
-/WebGL Builds/Build
 /WebGL Builds
 /WebGLgithubBuilds/Build
 /WebGLgithubBuilds
-webgl_sharing
-/ProjectSettings/Packages
-/ProjectSettings
+ProjectSettings/Packages/com.unity.connect.share/Settings.json
