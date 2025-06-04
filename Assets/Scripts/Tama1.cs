@@ -116,7 +116,7 @@ public class Tama1 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
 
     public void OnDrag(PointerEventData data)
     {
-        Debug.Log(data.delta.y);
+        //Debug.Log(data.delta.y);
 
         if (Mathf.Abs(data.delta.y) > 10)
         {

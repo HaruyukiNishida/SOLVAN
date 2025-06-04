@@ -186,7 +186,6 @@ public partial class Mondai : MonoBehaviour
         if(_hitEffect != null)
         {
             Instantiate(_hitEffect, transform.position, Quaternion.identity);
-            Debug.Log("Effect");
         }
 
         if (_tmpTxt != null)

@@ -1,6 +1,6 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -9,8 +9,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject _pauseMenuPanel;
     [SerializeField] TMP_Text _titleText;
     [SerializeField] TMP_Text _answerText;
-    [SerializeField] TMP_Text _countText;
-    [SerializeField] TMP_Text _hitText;
+    [SerializeField] Image _rank;
 
     private bool _active = false;
 
@@ -22,6 +21,9 @@ public class PauseMenu : MonoBehaviour
     public void PauseMenuInit()
     {
         _active = false;
+
+        _rank.gameObject.SetActive(false);
+
 
         PauseMenuTitle(false);
 
@@ -45,6 +47,7 @@ public class PauseMenu : MonoBehaviour
         if (active)
         {
             PauseMenuUpdate();
+            AudioManager.instance.PlaySE(TypePlaySE.WadaikoDon);
         }
     }
 
@@ -56,15 +59,17 @@ public class PauseMenu : MonoBehaviour
         int max = _gameDirector.countMax;
         int answer = _gameDirector.answer;
 
-        _countText.text = $"{count} / {max}";
-        _hitText.text = $"{hit}";
+        _titleText.enabled = (answer == 0);
         _answerText.text = (answer == 0) ? "?????" : answer.ToString();
 
     }
 
-    public void GameClear(int answer)
+    public void GameClear()
     {
         _btnManager.BtnIntaractablePause(false);
+
+        _rank.gameObject.SetActive(true);
+        _rank.sprite = AtlasManager.instance.GetRankSprite(_gameDirector.rank);
 
         SetPauseMenu(true);
 
@@ -95,6 +100,8 @@ public class PauseMenu : MonoBehaviour
     private void PauseMenuExit()
     {
         PauseMenuInit();
+
+        _rank.sprite = null;
 
         _btnManager.BtnIntaractableStartAndUndo(true);
 

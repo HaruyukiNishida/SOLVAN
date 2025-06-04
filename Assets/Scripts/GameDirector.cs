@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -20,9 +21,9 @@ public class GameDirector : MonoBehaviour
     public int countMax;
     public int answer;
     public int currentCount;
+    public int rank;
 
     int currentTotal;
-    int subTotal;
     int currentAnswer;
 
     public bool gameActive = false;
@@ -53,8 +54,8 @@ public class GameDirector : MonoBehaviour
         {
             isClear = true; ;
 
-          //  Invoke("GameClear", 1f);
-               GameClear();
+            //  Invoke("GameClear", 1f);
+            GameClear();
         }
     }
 
@@ -64,9 +65,9 @@ public class GameDirector : MonoBehaviour
         currentTotal = 0;                 //
         currentCount = 0;               //¡‰½–â–ÚH
         countMax = _menu.mondaiCount;   //–â‘è”
-        subTotal = 0;   //Œ»Ý‚Ì¬Œv
+        currentAnswer = 0;   //Œ»Ý‚Ì¬Œv
         answer = 0;
-        currentAnswer = 0;
+        rank = 0;
 
         isClear = false;
 
@@ -80,6 +81,7 @@ public class GameDirector : MonoBehaviour
             _pauseMenu.PauseMenuInit();
 
             _title.LogoDisp(false);
+            AudioManager.instance.PlaySE(TypePlaySE.WadaikoDoDon);
         }
         else
         {
@@ -111,9 +113,9 @@ public class GameDirector : MonoBehaviour
     {
         if (!gameActive) return;
 
-        if (currentCount >= 10) return;
-
         mondaiList = _mondaiManager.GetMondaiList();
+
+     //   if (currentCount >= mondaiList.Count) return;
 
         currentTotal = _vanManager.GetTotal();
 
@@ -121,7 +123,7 @@ public class GameDirector : MonoBehaviour
         {
             if (mondaiList[i].status == MondaiStatus.Active)
             {
-                if (currentTotal == subTotal + mondaiList[i].num)
+                if (currentTotal == currentAnswer + mondaiList[i].num)
                 {
                     MondaiHit(i);
                     break;
@@ -136,7 +138,7 @@ public class GameDirector : MonoBehaviour
         _mondaiManager.hitFlag = true;
 
         hitCount++;
-        subTotal = currentTotal;
+        currentAnswer = currentTotal;
     }
 
 
@@ -144,11 +146,40 @@ public class GameDirector : MonoBehaviour
     {
         answer = _mondaiManager.GetAnswer();
 
-        _pauseMenu.GameClear(answer);
+        rank = GetRank();
+
+        _pauseMenu.GameClear();
 
         GameObject.FindFirstObjectByType<GameClear>().ClearSub(hitCount == countMax);
     }
 
+    public int GetRank()
+    {
+        float e_intarval = _menu.interval / _menu.interval_max;
+        float e_duration = _menu.duration / _menu.duration_max;
+        float e_level = _menu.level / 10;
+        float e_mondaiCount = _menu.mondaiCount / 20;
+        float e_hitCount = hitCount / _menu.mondaiCount;
+
+        float totalScore=
+           + e_intarval/2
+            + e_duration/2
+            + e_level
+            + e_mondaiCount
+            + e_hitCount;
+
+        totalScore = totalScore * 100 / 5;
+
+
+
+        int rankIndex = Mathf.Clamp(Mathf.FloorToInt(totalScore / 12.5f), 0, 7);
+
+        Debug.LogWarning(totalScore);
+
+        //rankIndex = 
+
+        return rankIndex;
+    }
 
     public void TotalDisp()
     {
@@ -160,13 +191,13 @@ public class GameDirector : MonoBehaviour
 
     public void UndoBtn()
     {
-        _vanManager.VanUndo(subTotal);
+        _vanManager.VanUndo(currentAnswer);
     }
 
     public void CountUp(int num)
     {
         currentCount++;
-        currentAnswer += num;
+     //   currentAnswer += num;
 
         TotalDisp();
     }

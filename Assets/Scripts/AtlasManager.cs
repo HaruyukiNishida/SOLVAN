@@ -23,6 +23,11 @@ public class AtlasManager : MonoBehaviour
 
     public Sprite GetSprite(int num)
     {
-        return spriteAtlas.GetSprite(num.ToString()); ;
+        return spriteAtlas.GetSprite(num.ToString());
+    }
+
+    public Sprite GetRankSprite(int rank)
+    {
+        return spriteAtlas.GetSprite("rank"+rank.ToString());
     }
 }
