@@ -16,10 +16,10 @@ public class Menu : MonoBehaviour
 
     public int mode;//出現方式（２パターン）
 
-    public float interval_min = 0.5f;
-    public float interval_max = 20f;
-    public float duration_min = 0.5f;
-    public float duration_max = 20f;
+    public float interval_min;
+    public float interval_max;
+    public float duration_min;
+    public float duration_max;
 
     private bool active;
     //読み上げ音声ONOFF
@@ -29,17 +29,22 @@ public class Menu : MonoBehaviour
     {
         active = false;
         _menuPanel.SetActive(false);
-    }
 
-    void Start()
-    {
+        interval_min = 2.5f;
+        interval_max = 15f;
+        duration_min = 2.5f;
+        duration_max = 15f;
+
         mondaiCount = 5;
         interval = 10.0f;
         duration = 10.0f;
         level = 0;
 
         mode = 1;
+    }
 
+    void Start()
+    {
     }
 
     public void Toggle()

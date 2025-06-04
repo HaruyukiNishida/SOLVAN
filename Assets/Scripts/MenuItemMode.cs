@@ -11,7 +11,7 @@ public class MenuItemMode : SwipeMenuItem
     {
         value = _menu.mode;
         _text.text = ModeString((int)value);
-        swipeThreshold = 10f; // スワイプ感度設定
+     //   swipeThreshold = 10f; // スワイプ感度設定
     }
 
     protected override void HandleSwipe(float deltaX)

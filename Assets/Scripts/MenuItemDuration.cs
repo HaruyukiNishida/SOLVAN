@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class MenuItemDuration : SwipeMenuItem
 {
-    float min = 0.5f;
-    float max = 20.0f;
+    float min;
+    float max;
 
     private new void Awake()
     {
         base.Awake();
-        min = _menu.duration_min;
-        max = _menu.duration_max;
     }
 
     private void Start()
-    {
+    { 
+        min = _menu.duration_min;
+        max = _menu.duration_max;
         value = _menu.duration;
         ValueDisp(value);
         swipeThreshold = 10f; // スワイプ感度設定
@@ -29,5 +29,4 @@ public class MenuItemDuration : SwipeMenuItem
 
         ValueDisp(value);
     }
-
 }

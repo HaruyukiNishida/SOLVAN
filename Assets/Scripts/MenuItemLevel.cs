@@ -12,7 +12,7 @@ public class MenuItemLevel : SwipeMenuItem
     {
         value = _menu.level;
         ValueDisp((int)value+1);
-        swipeThreshold = 30f; // スワイプ感度設定
+    //    swipeThreshold = 30f; // スワイプ感度設定
     }
 
     protected override void HandleSwipe(float deltaX)
