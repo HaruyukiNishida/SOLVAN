@@ -170,13 +170,9 @@ public class GameDirector : MonoBehaviour
 
         totalScore = totalScore * 100 / 5;
 
-
-
         int rankIndex = Mathf.Clamp(Mathf.FloorToInt(totalScore / 12.5f), 0, 7);
 
         Debug.LogWarning(totalScore);
-
-        //rankIndex = 
 
         return rankIndex;
     }

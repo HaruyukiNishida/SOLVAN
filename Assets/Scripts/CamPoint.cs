@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class CamPoint
 {
-    //instance は public static ではなく private static にする
-    //➡ public だと外部から instance を直接変更できてしまうので、Instance を通じてアクセスする形にする のが正しい
     private static CamPoint instance;
 
     //今作で競合がおこる事はないだろうけど一応
@@ -40,8 +38,6 @@ public class CamPoint
         }
 
     }
-
-
 
     public Vector3 GetCorner(TypeCorners corner)
     {

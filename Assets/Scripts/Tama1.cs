@@ -12,9 +12,6 @@ public class Tama1 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
     protected Vector3 onPos;
     protected Vector3 offPos;
 
-    private Vector3 swipeStartPos;
-    private Vector3 swipeEndPos;
-
     private float timer = 0f;
     private float speed = 10f;
     private float distance = 1.0f;
@@ -95,8 +92,6 @@ public class Tama1 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
                     _vanManager.UpdateTotal();
                     _audioSource.PlayOneShot((moveStatus == TamaStatus.On) ? click1 : click2);
                 }
-
-
             }
         }
     }
@@ -111,14 +106,12 @@ public class Tama1 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
     {
         if (!IsTamaStop(this)) return;
 
-        swipeStartPos = data.position;
+        //swipeStartPos = data.position;
     }
 
     public void OnDrag(PointerEventData data)
     {
-        //Debug.Log(data.delta.y);
-
-        if (Mathf.Abs(data.delta.y) > 10)
+        if (IsTamaStop(this) && Mathf.Abs(data.delta.y) > 10)
         {
             CheckEventTriggerDragEndSub((data.delta.y > 0));
         }

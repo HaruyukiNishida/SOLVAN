@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
@@ -12,27 +13,36 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Image _rank;
 
     private bool _active = false;
+    private Image _image;
 
     private void Start()
     {
         PauseMenuInit();
+        _image = _rank.GetComponent<Image>();
     }
+
+    private void Update()
+    {
+        if (_rank.IsActive())
+        {
+            _image.color = GamingColor.instance.GetGamingColor();
+        }
+    }
+
 
     public void PauseMenuInit()
     {
         _active = false;
 
-        _rank.gameObject.SetActive(false);
-
-
         PauseMenuTitle(false);
-
+        _rank.gameObject.SetActive(false);
         _pauseMenuPanel.SetActive(false);
     }
 
     public void Toggle()
     {
         _active = !_active;
+
         Time.timeScale = (!_active) ? 1.0f : 0f;
 
         SetPauseMenu(_active);
@@ -72,10 +82,7 @@ public class PauseMenu : MonoBehaviour
         _rank.sprite = AtlasManager.instance.GetRankSprite(_gameDirector.rank);
 
         SetPauseMenu(true);
-
         PauseMenuTitle(true);
-
-        //PauseMenuUpdate();
     }
 
     void PauseMenuTitle(bool clear)
